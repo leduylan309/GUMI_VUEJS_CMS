@@ -59,6 +59,7 @@
 	import Button from 'primevue/button'
 	import ValidationMessage from 'primevue/validationmessage'
 	import router from '../router'
+	import AuthModel from '../models/AuthModel'
 
 	export default {
 		name: 'Login',
@@ -86,15 +87,17 @@
 					password: this.loginPassword
 				}
 
-				return this.login(inputData).then(() => {
-					router.push({ name: 'Dashboard' })
-				}).catch(error => {
-					const { config, response: { status } } = error
+				return AuthModel.login(inputData).then()
 
-					if (status === 401) {
-						this.loginFail = true
-					}
-				})
+				// return this.login(inputData).then(() => {
+				// 	router.push({ name: 'Dashboard' })
+				// }).catch(error => {
+				// 	const { config, response: { status } } = error
+				//
+				// 	if (status === 401) {
+				// 		this.loginFail = true
+				// 	}
+				// })
 			}
 		}
 	}

@@ -1,18 +1,12 @@
-import Vue from 'vue'
 import Vuex from 'vuex'
-import modules from './modules'
+import VuexORM from '@vuex-orm/core'
+import VuexORMAxios from '@vuex-orm/plugin-axios/lib/VuexORMAxios'
 
-const state = {}
-const getters = {}
-const mutations = {}
-const actions = {}
+import database from './database'
+import axiosInstance from '../config/interceptor'
 
-Vue.use(Vuex)
+VuexORM.use(VuexORMAxios, { axiosInstance })
 
 export default new Vuex.Store({
-  state,
-  getters,
-  modules,
-  mutations,
-  actions
+  plugins: [VuexORMAxios.install(database)]
 })

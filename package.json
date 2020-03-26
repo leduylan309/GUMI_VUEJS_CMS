@@ -12,6 +12,8 @@
     "@fullcalendar/daygrid": "^4.4.0",
     "@fullcalendar/interaction": "^4.4.0",
     "@fullcalendar/timegrid": "^4.4.0",
+    "@vuex-orm/core": "^0.36.3",
+    "@vuex-orm/plugin-axios": "^0.9.2",
     "core-js": "^3.6.4",
     "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
