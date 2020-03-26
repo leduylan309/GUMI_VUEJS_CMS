@@ -52,14 +52,15 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+	import Vue from 'vue'
+	import { AuthService } from '../api'
+	import router from '../router'
+	import AuthModel from '../models/auth.model'
 
 	// Component
 	import InputText from 'primevue/inputtext'
 	import Button from 'primevue/button'
 	import ValidationMessage from 'primevue/validationmessage'
-	import router from '../router'
-	import AuthModel from '../models/AuthModel'
 
 	export default {
 		name: 'Login',
@@ -67,39 +68,40 @@
 		components: {
 			InputText,
 			Button,
-			ValidationMessage
+			ValidationMessage,
 		},
 
 		data () {
 			return {
 				loginEmail: null,
 				loginPassword: null,
-				loginFail: null
+				loginFail: null,
 			}
 		},
 
 		methods: {
-			...mapActions('auth', ['login']),
-
-			onSubmit () {
+			async onSubmit () {
 				const inputData = {
 					email: this.loginEmail,
-					password: this.loginPassword
+					password: this.loginPassword,
 				}
 
-				return AuthModel.login(inputData).then()
+				return await AuthService.login(inputData).then(response => {
+					const { token, exp } = AuthModel.query().first()
 
-				// return this.login(inputData).then(() => {
-				// 	router.push({ name: 'Dashboard' })
-				// }).catch(error => {
-				// 	const { config, response: { status } } = error
-				//
-				// 	if (status === 401) {
-				// 		this.loginFail = true
-				// 	}
-				// })
-			}
-		}
+					// set token to cookie
+					Vue.$cookies.set('token', token, exp)
+
+					router.push({ name: 'Dashboard' })
+				}).catch(error => {
+					const { config, response} = error
+
+					if (response && response.status === 401) {
+						this.loginFail = true
+					}
+				})
+			},
+		},
 	}
 </script>
 

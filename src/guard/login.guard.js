@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 export const LoginGuard = (to, from, next) => {
-  const accessToken = Vue.$cookies.get('accessToken')
+  const accessToken = Vue.$cookies.get('token')
 
   if (!accessToken) {
     // Exist token

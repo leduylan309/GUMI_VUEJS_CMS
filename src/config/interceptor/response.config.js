@@ -11,7 +11,7 @@ export const axiosInterceptorResponseConfig = (response) => {
 
 // Config Response Error Interceptor
 export const axiosInterceptorResponseError = (error) => {
-  if (!axios.isCancel(error)) {
+  if (!axios.isCancel(error) && error) {
     const { config, response: { status } } = error
 
     // remove request pending

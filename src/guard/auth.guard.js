@@ -1,16 +1,18 @@
 import Vue from 'vue'
+import { AuthService } from '../api'
+import AuthModel from '../models/auth.model'
 import store from '../store'
 
 export const AuthGuard = (to, from, next) => {
+  next()
   const accessToken = Vue.$cookies.get('token')
 
   if (accessToken) {
-    const admin = store.getters['auth/currentAdmin']
+    const admin = AuthModel.query().first()
     if (admin && 'id' in admin) {
       next()
     } else {
-
-      store.dispatch('auth/fetchAdmin').then(() => {
+      AuthService.fetchAdmin().then(() => {
         next()
       }).catch((error) => {
         // return if error == undefined
@@ -24,9 +26,7 @@ export const AuthGuard = (to, from, next) => {
           RedirectToLogin()
         }
       })
-
     }
-
   } else {
     // Not exist token
     next({ name: 'Login' })

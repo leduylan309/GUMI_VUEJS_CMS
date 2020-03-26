@@ -1,24 +1,16 @@
-import {
-  axiosConfig,
-  axiosInterceptorRequestConfig,
-  axiosInterceptorRequestError,
-  axiosInterceptorResponseConfig, axiosInterceptorResponseError
-} from '../../api/interceptor'
-
-import axios from 'axios'
-
-// config Axios
-const axiosInstance = axios.create(axiosConfig)
-
 // set request global
-axiosInstance.interceptors.request.use(
-  axiosInterceptorRequestConfig,
-  axiosInterceptorRequestError)
+import { axiosInterceptorRequestConfig, axiosInterceptorRequestError } from './request.config'
+import { axiosInterceptorResponseConfig, axiosInterceptorResponseError } from './response.config'
 
-// set response global
-axiosInstance.interceptors.response.use(
-  axiosInterceptorResponseConfig,
-  axiosInterceptorResponseError
-)
+export const configAxios = (axiosInstance) => {
+  // set request global
+  axiosInstance.interceptors.request.use(
+    axiosInterceptorRequestConfig,
+    axiosInterceptorRequestError)
 
-export default axiosInstance
+  // set response global
+  axiosInstance.interceptors.response.use(
+    axiosInterceptorResponseConfig,
+    axiosInterceptorResponseError
+  )
+}
