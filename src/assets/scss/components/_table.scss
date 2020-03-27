@@ -1,0 +1,89 @@
+body {
+  .p-datatable {
+    &.p-table-standard {
+
+      .p-datatable-header {
+        border: 0 none;
+        padding: 12px;
+        text-align: left;
+        font-size: 20px;
+        color: $textColor;
+
+        .p-datatable-globalfilter-container {
+          float: right;
+        }
+      }
+
+      .status-badge {
+        padding: 2px 10px;
+        border-radius: 5px;
+        text-transform: capitalize;
+        font-size: 12px;
+
+        &.status-activated {
+          background-color: $colorActivated;
+          color: $textColorActivated;
+        }
+
+        &.status-blocked {
+          background-color: $colorBlocked;
+          color: $textColorBlocked;
+        }
+
+        &.status-pending {
+          background-color: $colorPending;
+          color: $textColorPending;
+        }
+      }
+
+      .p-datatable-thead {
+        text-transform: capitalize;
+
+        tr {
+          color: $textColor;
+
+          th {
+            text-align: left;
+            border-color: $borderGrayLight;
+            color: $textColor;
+
+            .p-sortable-column-icon {
+              font-size: 11px;
+              float: right;
+            }
+
+            &.p-highlight {
+              color: $blueColor;
+              background: $lightGreyColor;
+
+              .p-sortable-column-icon {
+                color: $blueColor;
+                line-height: 20px;
+              }
+            }
+          }
+        }
+      }
+
+      .p-datatable-tbody {
+        tr {
+          color: $textColor;
+
+          th {
+            text-align: left;
+            border-color: $borderGrayLight;
+          }
+
+          td {
+            border-color: $borderGrayLight;
+          }
+        }
+      }
+
+      + .p-paginator {
+        border: 0 none;
+        padding: 1em;
+      }
+    }
+  }
+}

@@ -1,7 +1,15 @@
 // TEXT
-.error {
-  .text-danger {
-    margin-top: 10px;
-    color: $topbarItemBadgeBgColor
+body {
+  .p-message {
+    &.p-message-error {
+      margin-top: 5px;
+    }
+  }
+
+  .error {
+    .text-danger {
+      margin-top: 10px;
+      color: $topbarItemBadgeBgColor
+    }
   }
 }

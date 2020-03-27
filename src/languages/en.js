@@ -3,7 +3,9 @@ export default {
   common: {
     select_lang: 'Languages',
     login: 'Sign In',
-    global_search: 'Global Search'
+    global_search: 'Global Search',
+    settings: 'settings',
+    events: 'events',
   },
 
   // Login Page

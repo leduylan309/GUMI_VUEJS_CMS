@@ -1,4 +1,5 @@
 import AuthModel from '../models/auth.model'
+import AdminModel from '../models/admin.model'
 
 // define
 const AuthBaseUrl = ''
@@ -9,6 +10,12 @@ export const AuthService = {
   },
 
   async fetchAdmin () {
-    return await AuthModel.api().get(`${ AuthBaseUrl }` + '/profile')
-  },
+    return await AdminModel.api().get(`${ AuthBaseUrl }` + '/profile', {
+      dataTransformer: (response => {
+        const { data } = response.data
+
+        return data.attributes
+      })
+    })
+  }
 }
