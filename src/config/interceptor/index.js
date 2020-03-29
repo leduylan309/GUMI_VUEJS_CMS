@@ -2,7 +2,7 @@
 import { axiosInterceptorRequestConfig, axiosInterceptorRequestError } from './request.config'
 import { axiosInterceptorResponseConfig, axiosInterceptorResponseError } from './response.config'
 
-export const configAxios = (axiosInstance) => {
+export const configInterceptorAxios = (axiosInstance) => {
   // set request global
   axiosInstance.interceptors.request.use(
     axiosInterceptorRequestConfig,

@@ -1,4 +1,4 @@
-import Login from '../../pages/Login.vue'
+import Login from '../../views/pages/Login.vue'
 import multiguard from 'vue-router-multiguard'
 import { LoginGuard } from '../../guard/login.guard'
 

@@ -42,7 +42,7 @@
 					</div>
 
 					<Button :label="$t('common.login')"
-									icon="fas fa-sign-in-alt"
+									icon="pi pi-check"
 									type="submit"
 									iconPos="left"/>
 				</form>
@@ -53,9 +53,9 @@
 
 <script>
 	import Vue from 'vue'
-	import { AuthService } from '../api'
-	import router from '../router'
-	import AuthModel from '../models/auth.model'
+	import { AuthService } from '../../api'
+	import router from '../../router'
+	import AuthModel from '../../models/auth.model'
 
 	// Component
 	import InputText from 'primevue/inputtext'

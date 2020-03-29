@@ -12,7 +12,7 @@
 										 exact>
 					<i :class="item.meta.icon"/> {{item.meta.label}}
 
-					<i v-if="item.children" class="fas fa-angle-down menuitem-toggle-icon"/>
+					<i v-if="item.children" class="pi pi-fw pi-angle-down menuitem-toggle-icon"/>
 				</router-link>
 
 				<a v-if="!item.path"
@@ -20,7 +20,7 @@
 					 @click="onMenuItemClick($event,item,i)">
 					<i :class="item.meta.icon"/> {{item.meta.label}}
 
-					<i v-if="item.children" class="fas fa-angle-down menuitem-toggle-icon"/>
+					<i v-if="item.children" class="pi pi-fw pi-angle-down menuitem-toggle-icon"/>
 				</a>
 
 				<transition name="layout-submenu-wrapper">

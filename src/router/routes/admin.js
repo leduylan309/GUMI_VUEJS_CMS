@@ -1,17 +1,18 @@
 import Dashboard from '../../views/pages/Dashboard'
 import { AuthGuard } from '../../guard/auth.guard'
 import multiguard from 'vue-router-multiguard'
+import Admin from '../../views/pages/Admin'
 
 const dashboard = {
-  path: '/dashboard',
-  name: 'Dashboard',
-  component: Dashboard,
+  path: '/admin',
+  name: 'Admin',
+  component: Admin,
   meta: {
-    title: 'Dashboard',
+    title: 'Admin',
 
     // for menu
-    icon: 'pi pi-fw pi-home',
-    label: 'Dashboard'
+    icon: 'pi pi-fw pi-user',
+    label: 'Admin'
   },
   beforeEnter: multiguard([AuthGuard])
 }

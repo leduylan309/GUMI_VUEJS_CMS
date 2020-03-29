@@ -8,7 +8,7 @@ import store from './store'
 import './assets/scss/main.scss'
 
 // import Plugins
-import './plugins/validation/'
+import './plugins/validation'
 import './plugins/vue-cookies'
 import i18n from './plugins/i18n'
 

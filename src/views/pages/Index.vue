@@ -3,15 +3,15 @@
 			 :class="containerClass"
 			 @click="onWrapperClick">
 
-		// TOP MENU
+		<!--TOP MENU-->
 		<AppTopBar @menu-toggle="onMenuToggle"/>
 
-		// SIDE MENU
+		<!--SIDE MENU-->
 		<transition name="layout-sidebar">
 			<div class="layout-sidebar layout-sidebar-dark" @click="onSidebarClick" v-show="isSidebarVisible()">
 				<div class="layout-logo">
 					<router-link to="/">
-						<h2>Newphoria</h2>
+						<img alt="Logo" src="../../assets/images/newphoria_logo.svg">
 					</router-link>
 				</div>
 
@@ -19,12 +19,12 @@
 			</div>
 		</transition>
 
-		// MAIN CONTENT
+		<!--MAIN CONTENT-->
 		<div class="layout-main">
 			<router-view/>
 		</div>
 
-		// FOOTER APP
+		<!--FOOTER APP-->
 		<AppFooter/>
 	</div>
 </template>

@@ -2,10 +2,11 @@ import multiguard from 'vue-router-multiguard'
 import { AuthGuard } from '../../guard/auth.guard'
 
 // Components
-import Index from '../../pages/Index.vue'
+import Index from '../../views/pages/Index.vue'
 
 // Modules
 import DashboardRoute from './dashboard'
+import AdminRoute from './admin'
 
 const main = {
   path: '',
@@ -13,7 +14,8 @@ const main = {
   component: Index,
   beforeEnter: multiguard([AuthGuard]),
   children: [
-    DashboardRoute
+    DashboardRoute,
+    AdminRoute
   ]
 }
 
