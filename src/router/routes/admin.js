@@ -9,7 +9,6 @@ import Edit from '../../views/pages/admin/Edit'
 
 const admin = {
   path: '',
-  name: 'Admin',
   component: Index,
   meta: {
     title: 'Admin',

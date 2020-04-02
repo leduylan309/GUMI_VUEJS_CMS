@@ -6,7 +6,22 @@ export default {
     global_search: 'Global Search',
     settings: 'settings',
     events: 'events',
-    add_new: 'Add New'
+    add_new: 'Add New',
+
+    button: {
+      save: 'Save',
+      cancel: 'Cancel',
+      reset: 'Reset',
+      delete: 'Delete',
+      edit: 'Edit'
+    },
+
+    text: {
+      name: 'Name',
+      email: 'Email',
+      password: 'Password',
+      activate: 'Activate'
+    }
   },
 
   // Login Page
@@ -21,7 +36,8 @@ export default {
   // Admin Page
   admin: {
     title_list_page: 'List of Admins',
-    create_an_admin: 'Create an admin'
+    create_an_admin: 'Create an admin',
+    edit_admin: 'Edit Admin'
   },
 
   // Candidate Page

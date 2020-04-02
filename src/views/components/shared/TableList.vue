@@ -67,7 +67,7 @@
 				</Column>
 				<Column field="created_at" header="Created At" :sortable="true"></Column>
 				<Column>
-					<template #body="slotProps" >
+					<template #body="slotProps">
 						<Button type="button"
 										icon="pi pi-pencil"
 										class="p-button-info"
@@ -92,6 +92,7 @@
 
 <script>
 	import { convertQueryFilterToString } from '../../../utils/filter'
+	import { StatusCommon } from '../../../enum/common.enum'
 
 	// Component
 	import InputText from 'primevue/inputtext'
@@ -100,7 +101,6 @@
 	import Paginator from 'primevue/paginator'
 	import Button from 'primevue/button'
 	import Dropdown from 'primevue/dropdown'
-	import { StatusCommon } from '../../../enum/common.enum'
 
 	export default {
 		name: 'TableList',
