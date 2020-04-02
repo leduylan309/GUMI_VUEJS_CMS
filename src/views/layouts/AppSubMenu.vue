@@ -2,6 +2,7 @@
 	<ul v-if="items">
 		<template v-for="(item,i) of items">
 			<li :key="i"
+					v-if="!item.meta.hidden"
 					:class="[{'active-menuitem': activeIndex === i && !item.path}]">
 				<div v-if="item.children && root===true" class='arrow'/>
 

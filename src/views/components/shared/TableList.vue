@@ -15,6 +15,12 @@
 				<template #header>
 					{{ $t(`${pageName}.title_list_page`) }}
 
+					<router-link class="p-button p-button-success" :to="`${pageName}/register`">
+						<i class="pi pi-user-plus"/>
+
+						{{ $t('common.add_new') }}
+					</router-link>
+
 					<div class="p-datatable-globalfilter-container">
 						<InputText v-model="filters.global" :placeholder="$t('common.global_search')"/>
 					</div>
@@ -60,9 +66,13 @@
 					</template>
 				</Column>
 				<Column field="created_at" header="Created At" :sortable="true"></Column>
-				<Column headerStyle="width: 8em; text-align: center" bodyStyle="text-align: center; overflow: visible">
-					<template #body>
-						<Button type="button" icon="pi pi-pencil" class="p-button-info"></Button>
+				<Column>
+					<template #body="slotProps" >
+						<Button type="button"
+										icon="pi pi-pencil"
+										class="p-button-info"
+										@click="onEdit(slotProps.data.id)"
+						/>
 					</template>
 				</Column>
 			</DataTable>
@@ -228,6 +238,11 @@
 					this.loading = false
 				})
 			},
+
+			onEdit (ID) {
+				return this.$router.push(`${ this.pageName }/${ ID }`)
+			},
+
 		},
 	}
 </script>

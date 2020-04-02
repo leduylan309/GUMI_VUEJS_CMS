@@ -5,14 +5,14 @@
 	/>
 </template>
 
-<script>
-	import TableList from '../components/shared/TableList'
-	import TableMixin from '../../mixins/table.mixin'
-	import { AdminService } from '../../api'
-	import AdminModel from '../../models/admin.model'
+<script lang="js">
+	import TableList from '../../components/shared/TableList'
+	import TableMixin from '../../../mixins/table.mixin'
+	import { AdminService } from '../../../api'
+	import AdminModel from '../../../models/admin.model'
 
 	export default {
-		name: 'Admin',
+		name: 'List',
 		mixins: [TableMixin],
 		components: { TableList },
 		data () {

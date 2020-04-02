@@ -6,6 +6,7 @@ export default {
     global_search: 'Global Search',
     settings: 'settings',
     events: 'events',
+    add_new: 'Add New'
   },
 
   // Login Page
@@ -19,7 +20,8 @@ export default {
 
   // Admin Page
   admin: {
-    title_list_page: 'List of Admins'
+    title_list_page: 'List of Admins',
+    create_an_admin: 'Create an admin'
   },
 
   // Candidate Page
