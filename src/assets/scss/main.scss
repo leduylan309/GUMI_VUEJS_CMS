@@ -11,14 +11,15 @@
 // Import jQuery lib, Bootstrap ... etc
 
 // Themes
-@import "themes/primevue";
+@import "vendors/primevue";
+@import "vendors/adminlte";
 
 // Layout
-@import "layout/common";
-@import "layout/header";
-@import "layout/main";
-@import "layout/sidebar";
-@import "layout/footer";
+//@import "layout/common";
+//@import "layout/header";
+//@import "layout/main";
+//@import "layout/sidebar";
+//@import "layout/footer";
 
 // Components
 @import "components/grid";
@@ -46,5 +47,5 @@
 @import "components/common";
 
 // Page specific styles
-@import "page/login";
-@import "page/banner";
+//@import "page/login";
+//@import "page/banner";

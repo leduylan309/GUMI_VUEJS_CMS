@@ -1,11 +1,13 @@
 <template>
-	<router-view/>
+  <div>
+		Add new admin
+	</div>
 </template>
 
 <script lang="js">
-	export default {
-		name: 'Index',
-	}
+  export default {
+    name: 'AdminAdd',
+  }
 </script>
 
 <style scoped>

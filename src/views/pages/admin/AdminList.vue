@@ -12,7 +12,7 @@
 	import AdminModel from '../../../models/admin.model'
 
 	export default {
-		name: 'List',
+		name: 'AdminList',
 		mixins: [TableMixin],
 		components: { TableList },
 		data () {

@@ -61,7 +61,7 @@
 	import Password from 'primevue/password';
 
 	export default {
-		name: 'Edit',
+		name: 'AdminEdit',
 
 		components: {
 			Button,

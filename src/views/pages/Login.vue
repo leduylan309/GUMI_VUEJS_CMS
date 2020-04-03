@@ -1,52 +1,76 @@
 <template>
-	<div class="login-body">
-		<div class="login-panel"></div>
-		<div class="login-content">
-			<ValidationObserver v-slot="{ handleSubmit }">
-				<form @submit.prevent="handleSubmit(onSubmit)">
-					<h1 v-html="$t('login.title')"></h1>
+	<div class="login-page">
+		<div class="login-box">
 
-					<p>{{ $t('login.welcome') }}</p>
+			<!-- /.login-logo -->
+			<div class="card">
+				<div class="card-body login-card-body">
+					<p class="login-box-msg" v-html="$t('login.title')"/>
 
-					<div class="login-input-wrapper">
-						<ValidationProvider :name="$t('login.username_placeholder')" rules="required" v-slot="{ errors }">
-              <span class="p-float-label">
-                <InputText id="username"
-													 type="text"
-													 v-model="loginEmail"/>
+					<ValidationObserver v-slot="{ handleSubmit }">
+						<form @submit.prevent="handleSubmit(onSubmit)">
+							<ValidationProvider
+											:name="$t('login.username_placeholder')"
+											rules="required"
+											v-slot="{ errors }"
+							>
+								<div class="input-group mb-3">
+									<InputText class="form-control"
+														 type="text"
+														 v-model="loginEmail"
+														 :class="{'is-invalid': errors.length }"
+									/>
 
-	            <label for="username">{{$t('login.username_placeholder')}}</label>
-              </span>
+									<div class="input-group-append">
+										<div class="input-group-text">
+											<span class="pi pi-envelope"></span>
+										</div>
+									</div>
 
-							<ValidationMessage class="error text-danger" v-if="errors.length">{{ errors[0] }}</ValidationMessage>
-						</ValidationProvider>
-					</div>
-					<div class="login-input-wrapper">
-						<ValidationProvider :name="$t('login.password_placeholder')" rules="required" v-slot="{ errors }">
-              <span class="p-float-label">
-                <InputText id="password"
-													 type="password"
-													 v-model="loginPassword"/>
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
 
-                <label for="password">{{$t('login.password_placeholder')}}</label>
-              </span>
+							<ValidationProvider
+											:name="$t('login.password_placeholder')"
+											rules="required"
+											v-slot="{ errors }"
+							>
+								<div class="form-group">
+									<div class="input-group mb-3">
+										<InputText class="form-control"
+															 type="password"
+															 :class="{'is-invalid': errors.length }"
+															 v-model="loginPassword"/>
 
-							<ValidationMessage class="error text-danger" v-if="errors.length">{{ errors[0] }}</ValidationMessage>
-						</ValidationProvider>
-					</div>
+										<div class="input-group-append">
+											<div class="input-group-text">
+												<span class="pi pi-lock"></span>
+											</div>
+										</div>
 
-					<div class="login-input-wrapper" v-if="loginFail">
-						<ValidationMessage class="error text-danger">
-							{{ $t('login.wrong_username_password') }}
-						</ValidationMessage>
-					</div>
+										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+									</div>
 
-					<Button :label="$t('common.login')"
-									icon="pi pi-check"
-									type="submit"
-									iconPos="left"/>
-				</form>
-			</ValidationObserver>
+								</div>
+
+								</ValidationProvider>
+
+							<div class="row">
+								<div class="col-12">
+									<Button :label="$t('common.login')"
+													class="btn btn-primary btn-block"
+													icon="pi pi-check"
+													type="submit"
+													/>
+								</div>
+								<!-- /.col -->
+							</div>
+						</form>
+					</ValidationObserver>
+					<!-- /.login-card-body -->
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -94,7 +118,7 @@
 
 					router.push({ name: 'Dashboard' })
 				}).catch(error => {
-					const { config, response} = error
+					const { config, response } = error
 
 					if (response && response.status === 401) {
 						this.loginFail = true

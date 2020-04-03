@@ -1,6 +1,6 @@
 <template>
 	<div class="layout-topbar">
-		<button class="p-link layout-menu-button" @click="onMenuToggle">
+		<button class="p-link layout-menu-button">
 			<span class="pi pi-bars"></span>
 		</button>
 		<div class="layout-topbar-icons">
@@ -20,11 +20,5 @@
 <script lang="js">
 	export default {
 		name: 'AppTopBar',
-
-		methods: {
-			onMenuToggle (event) {
-				this.$emit('menu-toggle', event)
-			},
-		},
 	}
 </script>

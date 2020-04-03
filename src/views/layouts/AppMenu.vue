@@ -1,7 +1,7 @@
 <template>
-	<div class="layout-menu-container">
-		<AppSubmenu :items="model" class="layout-menu" :root="true" @menuitem-click="onMenuItemClick"/>
-	</div>
+	<nav class="mt-2">
+		<AppSubmenu :items="model" :root="true"/>
+	</nav>
 </template>
 
 <script lang="js">
@@ -16,12 +16,6 @@
 
 		props: {
 			model: Array,
-		},
-
-		methods: {
-			onMenuItemClick (event) {
-				return event
-			},
 		},
 	}
 </script>

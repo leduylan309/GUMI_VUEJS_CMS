@@ -7,6 +7,7 @@ import Index from '../../views/pages/Index.vue'
 // Modules
 import DashboardRoute from './dashboard'
 import AdminRoute from './admin'
+import PostRoute from './post'
 
 const main = {
   path: '',
@@ -15,7 +16,8 @@ const main = {
   beforeEnter: multiguard([AuthGuard]),
   children: [
     DashboardRoute,
-    AdminRoute
+    AdminRoute,
+    PostRoute
   ]
 }
 

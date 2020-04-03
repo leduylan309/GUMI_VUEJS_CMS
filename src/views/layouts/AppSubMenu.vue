@@ -1,32 +1,42 @@
 <template>
-	<ul v-if="items">
+	<ul class="nav nav-pills nav-sidebar flex-column"
+			v-if="items"
+			:class="{'nav-pills nav-sidebar flex-column': root, 'nav-treeview': !root}"
+	>
 		<template v-for="(item,i) of items">
-			<li :key="i"
-					v-if="!item.meta.hidden"
-					:class="[{'active-menuitem': activeIndex === i && !item.path}]">
-				<div v-if="item.children && root===true" class='arrow'/>
-
-				<router-link v-if="item.path"
-										 :to="item.path"
-										 :class="[{'active-route': activeIndex === i}]"
+			<li v-if="!item.meta.hidden"
+					class="nav-item has-treeview"
+					:key="i"
+					:class="[{'menu-open': activeIndex === i}]">
+				<router-link v-if="!item.children && (item.path || item.path === '')"
+										 :to="{name: item.name}"
+										 :class="[{'active': activeIndex === i}]"
+										 class="nav-link"
 										 @click.native="onMenuItemClick($event,item,i)"
 										 exact>
-					<i :class="item.meta.icon"/> {{item.meta.label}}
+					<i :class="item.meta.icon"/>
 
-					<i v-if="item.children" class="pi pi-fw pi-angle-down menuitem-toggle-icon"/>
+					<p>{{item.meta.label}}</p>
+
+					<i v-if="item.children" class="right pi pi-fw pi-angle-down menuitem-toggle-icon"/>
 				</router-link>
 
-				<a v-if="!item.path"
-					 :href="item.path||'#'"
+				<a v-if="item.children && item.path"
+					 href="#"
+					 class="nav-link"
+					 :class="[{'active': activeIndex === i}]"
 					 @click="onMenuItemClick($event,item,i)">
-					<i :class="item.meta.icon"/> {{item.meta.label}}
+					<i :class="item.meta.icon"/>
 
-					<i v-if="item.children" class="pi pi-fw pi-angle-down menuitem-toggle-icon"/>
+					<p>{{item.meta.label}}</p>
+
+					<i v-if="item.children" class="right pi pi-fw pi-angle-left menuitem-toggle-icon"/>
 				</a>
 
-				<transition name="layout-submenu-wrapper">
+				<transition>
 					<AppSubMenu v-show="activeIndex === i"
 											:items="item.children"
+											:root="false"
 											@menuitem-click="$emit('menuitem-click', $event)"/>
 				</transition>
 			</li>
@@ -40,7 +50,7 @@
 		name: 'AppSubMenu',
 
 		components: {
-			AppSubMenu
+			AppSubMenu,
 		},
 
 		props: {
@@ -72,11 +82,6 @@
 				}
 
 				this.activeIndex = index === this.activeIndex ? null : index
-
-				this.$emit('menuitem-click', {
-					originalEvent: event,
-					item: item,
-				})
 			},
 		},
 	}

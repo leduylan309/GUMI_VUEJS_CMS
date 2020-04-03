@@ -1,91 +1,126 @@
 <template>
-	<div class="p-card">
-		<div class="p-card-body" style="padding:0">
-			<DataTable
-							class="p-datatable-responsive p-table-standard"
-							:value="list"
-							:rows="paginator.perPage"
-							:first.sync="page"
-							:loading="loading"
-							:resizableColumns="true"
-							:rowHover="true"
-							:autoLayout="true"
-							@sort="onSort"
-			>
-				<template #header>
-					{{ $t(`${pageName}.title_list_page`) }}
-
-					<router-link class="p-button p-button-success" :to="`${pageName}/register`">
-						<i class="pi pi-user-plus"/>
-
-						{{ $t('common.add_new') }}
-					</router-link>
-
-					<div class="p-datatable-globalfilter-container">
-						<InputText v-model="filters.global" :placeholder="$t('common.global_search')"/>
+	<div class="content-wrapper">
+		<div class="content-header">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-6">
+						<h1 class="m-0 text-dark">
+							{{ $t(`${pageName}.title_list_page`) }}
+						</h1>
 					</div>
-				</template>
-				<Column field="name" header="name" :sortable="true">
-					<template #filter>
-						<InputText
-										type="text"
-										v-model="filters.name"
-										class="p-column-filter"
-										@keyup.enter="onSearch"
-						/>
-					</template>
-				</Column>
-				<Column field="email" header="email" :sortable="true">
-					<template #filter>
-						<InputText
-										type="text"
-										@keyup.enter="onSearch"
-										v-model="filters.email"
-										class="p-column-filter"
-						/>
-					</template>
-				</Column>
-				<Column field="status" header="status" :sortable="true" filterMatchMode="equals">
-					<template #body="slotProps">
-						<span :class="'status-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
-					</template>
+				</div>
+			</div>
+		</div>
 
-					<template #filter>
-						<Dropdown
-										v-model="filters.status"
-										class="p-column-filter"
-										@change="onSearch"
-										placeholder="All"
-										:options="status"
-										:showClear="true"
-						>
-							<template #option="slotProps">
-								<span :class="'status-badge status-' + slotProps.option">{{slotProps.option}}</span>
-							</template>
-						</Dropdown>
-					</template>
-				</Column>
-				<Column field="created_at" header="Created At" :sortable="true"></Column>
-				<Column>
-					<template #body="slotProps">
-						<Button type="button"
-										icon="pi pi-pencil"
-										class="p-button-info"
-										@click="onEdit(slotProps.data.id)"
-						/>
-					</template>
-				</Column>
-			</DataTable>
+		<div class="content">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-12">
+						<div class="card">
+							<div class="card-header">
+								<div class="card-title"></div>
 
-			<Paginator
-							:rows="paginator.perPage"
-							:totalRecords="paginator.total"
-							:paginator="true"
-							:first.sync="page"
-							:page="page"
-							:rowsPerPageOptions="[15,30,50]"
-							@page="onPage($event)"
-			/>
+								<div class="card-tools">
+									<div class="p-datatable-globalfilter-container">
+										<InputText v-model="filters.global"
+															 :placeholder="$t('common.global_search')"
+															 class="form-control"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<div class="card-body">
+								<DataTable
+												class="table table-responsive table-bordered"
+												:value="list"
+												:rows="paginator.perPage"
+												:first.sync="page"
+												:loading="loading"
+												:resizableColumns="true"
+												:rowHover="true"
+												:autoLayout="true"
+												@sort="onSort"
+								>
+									<Column field="name" header="name" :sortable="true">
+										<template #filter>
+											<InputText
+															type="text"
+															v-model="filters.name"
+															class="p-column-filter"
+															@keyup.enter="onSearch"
+											/>
+										</template>
+									</Column>
+									<Column field="email" header="email" :sortable="true">
+										<template #filter>
+											<InputText
+															type="text"
+															@keyup.enter="onSearch"
+															v-model="filters.email"
+															class="p-column-filter"
+											/>
+										</template>
+									</Column>
+									<Column field="status" header="status" :sortable="true" filterMatchMode="equals">
+										<template #body="slotProps">
+											<span :class="'status-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
+										</template>
+
+										<template #filter>
+											<Dropdown
+															v-model="filters.status"
+															class="p-column-filter"
+															@change="onSearch"
+															placeholder="All"
+															:options="status"
+															:showClear="true"
+											>
+												<template #option="slotProps">
+													<span :class="'status-badge status-' + slotProps.option">{{slotProps.option}}</span>
+												</template>
+											</Dropdown>
+										</template>
+									</Column>
+									<Column field="created_at" header="Created At" :sortable="true"></Column>
+									<Column>
+										<template #body="slotProps">
+											<div class="btn-group btn-group-toggle">
+												<button class="btn btn-sm btn-info"
+																@click="onEdit(slotProps.data.id)">
+													<i class="pi pi-pencil"/>
+
+													<span class="d-none d-lg-inline-block">{{ $t('common.button.edit') }}</span>
+												</button>
+
+												<button class="btn btn-sm btn-danger"
+																@click="onEdit(slotProps.data.id)">
+													<i class="pi pi-trash"/>
+
+													<span class="d-none d-lg-inline-block">{{ $t('common.button.delete') }}</span>
+												</button>
+											</div>
+
+										</template>
+									</Column>
+								</DataTable>
+							</div>
+
+							<div class="card-footer">
+								<Paginator
+												:rows="paginator.perPage"
+												:totalRecords="paginator.total"
+												:paginator="true"
+												:first.sync="page"
+												:page="page"
+												:rowsPerPageOptions="[15,30,50]"
+												@page="onPage($event)"
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </template>
@@ -99,7 +134,6 @@
 	import Column from 'primevue/column'
 	import DataTable from 'primevue/datatable'
 	import Paginator from 'primevue/paginator'
-	import Button from 'primevue/button'
 	import Dropdown from 'primevue/dropdown'
 
 	export default {
@@ -110,7 +144,6 @@
 			Column,
 			DataTable,
 			Paginator,
-			Button,
 			Dropdown,
 		},
 
@@ -239,11 +272,15 @@
 				})
 			},
 
+			/**
+			 * href to edit page
+			 * @param ID
+			 * @return {Promise<Route>}
+			 */
 			onEdit (ID) {
-				return this.$router.push(`${ this.pageName }/${ ID }`)
+				return this.$router.push(`/${ this.pageName }/${ ID }`)
 			},
-
-		},
+		}
 	}
 </script>
 

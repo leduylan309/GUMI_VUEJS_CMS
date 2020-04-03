@@ -26,11 +26,12 @@ export default {
 
   // Login Page
   login: {
-    title: '<span> SIGN IN</span> TO DASHBOARD',
+    title: '<strong> SIGN IN</strong> TO DASHBOARD',
     welcome: 'Welcome, please use the form to sign-in.',
     username_placeholder: 'Username',
     password_placeholder: 'Password',
-    wrong_username_password: 'Error!!! You have entered incorrect username or password.'
+    wrong_username_password: 'Error!!! You have entered incorrect username or password.',
+    remember_me: 'Remember Me'
   },
 
   // Admin Page
@@ -40,8 +41,10 @@ export default {
     edit_admin: 'Edit Admin'
   },
 
-  // Candidate Page
-  candidate: {
-    title_list_page: 'List of Candidates'
-  }
+  // Post Page
+  post: {
+    title_list_page: 'List of Posts',
+    create_an_post: 'Create an post',
+    edit_post: 'Edit post'
+  },
 }

@@ -6,7 +6,7 @@
 
 <script lang="js">
   export default {
-    name: 'add',
+    name: 'PostAdd',
   }
 </script>
 
