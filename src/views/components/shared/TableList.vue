@@ -22,17 +22,16 @@
 
 								<div class="card-tools">
 									<div class="p-datatable-globalfilter-container">
-										<InputText v-model="filters.global"
-															 :placeholder="$t('common.global_search')"
-															 class="form-control"
-										/>
+										<input :placeholder="$t('common.global_search')"
+													 class="form-control"
+													 v-model="filters.global"/>
 									</div>
 								</div>
 							</div>
 
 							<div class="card-body">
 								<DataTable
-												class="table table-responsive table-bordered"
+												class="table table-responsive"
 												:value="list"
 												:rows="paginator.perPage"
 												:first.sync="page"
@@ -42,51 +41,47 @@
 												:autoLayout="true"
 												@sort="onSort"
 								>
-									<Column field="name" header="name" :sortable="true">
+									<Column field="name" :header="$t('common.table.name')" :sortable="true">
 										<template #filter>
-											<InputText
-															type="text"
-															v-model="filters.name"
-															class="p-column-filter"
-															@keyup.enter="onSearch"
-											/>
+											<input type="text"
+														 v-model="filters.name"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="email" header="email" :sortable="true">
+									<Column field="email" :header="$t('common.table.email')" :sortable="true">
 										<template #filter>
-											<InputText
-															type="text"
-															@keyup.enter="onSearch"
-															v-model="filters.email"
-															class="p-column-filter"
-											/>
+											<input type="text"
+														 @keyup.enter="onSearch"
+														 v-model="filters.email"
+														 class="form-control"/>
 										</template>
 									</Column>
-									<Column field="status" header="status" :sortable="true" filterMatchMode="equals">
+									<Column field="status" :header="$t('common.table.email')" :sortable="true" filterMatchMode="equals">
 										<template #body="slotProps">
-											<span :class="'status-badge status-' + slotProps.data.status">{{slotProps.data.status}}</span>
+											<span :class="'badge badge-' + slotProps.data.status">{{slotProps.data.status}}</span>
 										</template>
 
 										<template #filter>
 											<Dropdown
 															v-model="filters.status"
-															class="p-column-filter"
+															class="form-control"
 															@change="onSearch"
 															placeholder="All"
 															:options="status"
 															:showClear="true"
 											>
 												<template #option="slotProps">
-													<span :class="'status-badge status-' + slotProps.option">{{slotProps.option}}</span>
+													<span :class="'badge badge-' + slotProps.option">{{slotProps.option}}</span>
 												</template>
 											</Dropdown>
 										</template>
 									</Column>
-									<Column field="created_at" header="Created At" :sortable="true"></Column>
+									<Column field="created_at" :header="$t('common.table.created_at')" :sortable="true"></Column>
 									<Column>
 										<template #body="slotProps">
 											<div class="btn-group btn-group-toggle">
-												<button class="btn btn-sm btn-info"
+												<button class="btn btn-sm btn-primary"
 																@click="onEdit(slotProps.data.id)">
 													<i class="pi pi-pencil"/>
 
@@ -100,21 +95,19 @@
 													<span class="d-none d-lg-inline-block">{{ $t('common.button.delete') }}</span>
 												</button>
 											</div>
-
 										</template>
 									</Column>
 								</DataTable>
 							</div>
 
 							<div class="card-footer">
-								<Paginator
-												:rows="paginator.perPage"
-												:totalRecords="paginator.total"
-												:paginator="true"
-												:first.sync="page"
-												:page="page"
-												:rowsPerPageOptions="[15,30,50]"
-												@page="onPage($event)"
+								<Paginator :rows="paginator.perPage"
+													 :totalRecords="paginator.total"
+													 :paginator="true"
+													 :first.sync="page"
+													 :page="page"
+													 :rowsPerPageOptions="[15,30,50]"
+													 @page="onPage($event)"
 								/>
 							</div>
 						</div>
@@ -130,7 +123,6 @@
 	import { StatusCommon } from '../../../enum/common.enum'
 
 	// Component
-	import InputText from 'primevue/inputtext'
 	import Column from 'primevue/column'
 	import DataTable from 'primevue/datatable'
 	import Paginator from 'primevue/paginator'
@@ -140,7 +132,6 @@
 		name: 'TableList',
 
 		components: {
-			InputText,
 			Column,
 			DataTable,
 			Paginator,
@@ -280,7 +271,7 @@
 			onEdit (ID) {
 				return this.$router.push(`/${ this.pageName }/${ ID }`)
 			},
-		}
+		},
 	}
 </script>
 

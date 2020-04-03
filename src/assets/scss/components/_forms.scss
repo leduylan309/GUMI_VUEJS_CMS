@@ -1,0 +1,7 @@
+.form-control {
+  &.p-dropdown {
+    padding: 0;
+    height: auto;
+    border: 1px solid $gray-400;
+  }
+}

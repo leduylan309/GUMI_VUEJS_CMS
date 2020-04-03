@@ -19,7 +19,7 @@ export const AuthGuard = (to, from, next) => {
 
         // return if unauthenticated
         const { response: { status } } = error
-        if (!response || status === 401) {
+        if (response || status === 401) {
           RedirectToLogin()
         }
       })

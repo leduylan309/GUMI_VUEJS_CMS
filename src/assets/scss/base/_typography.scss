@@ -1,10 +1,10 @@
 html, body {
-  font-size: 16px;
+  font-size: 14px;
   -webkit-font-smoothing: antialiased;
   background: #edf0f5;
 
   @media #{$info-tablet-horizontal} {
-    font-size: 15px;
+    font-size: 14px;
   }
   @media #{$info-tablet-vertical} {
     font-size: 14px;

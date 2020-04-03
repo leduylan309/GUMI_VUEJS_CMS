@@ -1,0 +1,17 @@
+.wrapper {
+  .p-paginator {
+    background: none;
+    border: none;
+
+    .p-paginator-pages {
+      .p-paginator-page {
+        &.p-highlight {
+          font-weight: bold;
+          //background-color: unset;
+          color: $white;
+          border-radius: $border-radius;
+        }
+      }
+    }
+  }
+}

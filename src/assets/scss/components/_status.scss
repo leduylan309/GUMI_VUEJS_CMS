@@ -1,0 +1,17 @@
+.badge {
+  text-transform: capitalize;
+  font-weight: normal;
+
+  &-pending {
+    background: $orange;
+    color: $white;
+  }
+
+  &-activated {
+    background: $green;
+  }
+
+  &-blocked {
+    background: $gray-600;
+  }
+}

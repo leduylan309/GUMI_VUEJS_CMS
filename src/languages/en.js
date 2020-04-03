@@ -20,7 +20,14 @@ export default {
       name: 'Name',
       email: 'Email',
       password: 'Password',
-      activate: 'Activate'
+      activate: 'Activate',
+    },
+
+    table: {
+      name: 'Name',
+      email: 'Email',
+      status: 'Status',
+      created_at: 'Created At'
     }
   },
 

@@ -1,7 +1,7 @@
-@import '~admin-lte/dist/css/alt/adminlte.components.min.css';
-@import '~admin-lte/dist/css/alt/adminlte.core.min.css';
-@import '~admin-lte/dist/css/alt/adminlte.pages.min.css';
-@import '~admin-lte/dist/css/alt/adminlte.extra-components.min.css';
+@import '~bootstrap/scss/functions';
+@import "~admin-lte/build/scss/bootstrap-variables";
+@import '~admin-lte/build/scss/AdminLTE-components';
+@import '~admin-lte/build/scss/AdminLTE-core';
+@import '~admin-lte/build/scss/AdminLTE-pages';
+@import '~admin-lte/build/scss/AdminLTE-extra-components';
 
-// font
-//@import "~@fortawesome/fontawesome-free/css/all.min.css";

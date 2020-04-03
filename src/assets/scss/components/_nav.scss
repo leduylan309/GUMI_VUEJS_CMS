@@ -5,7 +5,14 @@
 
     .nav-sidebar {
       .nav-sidebar {
-        padding-left: 15px;
+        .nav-link {
+          box-shadow: none;
+
+          &.active {
+            background: $gray-900;
+            color: $white
+          }
+        }
       }
 
       .nav-link {

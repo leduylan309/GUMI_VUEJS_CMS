@@ -1,1 +1,33 @@
 // Prime
+.wrapper {
+  .p-datatable {
+    &.table-responsive {
+      overflow: unset;
+    }
+
+    .p-datatable-thead {
+      tr {
+        th {
+          border: 1px solid $gray-400;
+          text-align: left;
+          overflow: unset;
+
+          .pi {
+            float: right;
+            padding: inherit;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+
+    .p-datatable-tbody {
+      tr {
+        td {
+          overflow: unset;
+          border: 1px solid $gray-400;
+        }
+      }
+    }
+  }
+}
