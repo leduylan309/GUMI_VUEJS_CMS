@@ -77,7 +77,14 @@
 											</Dropdown>
 										</template>
 									</Column>
-									<Column field="created_at" :header="$t('common.table.created_at')" :sortable="true"></Column>
+									<Column field="created_at" :header="$t('common.table.created_at')" :sortable="true">
+										<template #filter>
+											<Calendar class="p-column-filter"
+																v-model="filters.created_at"
+																selectionMode="range"
+																:manualInput="false"/>
+										</template>
+									</Column>
 									<Column>
 										<template #body="slotProps">
 											<div class="btn-group btn-group-toggle">
@@ -127,6 +134,7 @@
 	import DataTable from 'primevue/datatable'
 	import Paginator from 'primevue/paginator'
 	import Dropdown from 'primevue/dropdown'
+	import Calendar from 'primevue/calendar'
 
 	export default {
 		name: 'TableList',
@@ -136,6 +144,7 @@
 			DataTable,
 			Paginator,
 			Dropdown,
+			Calendar,
 		},
 
 		data () {
