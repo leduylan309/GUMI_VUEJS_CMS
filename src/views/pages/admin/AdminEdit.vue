@@ -1,73 +1,84 @@
 <template>
-	<div class="p-form">
-		<div class="p-grid">
-			<div class="p-md-10 p-col-12">
-				<div class="card">
-					<h1 class="p-font--bold">{{ $t('admin.edit_admin') }}</h1>
+	<div class="content-wrapper">
+		<!-- Header Table -->
+		<ContentHeader :title="$t('admin.edit_admin')"/>
 
-					<div class="card-body">
-						<div class="p-form-group">
-							<label>{{ $t('common.text.name') }}</label>
+		<!-- Content Table -->
+		<div class="content">
+			<div class="card">
+				<div class="card-body">
+					<form class="form-horizontal">
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.text.name') }}</label>
 
-							<InputText v-model="item.name" :placeholder="$t('common.text.name')"/>
+							<div class="col-sm-10">
+								<InputText class="form-control" v-model="item.name" :placeholder="$t('common.text.name')"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.email') }}</label>
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.text.email') }}</label>
 
-							<InputText v-model="item.email" :placeholder="$t('common.text.email')"/>
+							<div class="col-sm-10">
+								<InputText class="form-control" v-model="item.email" :placeholder="$t('common.text.email')"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.password') }}</label>
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.text.password') }}</label>
 
-							<Password v-model="item.password" />
+							<div class="col-sm-10">
+								<Password class="form-control" v-model="item.password"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.activate') }}</label>
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.text.activate') }}</label>
 
-							<InputSwitch class="p-display--block" v-model="item.activate" />
+							<div class="col-sm-10">
+								<InputSwitch class="p-display--block" v-model="item.activate"/>
+							</div>
 						</div>
-					</div>
+					</form>
 				</div>
-			</div>
 
-			<div class="p-md-2 p-col-12">
-				<div class="card">
-					<Button type="button"
-									icon="pi pi-save"
-									:label="$t('common.button.save')"
-									class="p-button-success p-component p-button--block p-font--bold"
-					/>
+				<div class="card-footer">
+					<button type="button" class=" btn btn-default float-right">
+						<i class="pi pi-times"/>
 
-					<Button type="button"
-									icon="pi pi-times"
-									:label="$t('common.button.cancel')"
-									class="p-button-secondary p-component p-button--block p-font--bold"
-					/>
+						<span>{{ $t('common.button.cancel') }}</span>
+					</button>
+
+					<button type="button" class="btn btn-success float-right mr-1">
+						<i class="pi pi-save"/>
+
+						<span>{{$t('common.button.save')}}</span>
+					</button>
 				</div>
 			</div>
 		</div>
+
 		<pre>{{ item }}</pre>
 	</div>
 </template>
 
 <script lang="js">
 	// Components
-	import Button from 'primevue/button'
+	import ContentHeader from '../../components/shared/ContentHeader'
+
+	// Prime
 	import InputText from 'primevue/inputtext'
-	import InputSwitch from 'primevue/inputswitch';
-	import Password from 'primevue/password';
+	import InputSwitch from 'primevue/inputswitch'
+	import Password from 'primevue/password'
 
 	export default {
 		name: 'AdminEdit',
 
 		components: {
-			Button,
+			ContentHeader,
 			InputText,
 			InputSwitch,
-			Password
+			Password,
 		},
 
 		data () {

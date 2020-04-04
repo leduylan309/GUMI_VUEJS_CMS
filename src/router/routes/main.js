@@ -14,6 +14,10 @@ const main = {
   name: 'Index',
   component: Index,
   beforeEnter: multiguard([AuthGuard]),
+  meta: {
+    title: 'Dashboard'
+  },
+  redirect: DashboardRoute,
   children: [
     DashboardRoute,
     AdminRoute,

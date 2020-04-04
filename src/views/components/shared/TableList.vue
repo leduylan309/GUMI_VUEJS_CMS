@@ -1,17 +1,7 @@
 <template>
 	<div class="content-wrapper">
 		<!-- Header Table -->
-		<div class="content-header">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-sm-6">
-						<h1 class="m-0 text-dark">
-							{{ $t(`${pageName}.title_list_page`) }}
-						</h1>
-					</div>
-				</div>
-			</div>
-		</div>
+		<ContentHeader :title="$t(`${pageName}.title_list_page`)"/>
 
 		<!-- Content Table -->
 		<div class="content">
@@ -19,18 +9,6 @@
 				<div class="row">
 					<div class="col-12">
 						<div class="card">
-							<div class="card-header d-none">
-								<div class="card-title"></div>
-
-								<div class="card-tools">
-									<div class="p-datatable-globalfilter-container">
-										<input :placeholder="$t('common.global_search')"
-													 class="form-control"
-													 v-model="filters.global"/>
-									</div>
-								</div>
-							</div>
-
 							<div class="card-body">
 								<DataTable
 												class="table table-responsive"
@@ -138,11 +116,10 @@
 </template>
 
 <script>
-	import { convertDateTimeForFilter, convertQueryFilterToString } from '../../../utils/filter'
 	import { StatusCommon } from '../../../enum/common.enum'
-	import moment from 'moment'
+	import ContentHeader from '../../components/shared/ContentHeader'
 
-	// Component
+	// Prime
 	import Column from 'primevue/column'
 	import DataTable from 'primevue/datatable'
 	import Paginator from 'primevue/paginator'
@@ -158,6 +135,7 @@
 			Paginator,
 			Dropdown,
 			Calendar,
+			ContentHeader,
 		},
 
 		data () {

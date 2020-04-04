@@ -23,7 +23,7 @@ const admin = {
       name: 'AdminList',
       component: AdminList,
       meta: {
-        title: 'Admin',
+        title: 'Admin List',
 
         // for menu
         icon: 'pi pi-fw pi-users',
