@@ -27,10 +27,6 @@
 			breadcrumbs: null,
 		},
 
-		created () {
-			console.log(this.$route.matched)
-		},
-
 		methods: {
 			isActive (name) {
 				return this.$route.name === name
