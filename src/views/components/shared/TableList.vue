@@ -37,7 +37,7 @@
 														 class="form-control"/>
 										</template>
 									</Column>
-									<Column field="status" :header="$t('common.table.email')" :sortable="true" filterMatchMode="equals">
+									<Column field="status" :header="$t('common.table.status')" :sortable="true" filterMatchMode="equals">
 										<template #body="slotProps">
 											<span :class="'badge badge-' + slotProps.data.status">{{slotProps.data.status}}</span>
 										</template>

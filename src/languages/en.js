@@ -20,12 +20,13 @@ export default {
       name: 'Name',
       email: 'Email',
       password: 'Password',
-      activate: 'Activate',
+      activate: 'Activate'
     },
 
     table: {
       name: 'Name',
       email: 'Email',
+      image: 'Image',
       status: 'Status',
       created_at: 'Created At',
       no_records_found: 'No records found.'
@@ -54,5 +55,5 @@ export default {
     title_list_page: 'List of Posts',
     create_an_post: 'Create an post',
     edit_post: 'Edit post'
-  },
+  }
 }
