@@ -1,6 +1,7 @@
 // convert filters
 import * as _ from 'lodash'
 import qs from 'querystring'
+import moment from 'moment'
 
 /**
  * map params and filter for query
@@ -66,4 +67,17 @@ export const convertQueryObjectFilter = (currentQuery = {}, defaultQuery = {}) =
     ...params,
     filters: filters
   }
+}
+
+/**
+ * convert time
+ * @param date
+ * @param format
+ * @param timezone
+ * @return {Array}
+ */
+export const convertDateTimeForFilter = (date, format = 'YYYY/MM/DD', timezone = 'Asia/Tokyo') => {
+  return _.map([...date], (val) => {
+    return val ? moment(val).format(format) : null
+  })
 }

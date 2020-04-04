@@ -84,7 +84,6 @@
 	// Component
 	import InputText from 'primevue/inputtext'
 	import Button from 'primevue/button'
-	import ValidationMessage from 'primevue/validationmessage'
 
 	export default {
 		name: 'Login',
@@ -92,7 +91,6 @@
 		components: {
 			InputText,
 			Button,
-			ValidationMessage,
 		},
 
 		data () {

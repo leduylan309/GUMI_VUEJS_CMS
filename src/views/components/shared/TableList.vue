@@ -1,5 +1,6 @@
 <template>
 	<div class="content-wrapper">
+		<!-- Header Table -->
 		<div class="content-header">
 			<div class="container-fluid">
 				<div class="row">
@@ -12,12 +13,13 @@
 			</div>
 		</div>
 
+		<!-- Content Table -->
 		<div class="content">
 			<div class="container-fluid">
 				<div class="row">
 					<div class="col-12">
 						<div class="card">
-							<div class="card-header">
+							<div class="card-header d-none">
 								<div class="card-title"></div>
 
 								<div class="card-tools">
@@ -81,7 +83,10 @@
 										<template #filter>
 											<Calendar class="p-column-filter"
 																v-model="filters.created_at"
+																:dateFormat="`${dateTimeFormat}`"
 																selectionMode="range"
+																icon="pi pi-calendar"
+																@date-select="onSelectCalendar"
 																:manualInput="false"/>
 										</template>
 									</Column>
@@ -89,21 +94,26 @@
 										<template #body="slotProps">
 											<div class="btn-group btn-group-toggle">
 												<button class="btn btn-sm btn-primary"
-																@click="onEdit(slotProps.data.id)">
+																@click="onEdit(slotProps.data.id)"
+																v-tooltip.top="$t('common.button.edit')"
+												>
 													<i class="pi pi-pencil"/>
-
-													<span class="d-none d-lg-inline-block">{{ $t('common.button.edit') }}</span>
 												</button>
 
 												<button class="btn btn-sm btn-danger"
-																@click="onEdit(slotProps.data.id)">
+																@click="onEdit(slotProps.data.id)"
+																v-tooltip.top="$t('common.button.delete')"
+												>
 													<i class="pi pi-trash"/>
-
-													<span class="d-none d-lg-inline-block">{{ $t('common.button.delete') }}</span>
 												</button>
 											</div>
 										</template>
 									</Column>
+
+									<!-- For Empty items -->
+									<template #empty>
+										{{ $t('common.table.no_records_found') }}
+									</template>
 								</DataTable>
 							</div>
 
@@ -122,12 +132,15 @@
 				</div>
 			</div>
 		</div>
+
+		<pre>{{ filters }}</pre>
 	</div>
 </template>
 
 <script>
-	import { convertQueryFilterToString } from '../../../utils/filter'
+	import { convertDateTimeForFilter, convertQueryFilterToString } from '../../../utils/filter'
 	import { StatusCommon } from '../../../enum/common.enum'
+	import moment from 'moment'
 
 	// Component
 	import Column from 'primevue/column'
@@ -152,6 +165,7 @@
 				loading: false,
 				filters: {},
 				status: StatusCommon,
+				dateTimeFormat: 'yy/mm/dd',
 			}
 		},
 
@@ -214,7 +228,7 @@
 					...convertQueryFilterToString(params),
 					...this.filters,
 				}
-
+				console.log(queries)
 				this.$router.replace({ query: queries }).catch(() => {})
 			},
 
@@ -253,6 +267,13 @@
 				}
 
 				return this.callGetList(params)
+			},
+
+			/**
+			 * Function will filter by date
+			 */
+			onSelectCalendar (value) {
+
 			},
 
 			/**

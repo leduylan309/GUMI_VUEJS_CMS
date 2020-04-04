@@ -23,6 +23,16 @@
 
     .p-datatable-tbody {
       tr {
+        &.p-datatable-emptymessage {
+          td {
+            height: 40vh;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 2rem;
+            color: $gray-300
+          }
+        }
+
         td {
           overflow: unset;
           border: 1px solid $gray-400;
