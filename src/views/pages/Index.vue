@@ -1,5 +1,5 @@
 <template>
-	<div class="transition sidebar-mini" :class="{'sidebar-collapse': !isOpen}">
+	<div class="transition sidebar-mini">
 		<div class="wrapper">
 			<!-- Navbar -->
 			<nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -127,13 +127,6 @@
 			})
 
 			this.menu = menus[1].children
-		},
-
-		methods: {
-			onMenuToggle () {
-				this.isOpen = !this.isOpen
-			},
-
 		},
 	}
 </script>
