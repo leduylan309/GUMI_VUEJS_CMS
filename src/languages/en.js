@@ -9,6 +9,7 @@ export default {
     add_new: 'Add New',
 
     button: {
+      add: 'Add',
       save: 'Save',
       cancel: 'Cancel',
       reset: 'Reset',
@@ -59,7 +60,7 @@ export default {
   // Post Page
   post: {
     title_list_page: 'List of Posts',
-    create_an_post: 'Create an post',
+    create_a_post: 'Create a post',
     edit_post: 'Edit post'
   }
 }

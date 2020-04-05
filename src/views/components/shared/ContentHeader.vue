@@ -23,7 +23,11 @@
 		name: 'ContentHeader',
 
 		props: {
-			title: String,
+			title: {
+				type: String,
+				require: true,
+				default: () => 'Lists',
+			},
 		},
 
 		components: { Breadcrumb },

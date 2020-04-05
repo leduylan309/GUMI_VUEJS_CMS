@@ -1,7 +1,7 @@
 <template>
 	<div class="content-wrapper">
 		<!-- Header Table -->
-		<ContentHeader :title="$t(`${pageName}.title_list_page`)"/>
+		<ContentHeader :title="$t(`${pageName}.title_list_page`)" :page-name="`${pageName}`"/>
 
 		<!-- Content Table -->
 		<div class="content">
