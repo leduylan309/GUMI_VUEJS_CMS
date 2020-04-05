@@ -11,6 +11,7 @@ import './assets/scss/main.scss'
 import './plugins/validation'
 import './plugins/vue-cookies'
 import './plugins/pimevue'
+import './plugins/adminlte'
 import i18n from './plugins/i18n'
 
 Vue.config.productionTip = false

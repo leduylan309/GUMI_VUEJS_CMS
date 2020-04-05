@@ -16,8 +16,7 @@
     "@vuex-orm/plugin-axios": "^0.9.2",
     "admin-lte": "^3.0.4",
     "core-js": "^3.6.4",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.2",
+    "jquery": "^3.4.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
@@ -37,12 +36,10 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.2.0",
-    "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-plugin-router": "~4.2.0",
     "@vue/cli-plugin-vuex": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
     "axios": "^0.19.2",
-    "babel-eslint": "^10.0.3",
     "javel": "^0.1.7",
     "vue-template-compiler": "^2.6.11"
   },
