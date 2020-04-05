@@ -42,7 +42,7 @@
 					</form>
 				</div>
 
-				<div class="card-footer">
+				<div class="card-footer fixed-bottom">
 					<button type="button" class=" btn btn-default float-right">
 						<i class="pi pi-times"/>
 

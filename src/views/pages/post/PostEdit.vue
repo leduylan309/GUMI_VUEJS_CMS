@@ -1,51 +1,117 @@
 <template>
-	<div class="p-form">
-		<div class="p-grid">
-			<div class="p-md-10 p-col-12">
-				<div class="card">
-					<h1 class="p-font--bold">{{ $t('admin.edit_admin') }}</h1>
+	<div class="content-wrapper">
+		<!-- Header Table -->
+		<ContentHeader :title="$t('post.edit_post')"/>
 
-					<div class="card-body">
-						<div class="p-form-group">
-							<label>{{ $t('common.text.name') }}</label>
+		<!-- Content Table -->
+		<div class="content">
+			<div class="card">
+				<div class="card-body">
+					<form class="form-horizontal">
+						<!-- Title -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.title') }}</label>
 
-							<InputText v-model="item.name" :placeholder="$t('common.text.name')"/>
+							<div class="col-sm-10">
+								<InputText class="form-control" v-model="item.title" :placeholder="$t('common.table.title')"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.email') }}</label>
+						<!-- SLug - Url -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.slug') }}</label>
 
-							<InputText v-model="item.email" :placeholder="$t('common.text.email')"/>
+							<div class="col-sm-10">
+								<InputText class="form-control" v-model="item.slug" :placeholder="$t('common.table.slug')"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.password') }}</label>
+						<!-- Image -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.image') }}</label>
 
-							<Password v-model="item.password" />
+							<div class="col-sm-10">
+								<FileUpload mode="basic"
+														:name="item.image"
+														v-model="item.image"
+														:previewWidth="100"
+														@upload="onUploadImage"
+														accept="image/*"
+														:maxFileSize="1000000"
+														:chooseLabel="$t('common.text.select_image')"/>
+							</div>
 						</div>
 
-						<div class="p-form-group">
-							<label>{{ $t('common.text.activate') }}</label>
+						<!-- Single Categories -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
 
-							<InputSwitch class="p-display--block" v-model="item.activate" />
+							<div class="col-sm-10">
+								<Dropdown v-model="item.category_id"
+													class="form-control"
+													:options="categories"
+													:placeholder="$t('common.text.select_category')"
+													:filter="true"
+													:showClear="true"
+													multiple="true"
+													optionLabel="title"
+													optionValue="id">
+									<template #option="slotProps">
+										<span>{{slotProps.option.title}}</span>
+									</template>
+								</Dropdown>
+							</div>
 						</div>
-					</div>
+
+						<!-- Multiple Categories -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
+
+							<div class="col-sm-10">
+								<MultiSelect v-model="item.category_id"
+														 class="form-control"
+														 :options="categories"
+														 :placeholder="$t('common.text.select_category')"
+														 :filter="true"
+														 :showClear="true"
+														 optionLabel="title"
+														 optionValue="id"
+								>
+									<template #option="slotProps">
+										<span>{{slotProps.option.title}}</span>
+									</template>
+								</MultiSelect>
+							</div>
+						</div>
+
+						<!-- Description -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.description') }}</label>
+
+							<div class="col-sm-10">
+								<Editor v-model="item.description" editorStyle="height: 320px"/>
+							</div>
+						</div>
+					</form>
 				</div>
-			</div>
 
-			<div class="p-md-2 p-col-12">
-				<div class="card">
-					<Button type="button"
-									icon="pi pi-save"
-									:label="$t('common.button.save')"
-									class="p-button-success p-component p-button--block p-font--bold"
-					/>
+				<!-- Action Section Submit & Cancel -->
+				<div class="card-footer fixed-bottom">
+					<button type="button"
+									class="btn btn-default float-right"
+									@click="onCancel">
+						<i class="pi pi-times"/>
 
-					<Button type="button"
-									icon="pi pi-times"
-									:label="$t('common.button.cancel')"
-									class="p-button-secondary p-component p-button--block p-font--bold"
-					/>
+						<span>{{ $t('common.button.cancel') }}</span>
+					</button>
+
+					<button type="button"
+									class="btn btn-success float-right mr-1"
+									@click="onSubmit">
+						<i class="pi pi-save"/>
+
+						<span>{{$t('common.button.save')}}</span>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -54,25 +120,35 @@
 </template>
 
 <script lang="js">
+	// Dummy
+	import categories from '../../../dummy/post_categories'
+
 	// Components
-	import Button from 'primevue/button'
+	import ContentHeader from '../../components/shared/ContentHeader'
+
+	// Prime
 	import InputText from 'primevue/inputtext'
-	import InputSwitch from 'primevue/inputswitch';
-	import Password from 'primevue/password';
+	import Editor from 'primevue/editor'
+	import FileUpload from 'primevue/fileupload'
+	import Dropdown from 'primevue/dropdown'
+	import MultiSelect from 'primevue/multiselect'
 
 	export default {
 		name: 'PostEdit',
 
 		components: {
-			Button,
+			ContentHeader,
 			InputText,
-			InputSwitch,
-			Password
+			Editor,
+			FileUpload,
+			Dropdown,
+			MultiSelect,
 		},
 
 		data () {
 			return {
 				item: {},
+				categories,
 			}
 		},
 
@@ -80,5 +156,27 @@
 			next()
 		},
 
+		methods: {
+			/**
+			 * Action upload Photo
+			 */
+			onUploadImage () {
+
+			},
+
+			/**
+			 * Submit Action
+			 */
+			onSubmit () {
+				console.log(this.item)
+			},
+
+			/**
+			 * back to previous page
+			 */
+			onCancel () {
+				return this.$router.back()
+			},
+		},
 	}
 </script>

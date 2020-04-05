@@ -1,0 +1,6 @@
+.card-footer {
+  &.fixed-bottom {
+    background-color: $main-bg;
+    box-shadow: $modal-content-box-shadow-xs;
+  }
+}

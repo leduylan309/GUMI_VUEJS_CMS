@@ -3,5 +3,40 @@
     padding: 0;
     height: auto;
     border: 1px solid $gray-400;
+
+    &:hover {
+      border-color: $gray-400;
+
+      &:not(.p-disabled) {
+        border-color: $gray-400;
+      }
+    }
+
+    .p-dropdown-filter-container {
+      display: block;
+    }
+  }
+
+  &.p-multiselect {
+    padding: 0;
+    height: auto;
+    border: 1px solid $gray-400;
+    display: block;
+
+    .p-multiselect-label {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      border-color: $gray-400;
+
+      &:not(.p-disabled) {
+        border-color: $gray-400;
+      }
+    }
+
+    .p-dropdown-filter-container {
+      display: block;
+    }
   }
 }

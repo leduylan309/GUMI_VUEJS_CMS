@@ -20,15 +20,21 @@ export default {
       name: 'Name',
       email: 'Email',
       password: 'Password',
-      activate: 'Activate'
+      activate: 'Activate',
+      select_image: 'Please select image',
+      select_category: 'Please select category',
     },
 
     table: {
       name: 'Name',
+      title: 'Title',
+      slug: 'Slug',
       email: 'Email',
       image: 'Image',
       status: 'Status',
+      categories: 'Categories',
       created_at: 'Created At',
+      description: 'Description',
       no_records_found: 'No records found.'
     }
   },

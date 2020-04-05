@@ -18,7 +18,7 @@ export const axiosInterceptorResponseError = (error) => {
     AxiosRemovePending(config)
 
     if (status === 401 && router.currentRoute.name !== 'Login') {
-      return router.push('/Login')
+      return router.push({ name: 'Login' })
     }
 
     return Promise.reject(error)

@@ -112,13 +112,18 @@
 </template>
 
 <script lang="js">
+	// Dummy
 	import posts from '../../../dummy/posts'
+
+	// Helper
 	import { StatusCommon } from '../../../enum/common.enum'
 	import { convertQueryFilterToString } from '../../../utils/filter'
+
+	// Post Component
 	import PostModel from '../../../models/post.model'
 	import ContentHeader from '../../components/shared/ContentHeader'
 
-	// Component
+	// Prime
 	import Column from 'primevue/column'
 	import DataTable from 'primevue/datatable'
 	import Paginator from 'primevue/paginator'
@@ -134,7 +139,7 @@
 			Paginator,
 			Dropdown,
 			ContentHeader,
-			Calendar
+			Calendar,
 		},
 
 		data () {
@@ -262,7 +267,7 @@
 			},
 
 			onEdit (ID) {
-				return this.$router.push(`${ this.pageName }/${ ID }`)
+				return this.$router.push(`/${ this.pageName }/${ ID }`)
 			},
 
 		},
