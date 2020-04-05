@@ -7,6 +7,7 @@ import Index from '../../views/pages/Index.vue'
 // Modules
 import DashboardRoute from './dashboard'
 import AdminRoute from './admin'
+import UserRoute from './user'
 import PostRoute from './post'
 
 const main = {
@@ -21,6 +22,7 @@ const main = {
   children: [
     DashboardRoute,
     AdminRoute,
+    UserRoute,
     PostRoute
   ]
 }

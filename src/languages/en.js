@@ -52,14 +52,21 @@ export default {
 
   // Admin Page
   admin: {
-    title_list_page: 'List of Admins',
+    title_list_page: 'List of admins',
     create_an_admin: 'Create an admin',
-    edit_admin: 'Edit Admin'
+    edit_admin: 'Edit admin'
+  },
+
+  // Admin Page
+  user: {
+    title_list_page: 'List of users',
+    create_an_user: 'Create an user',
+    edit_user: 'Edit user'
   },
 
   // Post Page
   post: {
-    title_list_page: 'List of Posts',
+    title_list_page: 'List of posts',
     create_a_post: 'Create a post',
     edit_post: 'Edit post'
   }

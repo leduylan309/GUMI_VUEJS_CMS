@@ -1,5 +1,5 @@
 <template>
-	<div class="transition sidebar-mini" :class="{'sidebar-collapse': !isOpen}">
+	<div class="transition sidebar-mini " :class="{'sidebar-collapse': !isOpen}">
 		<div class="wrapper">
 			<!-- Navbar -->
 			<nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -100,37 +100,16 @@
 
 		</div>
 	</div>
-
-
-	<!--	<div class="layout-wrapper layout-static"-->
-	<!--			 :class="containerClass"-->
-	<!--			 @click="onWrapperClick">-->
-
-	<!--		&lt;!&ndash;TOP MENU&ndash;&gt;-->
-	<!--		<AppTopBar @menu-toggle="onMenuToggle"/>-->
-
-	<!--		&lt;!&ndash;MAIN CONTENT&ndash;&gt;-->
-	<!--		<div class="layout-main">-->
-	<!--			<router-view/>-->
-	<!--		</div>-->
-
-	<!--		&lt;!&ndash;FOOTER APP&ndash;&gt;-->
-	<!--		<AppFooter/>-->
-	<!--	</div>-->
 </template>
 
 <script>
 	// Component
-	import AppFooter from '../layouts/AppFooter.vue'
-	import AppTopBar from '../layouts/AppTopBar.vue'
 	import AppMenu from '../layouts/AppMenu.vue'
 
 	export default {
 		name: 'PostIndex',
 
 		components: {
-			// AppFooter,
-			// AppTopBar,
 			AppMenu,
 		},
 
