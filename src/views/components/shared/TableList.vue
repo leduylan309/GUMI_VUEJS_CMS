@@ -118,6 +118,7 @@
 <script>
 	import { StatusCommon } from '../../../enum/common.enum'
 	import ContentHeader from '../../components/shared/ContentHeader'
+	import { convertQueryFilterToString } from '../../../utils/filter'
 
 	// Prime
 	import Column from 'primevue/column'
@@ -206,7 +207,7 @@
 					...convertQueryFilterToString(params),
 					...this.filters,
 				}
-				console.log(queries)
+
 				this.$router.replace({ query: queries }).catch(() => {})
 			},
 
