@@ -21,20 +21,30 @@
 												:autoLayout="true"
 												@sort="onSort"
 								>
-									<Column field="name" :header="$t('common.table.name')" :sortable="true">
+									<Column field="username"
+													:header="$t('common.table.username')"
+													:sortable="true">
 										<template #filter>
 											<input type="text"
-														 v-model="filters.name"
+														 @keyup.enter="onSearch"
+														 v-model="filters.username"
+														 class="form-control"/>
+										</template>
+									</Column>
+									<Column field="first_name" :header="$t('common.table.first_name')" :sortable="true">
+										<template #filter>
+											<input type="text"
+														 v-model="filters.first_name"
 														 class="form-control"
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="email" :header="$t('common.table.email')" :sortable="true">
+									<Column field="last_name" :header="$t('common.table.last_name')" :sortable="true">
 										<template #filter>
 											<input type="text"
-														 @keyup.enter="onSearch"
-														 v-model="filters.email"
-														 class="form-control"/>
+														 v-model="filters.last_name"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
 									<Column field="status" :header="$t('common.table.status')" :sortable="true" filterMatchMode="equals">
