@@ -8,6 +8,7 @@ import Index from '../../views/pages/Index.vue'
 import DashboardRoute from './dashboard'
 import AdminRoute from './admin'
 import PostRoute from './post'
+import CompanyRoute from './company'
 
 const main = {
   path: '',
@@ -21,7 +22,8 @@ const main = {
   children: [
     DashboardRoute,
     AdminRoute,
-    PostRoute
+    PostRoute,
+    CompanyRoute
   ]
 }
 

@@ -21,9 +21,19 @@ export default {
       name: 'Name',
       email: 'Email',
       password: 'Password',
+      confirm_password: 'Confirm Password',
+      permission: 'Permission',
       activate: 'Activate',
       select_image: 'Please select image',
       select_category: 'Please select category',
+      company_code: 'Company code',
+      postal_code: 'Postal code',
+      city: 'City',
+      address: 'Address',
+      freedial: 'Free dial',
+      phone: 'Phone',
+      fax: 'Fax',
+      url: 'Homepage url'
     },
 
     table: {
@@ -62,5 +72,12 @@ export default {
     title_list_page: 'List of Posts',
     create_a_post: 'Create a post',
     edit_post: 'Edit post'
-  }
+  },
+
+  // Company Page
+  company: {
+    title_list_page: 'List of Companies',
+    create_a_company: 'Create an Company',
+    edit_company: 'Edit Company'
+  },
 }

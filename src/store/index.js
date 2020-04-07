@@ -6,6 +6,9 @@ import VuexORMAxios from '@vuex-orm/plugin-axios'
 import { configInterceptorAxios } from '../config/interceptor'
 import database from './database'
 
+// map VUEX to Vue
+Vue.use(Vuex)
+
 // CONFIG GLOBAL FOR AXIOS
 VuexORM.use(VuexORMAxios, {
   axios,
@@ -21,9 +24,6 @@ VuexORM.use(VuexORMAxios, {
 
 // config interceptor for Axios
 configInterceptorAxios(axios)
-
-// map VUEX to Vue
-Vue.use(Vuex)
 
 const store = new Vuex.Store({
   plugins: [VuexORM.install(database)]
