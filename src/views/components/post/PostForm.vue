@@ -86,10 +86,10 @@
 
 						<!-- Description -->
 						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">{{ $t('common.table.description') }}</label>
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.content') }}</label>
 
 							<div class="col-sm-10">
-								<Editor v-model="item.description" editorStyle="height: 320px"/>
+								<Editor v-model="item.content" editorStyle="height: 320px"/>
 							</div>
 						</div>
 					</form>

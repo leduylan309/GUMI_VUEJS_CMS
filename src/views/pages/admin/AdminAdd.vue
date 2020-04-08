@@ -1,17 +1,17 @@
 <template>
 	<AdminForm :title="$t('admin.create_an_admin')"
-               :item="item" />
+						 :item="item"/>
 </template>
 
 <script lang="js">
 	// Components
-    import AdminForm from '../../components/admin/AdminForm'
+	import AdminForm from '../../components/admin/AdminForm'
 
-  export default {
-    name: 'AdminAdd',
+	export default {
+		name: 'AdminAdd',
 
 		components: {
-          AdminForm,
+			AdminForm,
 		},
 
 		data () {
@@ -20,7 +20,7 @@
 			}
 		},
 
-  }
+	}
 </script>
 
 <style scoped>

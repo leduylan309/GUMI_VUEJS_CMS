@@ -38,6 +38,9 @@ export default {
 
     table: {
       name: 'Name',
+      first_name: 'First Name',
+      last_name: 'Last Name',
+      username: 'Username',
       title: 'Title',
       slug: 'Slug',
       email: 'Email',
@@ -86,5 +89,5 @@ export default {
     title_list_page: 'List of Companies',
     create_a_company: 'Create an Company',
     edit_company: 'Edit Company'
-  },
+  }
 }

@@ -112,15 +112,13 @@
 </template>
 
 <script lang="js">
-	// Dummy
-	import posts from '../../../dummy/posts'
-
 	// Helper
 	import { StatusCommon } from '../../../enum/common.enum'
-	import { convertQueryFilterToString } from '../../../utils/filter'
+	import TableMixin from '../../../mixins/table.mixin'
 
 	// Post Component
 	import PostModel from '../../../models/post.model'
+	import { PostService } from '../../../api'
 	import ContentHeader from '../../components/shared/ContentHeader'
 
 	// Prime
@@ -133,6 +131,8 @@
 	export default {
 		name: 'PostList',
 
+		mixins: [TableMixin],
+
 		components: {
 			Column,
 			DataTable,
@@ -144,132 +144,17 @@
 
 		data () {
 			return {
-				list: posts,
 				dateTimeFormat: 'yy/mm/dd',
 
-				// dummy
 				loading: false,
 				filters: {},
 				status: StatusCommon,
+
+				// Page Define
 				pageName: 'post',
 				pageModel: PostModel,
+				pageService: PostService,
 			}
-		},
-
-		computed: {
-			page: {
-				get () {
-					const { page, perPage } = this.$route.query
-					return ((parseInt(page) === 0 ? 1 : parseInt(page)) - 1) * parseInt(perPage)
-				},
-
-				set (value) {
-					return value
-				},
-			},
-
-			paginator () {
-				if (!this.pageModel) {
-					return
-				}
-
-				return this.$store.state.entities[this.pageName].paginator
-			},
-		},
-
-		methods: {
-			/**
-			 * @param inputParams
-			 */
-			setQueries (inputParams) {
-				const params = {
-					..._.cloneDeep(this.$route.query),
-					...inputParams,
-				}
-				// replace url every actions
-				this.replaceUrl(params)
-
-				return params
-			},
-
-			/**
-			 * replace URL every actions in list table
-			 * @param params
-			 */
-			replaceUrl (params) {
-				const queries = {
-					...convertQueryFilterToString(params),
-					...this.filters,
-				}
-
-				this.$router.replace({ query: queries }).catch(() => {})
-			},
-
-			/**
-			 * Action when changing page
-			 */
-			onPage (event) {
-				const params = {
-					perPage: event.rows,
-					page: (event.page + 1),
-				}
-
-				return this.callGetList(params)
-			},
-
-			/**
-			 * Action for Search
-			 */
-			onSearch (event) {
-				const params = {
-					page: 1,
-				}
-
-				return this.callGetList(params)
-			},
-
-			/**
-			 * action for sorting column
-			 * @param event
-			 */
-			onSort (event) {
-				const params = {
-					page: 1,
-					sort: event.sortField,
-					direction: event.sortOrder === -1 ? 'desc' : 'asc',
-				}
-
-				return this.callGetList(params)
-			},
-
-			/**
-			 * Function will filter by date
-			 */
-			onSelectCalendar (value) {
-
-			},
-
-			/**
-			 * Call Api list of admin
-			 * @param params
-			 */
-			async callGetList (params) {
-				this.loading = true
-
-				const queries = this.setQueries({
-					...params,
-					filters: this.filters,
-				})
-
-				return this.pageService.list(queries).then(() => {
-					this.loading = false
-				})
-			},
-
-			onEdit (ID) {
-				return this.$router.push(`/${ this.pageName }/${ ID }`)
-			},
-
 		},
 	}
 </script>

@@ -9,6 +9,8 @@
 	import categories from '../../../dummy/post_categories'
 
 	import PostForm from '../../components/post/PostForm'
+	import { PostService } from '../../../api'
+	import PostModel from '../../../models/post.model'
 
 	export default {
 		name: 'PostEdit',
@@ -19,13 +21,24 @@
 
 		data () {
 			return {
-				item: {},
-				categories
+				categories,
 			}
 		},
 
 		beforeRouteEnter (to, from, next) {
-			next()
+			const postID = to.params.id
+
+			PostService.item(postID).then(() => {
+				next()
+			})
+		},
+
+		computed: {
+			item () {
+				const postID = this.$route.params.id
+
+				return PostModel.query().find(postID)
+			},
 		},
 	}
 </script>
