@@ -1,44 +1,39 @@
 <template>
-	<PostForm :title="$t('post.edit_post')"
-						:post.sync="post"
-						:listName="'PostList'"
-						:categories="categories"/>
+	<CategoryForm :title="$t('category.edit_category')"
+								:category.sync="category"
+								:listName="'CategoryList'"
+								:categories="categories"/>
 </template>
 
 <script lang="js">
-	// Dummy
-	import categories from '../../../dummy/post_categories'
-
-	import PostForm from '../../components/post/PostForm'
-	import { PostService } from '../../../api'
-	import PostModel from '../../../models/post.model'
+	import CategoryForm from '../../components/category/CategoryForm'
+	import { CategoryService } from '../../../api'
+	import CategoryModel from '../../../models/category.model'
 
 	export default {
-		name: 'PostEdit',
+		name: 'CategoryEdit',
 
 		components: {
-			PostForm,
+			CategoryForm,
 		},
 
 		data () {
-			return {
-				categories,
-			}
+			return {}
 		},
 
 		beforeRouteEnter (to, from, next) {
-			const postID = to.params.id
+			const categoryID = to.params.id
 
-			PostService.item(postID).then(() => {
+			CategoryService.item(categoryID).then(() => {
 				next()
 			})
 		},
 
 		computed: {
-			post () {
-				const postID = this.$route.params.id
+			category () {
+				const categoryID = this.$route.params.id
 
-				return PostModel.query().find(postID)
+				return CategoryModel.query().find(categoryID)
 			},
 		},
 	}

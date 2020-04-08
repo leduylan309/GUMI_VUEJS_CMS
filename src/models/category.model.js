@@ -7,7 +7,7 @@ export default class CategoryModel extends BaseModel {
   static fields () {
     return {
       id: this.uid(),
-      model_id: this.uid(),
+      model_id: this.string(null).nullable(),
       model_type: this.string(null),
       name: this.string(null),
       display_name: this.string(null).nullable(),

@@ -33,7 +33,7 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="title"
+									<Column field="display_name"
 													:header="$t('common.table.display_name')"
 													:sortable="true"
 													v-if="this.fields.display_name"
