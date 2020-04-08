@@ -9,31 +9,31 @@
 				<div class="card-body">
 					<form class="form-horizontal">
 						<!-- Title -->
-						<div class="form-group row">
+						<div class="form-group row" v-if="this.fields.title">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.title') }}</label>
 
 							<div class="col-sm-10">
-								<InputText class="form-control" v-model="item.title" :placeholder="$t('common.table.title')"/>
+								<InputText class="form-control" v-model="post.title" :placeholder="$t('common.table.title')"/>
 							</div>
 						</div>
 
 						<!-- SLug - Url -->
-						<div class="form-group row">
+						<div class="form-group row" v-if="this.fields.slug">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.slug') }}</label>
 
 							<div class="col-sm-10">
-								<InputText class="form-control" v-model="item.slug" :placeholder="$t('common.table.slug')"/>
+								<InputText class="form-control" v-model="post.slug" :placeholder="$t('common.table.slug')"/>
 							</div>
 						</div>
 
 						<!-- Image -->
-						<div class="form-group row">
+						<div class="form-group row" v-if="this.fields.image">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.image') }}</label>
 
 							<div class="col-sm-10">
 								<FileUpload mode="basic"
-														:name="item.image"
-														v-model="item.image"
+														:name="post.image"
+														v-model="post.image"
 														:previewWidth="100"
 														@upload="onUploadImage"
 														accept="image/*"
@@ -43,11 +43,11 @@
 						</div>
 
 						<!-- Single Categories -->
-						<div class="form-group row" v-if="categories">
+						<div class="form-group row" v-if="categories && this.fields.categories">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
 
 							<div class="col-sm-10">
-								<Dropdown v-model="item.category_id"
+								<Dropdown v-model="post.category_id"
 													class="form-control"
 													:options="categories"
 													:placeholder="$t('common.text.select_category')"
@@ -64,11 +64,11 @@
 						</div>
 
 						<!-- Multiple Categories -->
-						<div class="form-group row" v-if="categories">
+						<div class="form-group row" v-if="categories && this.fields.categories">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
 
 							<div class="col-sm-10">
-								<MultiSelect v-model="item.category_id"
+								<MultiSelect v-model="post.category_id"
 														 class="form-control"
 														 :options="categories"
 														 :placeholder="$t('common.text.select_category')"
@@ -85,11 +85,38 @@
 						</div>
 
 						<!-- Description -->
-						<div class="form-group row">
+						<div class="form-group row" v-if="this.fields.content">
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.content') }}</label>
 
 							<div class="col-sm-10">
-								<Editor v-model="item.content" editorStyle="height: 320px"/>
+								<Editor v-model="post.content" editorStyle="height: 320px"/>
+							</div>
+						</div>
+
+						<!-- Publish -->
+						<div class="form-group row" v-if="this.fields.publish_from && this.fields.publish_to">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.table.publish') }}</label>
+
+							<div class="col-sm-3">
+								<Calendar class="p-column-filter"
+													icon="pi pi-calendar"
+													v-model="publish_from"
+													:dateFormat="`${calendarDateTimeFormat}`"
+													hourFormat="24"
+													:showTime="true"
+													:showSeconds="true"
+													:manualInput="false"/>
+							</div>
+							<label class="col-sm-1 control-label text-center">{{ $t('common.text.to') }}</label>
+							<div class="col-sm-3">
+								<Calendar class="p-column-filter"
+													icon="pi pi-calendar"
+													v-model="publish_to"
+													:dateFormat="`${calendarDateTimeFormat}`"
+													hourFormat="24"
+													:showTime="true"
+													:showSeconds="true"
+													:manualInput="false"/>
 							</div>
 						</div>
 					</form>
@@ -115,7 +142,7 @@
 				</div>
 			</div>
 		</div>
-		<pre>{{ item }}</pre>
+		<pre>{{ post }}</pre>
 		<pre>{{ title }}</pre>
 	</div>
 </template>
@@ -123,6 +150,7 @@
 <script>
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
+	import PostModel from '../../../models/post.model'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -130,6 +158,10 @@
 	import FileUpload from 'primevue/fileupload'
 	import Dropdown from 'primevue/dropdown'
 	import MultiSelect from 'primevue/multiselect'
+	import Calendar from 'primevue/calendar'
+	import moment from 'moment'
+	import { PostService } from '../../../api'
+	import AdminModel from '../../../models/admin.model'
 
 	export default {
 		name: 'PostForm',
@@ -140,13 +172,17 @@
 				require: true,
 				default: () => 'Form',
 			},
-			item: {
+			post: {
 				type: Object,
 				default: () => {},
 			},
 			categories: {
 				type: null,
 				default: () => {},
+			},
+			listName: {
+				type: String,
+				default: () => 'Dashboard',
 			},
 		},
 
@@ -157,10 +193,41 @@
 			FileUpload,
 			Dropdown,
 			MultiSelect,
+			Calendar,
 		},
 
 		data () {
-			return {}
+			return {
+				fields: PostModel.fields(),
+				dateTimeFormat: 'YYYY-MM-DD H:mm:ss',
+				calendarDateTimeFormat: 'yy-mm-dd',
+			}
+		},
+
+		computed: {
+			publish_from: {
+				get () {
+					return new Date(this.post.publish_from)
+				},
+
+				set (value) {
+					this.post.publish_from = moment(value).format(this.dateTimeFormat)
+
+					this.post.$save()
+				},
+			},
+
+			publish_to: {
+				get () {
+					return new Date(this.post.publish_to)
+				},
+
+				set (value) {
+					this.post.publish_to = moment(value).format(this.dateTimeFormat)
+
+					this.post.$save()
+				},
+			},
 		},
 
 		methods: {
@@ -174,8 +241,23 @@
 			/**
 			 * Submit Action
 			 */
-			onSubmit () {
-				console.log(this.item)
+			async onSubmit () {
+				const ID = this.post.$id
+
+				// save model
+				await this.post.$save()
+
+				console.log(ID)
+
+				if (ID) {
+					await PostService.update(ID).then(() => {
+						this.onRedirect()
+					})
+				} else {
+					await PostService.create(this.post.id).then(() => {
+						this.onRedirect()
+					})
+				}
 			},
 
 			/**
@@ -183,6 +265,14 @@
 			 */
 			onCancel () {
 				return this.$router.back()
+			},
+
+			/**
+			 * Redirect to list name
+			 * @return {Promise<Route>}
+			 */
+			onRedirect () {
+				return this.$router.push({ name: this.listName })
 			},
 		},
 	}

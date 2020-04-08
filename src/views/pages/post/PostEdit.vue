@@ -1,6 +1,7 @@
 <template>
 	<PostForm :title="$t('post.edit_post')"
-						:item="item"
+						:post.sync="post"
+						:listName="'PostList'"
 						:categories="categories"/>
 </template>
 
@@ -34,7 +35,7 @@
 		},
 
 		computed: {
-			item () {
+			post () {
 				const postID = this.$route.params.id
 
 				return PostModel.query().find(postID)

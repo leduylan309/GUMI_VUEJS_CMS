@@ -12,7 +12,7 @@ export default class AdminModel extends BaseModel {
       prefecture_id: this.uid(),
       username: this.string(null),
       first_name: this.string(null),
-      last_name: this.string(''),
+      last_name: this.string(null),
       dob: this.string(null).nullable(),
       gender: this.string(null),
       status: this.string('activated').nullable(),

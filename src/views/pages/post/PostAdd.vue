@@ -1,6 +1,7 @@
 <template>
 	<PostForm :title="$t('post.create_a_post')"
-						:item="item"
+						:post.sync="post"
+						:listName="'PostList'"
 						:categories="categories"/>
 </template>
 
@@ -9,6 +10,7 @@
 	import categories from '../../../dummy/post_categories'
 
 	import PostForm from '../../components/post/PostForm'
+	import PostModel from '../../../models/post.model'
 
 	export default {
 		name: 'PostAdd',
@@ -19,7 +21,7 @@
 
 		data () {
 			return {
-				item: {},
+				post: new PostModel(),
 				categories,
 			}
 		},

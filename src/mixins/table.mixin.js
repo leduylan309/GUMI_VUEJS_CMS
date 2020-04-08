@@ -41,6 +41,10 @@ export default {
       }
     },
 
+    /**
+     * setup paginator
+     * @return {*}
+     */
     paginator () {
       if (!this.pageModel) {
         return

@@ -33,7 +33,9 @@ export default {
       freedial: 'Free dial',
       phone: 'Phone',
       fax: 'Fax',
-      url: 'Homepage url'
+      url: 'Homepage url',
+      from: 'from',
+      to: 'to'
     },
 
     table: {
@@ -48,7 +50,9 @@ export default {
       status: 'Status',
       categories: 'Categories',
       created_at: 'Created At',
+      publish: 'Publish',
       description: 'Description',
+      content: 'Content',
       no_records_found: 'No records found.'
     }
   },

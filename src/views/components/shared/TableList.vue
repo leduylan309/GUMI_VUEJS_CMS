@@ -155,6 +155,7 @@
 				filters: {},
 				status: StatusCommon,
 				dateTimeFormat: 'yy/mm/dd',
+				fields: this.pageModel.fields()
 			}
 		},
 

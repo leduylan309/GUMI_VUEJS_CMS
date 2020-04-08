@@ -1,5 +1,6 @@
 import { IROOTQUERY } from '../shared/store/state'
 import PostModel from '../models/post.model'
+import AdminModel from '../models/admin.model'
 
 // define
 const PostBaseUrl = 'news'
@@ -16,10 +17,12 @@ const PostDataTransformer = ({ data, headers, status = null }) => {
     }
 
     PostModel.commit(state => {
+      // map paginator to stage
       if (data.meta) {
         state.paginator = { ...data.meta.pagination }
       }
 
+      // map params
       if (data.params) {
         state.queryParams = { ...data.params }
       }
@@ -62,5 +65,23 @@ export const PostService = {
       ...params,
       dataTransformer: PostDataTransformer
     })
+  },
+
+  async update (ID) {
+    const post = PostModel.query().find(ID)
+    const admin = AdminModel.query().first()
+
+    post.updated_by = admin.id
+
+    return await PostModel.api().put(`${ PostBaseUrl }/${ ID }`, post)
+  },
+
+  async create (ID) {
+    const post = PostModel.query().find(ID)
+    const admin = AdminModel.query().first()
+
+    post.created_by = post.updated_by = admin.id
+
+    return await PostModel.api().post(`${ PostBaseUrl }`, post)
   }
 }
