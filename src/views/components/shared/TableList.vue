@@ -23,7 +23,9 @@
 								>
 									<Column field="username"
 													:header="$t('common.table.username')"
-													:sortable="true">
+													:sortable="true"
+													v-if="this.fields.username"
+									>
 										<template #filter>
 											<input type="text"
 														 @keyup.enter="onSearch"
@@ -31,7 +33,35 @@
 														 class="form-control"/>
 										</template>
 									</Column>
-									<Column field="first_name" :header="$t('common.table.first_name')" :sortable="true">
+									<Column field="name"
+													:header="$t('common.table.name')"
+													:sortable="true"
+													v-if="this.fields.name"
+									>
+										<template #filter>
+											<input type="text"
+														 v-model="filters.name"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
+										</template>
+									</Column>
+									<Column field="email"
+													:header="$t('common.table.email')"
+													:sortable="true"
+													v-if="this.fields.email"
+									>
+										<template #filter>
+											<input type="text"
+														 v-model="filters.email"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
+										</template>
+									</Column>
+									<Column field="first_name"
+													:header="$t('common.table.first_name')"
+													:sortable="true"
+													v-if="this.fields.first_name"
+									>
 										<template #filter>
 											<input type="text"
 														 v-model="filters.first_name"
@@ -39,7 +69,11 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="last_name" :header="$t('common.table.last_name')" :sortable="true">
+									<Column field="last_name"
+													:header="$t('common.table.last_name')"
+													:sortable="true"
+													v-if="this.fields.last_name"
+									>
 										<template #filter>
 											<input type="text"
 														 v-model="filters.last_name"
@@ -47,7 +81,12 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="status" :header="$t('common.table.status')" :sortable="true" filterMatchMode="equals">
+									<Column field="status"
+													:header="$t('common.table.status')"
+													:sortable="true"
+													filterMatchMode="equals"
+													v-if="this.fields.status"
+									>
 										<template #body="slotProps">
 											<span :class="'badge badge-' + slotProps.data.status">{{slotProps.data.status}}</span>
 										</template>
@@ -67,7 +106,11 @@
 											</Dropdown>
 										</template>
 									</Column>
-									<Column field="created_at" :header="$t('common.table.created_at')" :sortable="true">
+									<Column field="created_at"
+													:header="$t('common.table.created_at')"
+													:sortable="true"
+													v-if="this.fields.created_at"
+									>
 										<template #filter>
 											<Calendar class="p-column-filter"
 																v-model="filters.created_at"
@@ -155,7 +198,7 @@
 				filters: {},
 				status: StatusCommon,
 				dateTimeFormat: 'yy/mm/dd',
-				fields: this.pageModel.fields()
+				fields: this.pageModel.fields(),
 			}
 		},
 
