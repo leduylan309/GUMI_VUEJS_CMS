@@ -14,7 +14,7 @@ const post = {
     title: 'Company',
 
     // for menu
-    icon: 'pi pi-file',
+    icon: 'pi pi-fw pi-file',
     label: 'Company'
   },
   children: [
@@ -26,7 +26,7 @@ const post = {
         title: 'Company',
 
         // for menu
-        icon: 'pi pi-file',
+        icon: 'pi pi-fw pi-file',
         label: 'Lists'
       },
       beforeEnter: multiguard([AuthGuard])
@@ -39,7 +39,7 @@ const post = {
         title: 'Create Company',
 
         // for menu
-        icon: 'pi pi-plus',
+        icon: 'pi pi-fw pi-plus',
         label: 'Create Company'
       },
       beforeEnter: multiguard([AuthGuard])

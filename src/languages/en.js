@@ -40,6 +40,7 @@ export default {
 
     table: {
       name: 'Name',
+      display_name: 'Display Name',
       first_name: 'First Name',
       last_name: 'Last Name',
       username: 'Username',
@@ -93,5 +94,12 @@ export default {
     title_list_page: 'List of Companies',
     create_a_company: 'Create an Company',
     edit_company: 'Edit Company'
+  },
+
+  // Category Page
+  category: {
+    title_list_page: 'List of categories',
+    create_a_category: 'Create a category',
+    edit_category: 'Edit post'
   }
 }
