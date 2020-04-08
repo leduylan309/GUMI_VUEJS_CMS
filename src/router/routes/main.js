@@ -9,6 +9,7 @@ import DashboardRoute from './dashboard'
 import AdminRoute from './admin'
 import UserRoute from './user'
 import PostRoute from './post'
+import CompanyRoute from './company'
 
 const main = {
   path: '',
@@ -23,7 +24,8 @@ const main = {
     DashboardRoute,
     AdminRoute,
     UserRoute,
-    PostRoute
+    PostRoute,
+    CompanyRoute
   ]
 }
 

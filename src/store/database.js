@@ -8,6 +8,7 @@ import PostModel from '../models/post.model'
 import MasterDataModel from '../models/masterdata.model'
 import DocumentModel from '../models/document.model'
 import ContactModel from '../models/contact.model'
+import CompanyModel from '../models/company.model'
 
 const database = new VuexORM.Database()
 
@@ -18,5 +19,6 @@ database.register(PostModel)
 database.register(MasterDataModel)
 database.register(DocumentModel)
 database.register(ContactModel)
+database.register(CompanyModel)
 
 export default database
