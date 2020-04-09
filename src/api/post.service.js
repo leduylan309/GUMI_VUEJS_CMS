@@ -89,7 +89,7 @@ export const PostService = {
    * @return {Promise<Response>}
    */
   async create (data = {}) {
-    data.created_by = post.updated_by = data.updated_by = AdminService.current_admin().id
+    data.created_by = data.updated_by = AdminService.current_admin().id
 
     return await PostModel.api().post(`${ PostBaseUrl }`, data)
   }

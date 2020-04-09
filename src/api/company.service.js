@@ -1,11 +1,12 @@
 import { IROOTQUERY } from '../shared/store/state'
 import CompanyModel from '../models/company.model'
+import { AdminService } from './admin.service'
 
 // define
 const baseUrl = 'companies'
 
 // define DataTransformer
-const CompanyDataTransformer = ({ data, headers, status = null }) => {
+const CompanyDataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
     // delete all data before add post
     CompanyModel.deleteAll()
@@ -33,7 +34,6 @@ const CompanyDataTransformer = ({ data, headers, status = null }) => {
 
 /**
  * Company Service
- * @type {{list(*=): Promise<Response>}}
  */
 export const CompanyService = {
   /**
@@ -51,5 +51,45 @@ export const CompanyService = {
       params,
       dataTransformer: CompanyDataTransformer
     })
+  },
+
+  /**
+   * get company
+   * @param ID
+   * @param queries
+   * @return {Promise<Response>}
+   */
+  async item (ID, queries = {}) {
+    const params = {
+      ...queries
+    }
+
+    return await CompanyModel.api().get(`${ baseUrl }/${ ID }`, {
+      ...params,
+      dataTransformer: CompanyDataTransformer
+    })
+  },
+
+  /**
+   * update company
+   * @param ID
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async update (ID, data = {}) {
+    data.updated_by = AdminService.current_admin().id
+
+    return await CompanyModel.api().put(`${ baseUrl }/${ ID }`, data)
+  },
+
+  /**
+   * create company
+   * @param data
+   * @return {Promise<*>}
+   */
+  async create (data = {}) {
+    data.created_by = data.updated_by = AdminService.current_admin().id
+
+    return await CompanyModel.api().api(`${ baseUrl }`, data)
   }
 }

@@ -111,7 +111,7 @@ export default {
   category: {
     title_list_page: 'List of categories',
     create_a_category: 'Create a category',
-    edit_category: 'Edit post'
+    edit_category: 'Edit category'
   },
 
   // Role Page

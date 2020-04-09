@@ -15,15 +15,17 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.title"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.title') }}</label>
+											v-if="fields.title">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.title') }}
+								</label>
 
 								<div class="col-sm-10">
 									<InputText class="form-control"
-														 v-model="post.title"
+														 v-model="item.title"
 														 :placeholder="$t('common.table.title')"
-														 :class="{'is-invalid': errors.length }"/>
+														 :class="{'is-invalid': errors.length }"
+									/>
 
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 								</div>
@@ -35,13 +37,14 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.slug"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.slug') }}</label>
+											v-if="fields.slug">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.slug') }}
+								</label>
 
 								<div class="col-sm-10">
 									<InputText class="form-control"
-														 v-model="post.slug"
+														 v-model="item.slug"
 														 :placeholder="$t('common.table.slug')"
 														 :class="{'is-invalid': errors.length }"
 									/>
@@ -56,16 +59,17 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.image"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.image') }}</label>
+											v-if="fields.image">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.image') }}
+								</label>
 
 								<div class="col-sm-10">
 									<FileUpload mode="basic"
-															v-model="post.image"
+															v-model="item.image"
 															@upload="onUploadImage"
 															accept="image/*"
-															:name="post.image"
+															:name="item.image"
 															:previewWidth="100"
 															:maxFileSize="1000000"
 															:chooseLabel="$t('common.text.select_image')"
@@ -82,12 +86,13 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
+											v-if="fields.categories && categories">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.categories') }}
+								</label>
 
 								<div class="col-sm-10">
-									<AutoComplete v-model="post.categories"
+									<AutoComplete v-model="item.categories"
 																class="form-control"
 																:multiple="true"
 																:suggestions="listCategories"
@@ -110,12 +115,13 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories && fields.categories"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
+											v-if="fields.categories && categories && fields.categories">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.categories') }}
+								</label>
 
 								<div class="col-sm-10">
-									<Dropdown v-model="post.category_id"
+									<Dropdown v-model="item.category_id"
 														class="form-control"
 														multiple="true"
 														optionLabel="name"
@@ -140,12 +146,13 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories && fields.categories"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
+											v-if="fields.categories && categories && fields.categories">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.categories') }}
+								</label>
 
 								<div class="col-sm-10">
-									<MultiSelect v-model="post.category_id"
+									<MultiSelect v-model="item.category_id"
 															 class="form-control"
 															 optionLabel="name"
 															 optionValue="id"
@@ -153,8 +160,7 @@
 															 :placeholder="$t('common.text.select_category')"
 															 :filter="true"
 															 :showClear="true"
-															 :class="{'is-invalid': errors.length }"
-									>
+															 :class="{'is-invalid': errors.length }">
 										<template #option="slotProps">
 											<span>{{slotProps.option.name}}</span>
 										</template>
@@ -170,14 +176,16 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.content"
-							>
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.content') }}</label>
+											v-if="fields.content">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.content') }}
+								</label>
 
 								<div class="col-sm-10">
-									<Editor v-model="post.content"
+									<Editor v-model="item.content"
 													editorStyle="height: 320px"
-													:class="{'is-invalid': errors.length }"/>
+													:class="{'is-invalid': errors.length }"
+									/>
 
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 								</div>
@@ -185,7 +193,9 @@
 
 							<!-- Publish -->
 							<div class="form-group row" v-if="fields.publish_from && fields.publish_to">
-								<label class="col-sm-2 control-label text-right">{{ $t('common.table.publish') }}</label>
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.publish') }}
+								</label>
 
 								<div class="col-sm-3">
 									<ValidationProvider
@@ -193,8 +203,7 @@
 													rules="required"
 													class="form-group row"
 													v-slot="{ errors }"
-													v-if="fields.publish_from"
-									>
+													v-if="fields.publish_from">
 										<Calendar class="p-column-filter"
 															icon="pi pi-calendar"
 															v-model="publish_from"
@@ -210,7 +219,8 @@
 									</ValidationProvider>
 								</div>
 
-								<label class="col-sm-1 control-label text-center">{{ $t('common.text.to') }}</label>
+								<label class="col-sm-1 control-label text-center">{{ $t('common.text.to') }}
+								</label>
 
 								<div class="col-sm-3">
 									<ValidationProvider
@@ -218,8 +228,7 @@
 													rules="required"
 													class="form-group row"
 													v-slot="{ errors }"
-													v-if="fields.publish_to"
-									>
+													v-if="fields.publish_to">
 										<Calendar class="p-column-filter"
 															icon="pi pi-calendar"
 															v-model="publish_to"
@@ -258,7 +267,7 @@
 				</form>
 			</ValidationObserver>
 		</div>
-		<pre>{{ post }}</pre>
+		<pre>{{ item }}</pre>
 		<pre>{{ title }}</pre>
 	</div>
 </template>
@@ -269,6 +278,7 @@
 	import PostModel from '../../../models/post.model'
 	import moment from 'moment'
 	import { CategoryService, PostService } from '../../../api'
+	import FormMixin from '../../../mixins/form.mixin'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -279,29 +289,17 @@
 	import Calendar from 'primevue/calendar'
 	import AutoComplete from 'primevue/autocomplete'
 	import { IROOTQUERY } from '../../../shared/store/state'
-	import category from '../../../router/routes/category'
 	import CategoryModel from '../../../models/category.model'
 
 	export default {
 		name: 'PostForm',
 
+		mixins: [FormMixin],
+
 		props: {
-			title: {
-				type: String,
-				require: true,
-				default: () => 'Form',
-			},
-			post: {
-				type: Object,
-				default: () => {},
-			},
 			categories: {
 				type: null,
 				default: () => {},
-			},
-			listName: {
-				type: String,
-				default: () => 'Dashboard',
 			},
 		},
 
@@ -318,6 +316,9 @@
 
 		data () {
 			return {
+				// MUST DEFINE //
+				FormService: PostService,
+
 				fields: PostModel.fields(),
 				dateTimeFormat: 'YYYY-MM-DD H:mm:ss',
 				calendarDateTimeFormat: 'yy-mm-dd',
@@ -327,21 +328,21 @@
 		computed: {
 			publish_from: {
 				get () {
-					return new Date(this.post.publish_from)
+					return new Date(this.item.publish_from)
 				},
 
 				set (value) {
-					this.post.publish_from = moment(value).format(this.dateTimeFormat)
+					this.item.publish_from = moment(value).format(this.dateTimeFormat)
 				},
 			},
 
 			publish_to: {
 				get () {
-					return new Date(this.post.publish_to)
+					return new Date(this.item.publish_to)
 				},
 
 				set (value) {
-					this.post.publish_to = moment(value).format(this.dateTimeFormat)
+					this.item.publish_to = moment(value).format(this.dateTimeFormat)
 				},
 			},
 
@@ -362,48 +363,6 @@
 			 */
 			onUploadImage () {
 
-			},
-
-			/**
-			 * Submit Action
-			 */
-			async onSubmit () {
-				const ID = this.$route.params.id
-
-				if (ID) {
-					await PostService.update(ID, this.post).then(() => {
-						this.onSuccess()
-					})
-				} else {
-					await PostService.create(this.post).then(() => {
-						this.onSuccess()
-					})
-				}
-			},
-
-			/**
-			 * back to previous page
-			 */
-			onCancel () {
-				return this.$router.back()
-			},
-
-			/**
-			 * Redirect to list name
-			 * @return {Promise<Route>}
-			 */
-			onRedirect () {
-				return this.$router.push({ name: this.listName })
-			},
-
-			/**
-			 * Success create & update
-			 */
-			onSuccess () {
-				// save model
-				this.post.$save().then(() => {
-					this.onRedirect()
-				})
 			},
 
 			/**

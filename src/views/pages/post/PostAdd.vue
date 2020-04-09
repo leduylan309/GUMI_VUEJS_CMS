@@ -1,6 +1,6 @@
 <template>
 	<PostForm :title="$t('post.create_a_post')"
-						:post.sync="post"
+						:item.sync="item"
 						:listName="'PostList'"
 						:categories="categories"/>
 </template>
@@ -20,7 +20,7 @@
 
 		data () {
 			return {
-				post: new PostModel(),
+				item: new PostModel(),
 			}
 		},
 

@@ -1,6 +1,6 @@
 <template>
 	<CategoryForm :title="$t('category.create_a_category')"
-						:category.sync="category"
+						:item.sync="item"
 						:listName="'CategoryList'"/>
 </template>
 
@@ -17,7 +17,7 @@
 
 		data () {
 			return {
-				category: new CategoryModel(),
+				item: new CategoryModel(),
 			}
 		},
 

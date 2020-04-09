@@ -1,8 +1,7 @@
 <template>
 	<CategoryForm :title="$t('category.edit_category')"
-								:category.sync="category"
-								:listName="'CategoryList'"
-								:categories="categories"/>
+								:item.sync="item"
+								:listName="'CategoryList'"/>
 </template>
 
 <script lang="js">
@@ -33,7 +32,7 @@
 		},
 
 		computed: {
-			category () {
+			item () {
 				const categoryID = this.$route.params.id
 
 				return CategoryModel.query().find(categoryID)
