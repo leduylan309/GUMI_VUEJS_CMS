@@ -6,6 +6,14 @@ const AdminBaseUrl = ''
 
 export const AdminService = {
   /**
+   * get current admin
+   * @return {Item<InstanceOf<AdminModel>>}
+   */
+  current_admin () {
+    return AdminModel.query().first()
+  },
+
+  /**
    * call Api to get profile
    * @return {Promise<Response>}
    */

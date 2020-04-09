@@ -22,7 +22,8 @@
 							<label class="col-sm-2 control-label text-right">{{ $t('common.table.display_name') }}</label>
 
 							<div class="col-sm-10">
-								<InputText class="form-control" v-model="category.display_name" :placeholder="$t('common.table.display_name')"/>
+								<InputText class="form-control" v-model="category.display_name"
+													 :placeholder="$t('common.table.display_name')"/>
 							</div>
 						</div>
 
@@ -119,6 +120,7 @@
 	import Calendar from 'primevue/calendar'
 	import moment from 'moment'
 	import { CategoryService } from '../../../api'
+	import category from '../../../router/routes/category'
 
 	export default {
 		name: 'CategoryForm',
@@ -197,16 +199,13 @@
 			async onSubmit () {
 				const ID = this.$route.params.id
 
-				// save model
-				await this.category.$save()
-
 				if (ID) {
-					await CategoryService.update(ID).then(() => {
-						this.onRedirect()
+					await CategoryService.update(ID, this.category).then(() => {
+						this.onSuccess()
 					})
 				} else {
-					await CategoryService.create(this.category.id).then(() => {
-						this.onRedirect()
+					await CategoryService.create(this.category).then(() => {
+						this.onSuccess()
 					})
 				}
 			},
@@ -224,6 +223,16 @@
 			 */
 			onRedirect () {
 				return this.$router.push({ name: this.listName })
+			},
+
+			/**
+			 * Success create & update
+			 */
+			onSuccess () {
+				// save model
+				this.category.$save().then(() => {
+					this.onRedirect()
+				})
 			},
 		},
 	}

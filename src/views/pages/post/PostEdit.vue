@@ -31,12 +31,10 @@
 
 			// call api
 			if (!post) {
-				return PostService.item(postID).then(() => {
-					next()
-				})
+				await PostService.item(postID)
 			}
 
-			return next()
+			next()
 		},
 
 		computed: {
