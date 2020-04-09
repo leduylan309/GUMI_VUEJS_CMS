@@ -1,12 +1,12 @@
 import { IROOTQUERY } from '../shared/store/state'
 import CategoryModel from '../models/category.model'
-import AdminModel from '../models/admin.model'
+import { AdminService } from './admin.service'
 
 // define
 const CategoryBaseUrl = 'categories'
 
 // define DataTransformer
-const CategoryDataTransformer = ({ data, headers, status = null }) => {
+const CategoryDataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
     // delete all data before add category
     CategoryModel.deleteAll()
@@ -67,18 +67,26 @@ export const CategoryService = {
     })
   },
 
-  async update (ID) {
-    const category = CategoryModel.query().find(ID)
-    const admin = AdminModel.query().first()
+  /**
+   * update category
+   * @param ID
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async update (ID, data = {}) {
+    data.updated_by = AdminService.current_admin().id
 
-    category.updated_by = admin.id
-
-    return await CategoryModel.api().put(`${ CategoryBaseUrl }/${ ID }`, category)
+    return await CategoryModel.api().put(`${ CategoryBaseUrl }/${ ID }`, data)
   },
 
-  async create (ID) {
-    const category = CategoryModel.query().find(ID)
+  /**
+   * create category
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async create (data = {}) {
+    data.created_by = AdminService.current_admin().id
 
-    return await CategoryModel.api().post(`${ CategoryBaseUrl }`, category)
+    return await CategoryModel.api().post(`${ CategoryBaseUrl }`, data)
   }
 }

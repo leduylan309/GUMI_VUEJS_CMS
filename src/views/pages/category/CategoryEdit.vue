@@ -21,12 +21,15 @@
 			return {}
 		},
 
-		beforeRouteEnter (to, from, next) {
+		async beforeRouteEnter (to, from, next) {
 			const categoryID = to.params.id
+			const category = await CategoryModel.query().find(categoryID)
 
-			CategoryService.item(categoryID).then(() => {
-				next()
-			})
+			if (!category) {
+				await CategoryService.item(categoryID)
+			}
+
+			next()
 		},
 
 		computed: {

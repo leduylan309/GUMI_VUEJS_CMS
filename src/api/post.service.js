@@ -1,12 +1,12 @@
 import { IROOTQUERY } from '../shared/store/state'
 import PostModel from '../models/post.model'
-import AdminModel from '../models/admin.model'
+import { AdminService } from './admin.service'
 
 // define
 const PostBaseUrl = 'news'
 
 // define DataTransformer
-const PostDataTransformer = ({ data, headers, status = null }) => {
+const PostDataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
     // delete all data before add post
     PostModel.deleteAll()
@@ -71,18 +71,25 @@ export const PostService = {
     })
   },
 
+  /**
+   * update post
+   * @param ID
+   * @param data
+   * @return {Promise<Response>}
+   */
   async update (ID, data = {}) {
-    const admin = AdminModel.query().first()
-
-    data.updated_by = admin.id
+    data.updated_by = AdminService.current_admin().id
 
     return await PostModel.api().put(`${ PostBaseUrl }/${ ID }`, data)
   },
 
+  /**
+   * create post
+   * @param data
+   * @return {Promise<Response>}
+   */
   async create (data = {}) {
-    const admin = AdminModel.query().first()
-
-    data.created_by = post.updated_by = admin.id
+    data.created_by = post.updated_by = data.updated_by = AdminService.current_admin().id
 
     return await PostModel.api().post(`${ PostBaseUrl }`, data)
   }
