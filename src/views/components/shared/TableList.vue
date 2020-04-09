@@ -22,103 +22,21 @@
 												@sort="onSort"
 								>
 
-									<!-- Username Column -->
-									<Column field="username"
-													:header="$t('common.table.username')"
-													:sortable="true"
-													v-if="this.fields.username"
-									>
-										<template #filter>
-											<input type="text"
-														 @keyup.enter="onSearch"
-														 v-model="filters.username"
-														 class="form-control"/>
-										</template>
-									</Column>
-
-									<!-- Name Column -->
-									<Column field="name"
-													:header="$t('common.table.name')"
-													:sortable="true"
-													v-if="this.fields.name"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.name"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
-
-									<!-- Email Column -->
-									<Column field="email"
-													:header="$t('common.table.email')"
-													:sortable="true"
-													v-if="this.fields.email"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.email"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
-
-									<!-- First Name Column -->
-									<Column field="first_name"
-													:header="$t('common.table.first_name')"
-													:sortable="true"
-													v-if="this.fields.first_name"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.first_name"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
-
-									<!-- Last Name Column -->
-									<Column field="last_name"
-													:header="$t('common.table.last_name')"
-													:sortable="true"
-													v-if="this.fields.last_name"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.last_name"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
-
-									<!-- Last Name Column -->
-									<Column field="code"
-													:header="$t('common.table.code')"
-													:sortable="true"
-													v-if="this.fields.code"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.code"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
-
-									<!-- Last Name Column -->
-									<Column field="prefecture_id"
-													:header="$t('common.table.prefecture')"
-													:sortable="true"
-													v-if="this.fields.prefecture_id"
-									>
-										<template #filter>
-											<input type="text"
-														 v-model="filters.prefecture_id"
-														 class="form-control"
-														 @keyup.enter="onSearch"/>
-										</template>
-									</Column>
+									<!-- Render Dynamic Columns  -->
+									<template v-for="(column, index) in this.columns">
+										<Column :key="index"
+														:field="column"
+														:header="$t(`common.table.${column}`)"
+														:sortable="true"
+										>
+											<template #filter>
+												<input type="text"
+															 @keyup.enter="onSearch"
+															 v-model="filters[column]"
+															 class="form-control"/>
+											</template>
+										</Column>
+									</template>
 
 									<!-- Status Column -->
 									<Column field="status"
@@ -241,6 +159,7 @@
 				status: StatusCommon,
 				dateTimeFormat: 'yy/mm/dd',
 				fields: this.pageModel.fields(),
+				columns: this.pageModel.columns,
 			}
 		},
 

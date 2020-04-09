@@ -24,6 +24,16 @@ export default class UserModel extends BaseModel {
   }
 
   /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = [
+    'first_name',
+    'last_name',
+    'username'
+  ]
+
+  /**
    * Get full name of the user.
    */
   get full_name () {

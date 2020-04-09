@@ -24,6 +24,16 @@ export default class AdminModel extends BaseModel {
     }
   }
 
+  /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = [
+    'first_name',
+    'last_name',
+    'username'
+  ]
+
   static state () {
     return {
       paginator: {},

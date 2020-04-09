@@ -195,7 +195,7 @@
 			 * Submit Action
 			 */
 			async onSubmit () {
-				const ID = this.category.$id
+				const ID = this.$route.params.id
 
 				// save model
 				await this.category.$save()

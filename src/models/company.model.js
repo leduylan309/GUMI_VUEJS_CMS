@@ -19,6 +19,17 @@ export default class CompanyModel extends BaseModel {
     }
   }
 
+  /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = [
+    'name',
+    'code',
+    'prefecture_id',
+    'created_by',
+  ]
+
   static state () {
     return {
       paginator: {},

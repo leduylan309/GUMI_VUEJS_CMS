@@ -24,6 +24,14 @@ export default class PostModel extends BaseModel {
     }
   }
 
+  /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = [
+    'title',
+  ]
+
   static state () {
     return {
       paginator: {},

@@ -183,6 +183,8 @@
        * Submit Action
        */
       onSubmit () {
+				const ID = this.$route.params.id
+
         console.log(this.item)
       },
 

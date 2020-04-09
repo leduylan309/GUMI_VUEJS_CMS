@@ -39,6 +39,7 @@ export default {
     },
 
     table: {
+      id: 'ID',
       name: 'Name',
       display_name: 'Display Name',
       first_name: 'First Name',
@@ -50,9 +51,12 @@ export default {
       image: 'Image',
       code: 'Code',
       prefecture: 'Prefecture',
+      prefecture_id: 'Prefecture',
       status: 'Status',
       categories: 'Categories',
       created_at: 'Created At',
+      created_by: 'Created By',
+      updated_at: 'Updated At',
       publish: 'Publish',
       publish_from: 'publish_from',
       publish_to: 'publish_to',

@@ -15,6 +15,15 @@ export default class CategoryModel extends BaseModel {
     }
   }
 
+  /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = [
+    'name',
+    'display_name',
+  ]
+
   static state () {
     return {
       paginator: {},

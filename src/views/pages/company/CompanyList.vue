@@ -6,38 +6,18 @@
 </template>
 
 <script lang="js">
-	// Helper
-	import { convertQueryFilterToString, convertQueryObjectFilter } from '../../../utils/filter'
-	import { IROOTQUERY } from '../../../shared/store/state'
-
 	// Component
 	import TableList from '../../components/shared/TableList'
 	import { CompanyService } from '../../../api'
 	import CompanyModel from '../../../models/company.model'
+	import TableMixin from '../../../mixins/table.mixin'
 	
 	export default {
 		name: 'CompanyList',
 
+		mixins: [TableMixin],
+
 		components: { TableList },
-
-		beforeRouteEnter (to, from, next) {
-			next((vm) => {
-				// map with route current url
-				const queries = convertQueryObjectFilter(to.query, IROOTQUERY)
-
-				Promise.all([
-					vm.pageService.list(queries),
-				]).then(() => {
-					const defaultQuery = {
-						...convertQueryFilterToString(queries),
-						...queries.filters,
-					}
-
-					vm.$router.replace({ query: defaultQuery }).catch(() => {})
-					vm.filters = queries.filters
-				})
-			})
-		},
 
 		data () {
 			return {
