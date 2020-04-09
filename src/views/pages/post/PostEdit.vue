@@ -6,12 +6,10 @@
 </template>
 
 <script lang="js">
-	// Dummy
-	import categories from '../../../dummy/post_categories'
-
 	import PostForm from '../../components/post/PostForm'
-	import { PostService } from '../../../api'
+	import { CategoryService, PostService } from '../../../api'
 	import PostModel from '../../../models/post.model'
+	import CategoryModel from '../../../models/category.model'
 
 	export default {
 		name: 'PostEdit',
@@ -21,15 +19,16 @@
 		},
 
 		data () {
-			return {
-				categories,
-			}
+			return {}
 		},
 
 		beforeRouteEnter (to, from, next) {
 			const postID = to.params.id
 
-			PostService.item(postID).then(() => {
+			return Promise.all([
+				PostService.item(postID),
+				CategoryService.list(),
+			]).then(() => {
 				next()
 			})
 		},
@@ -39,6 +38,10 @@
 				const postID = this.$route.params.id
 
 				return PostModel.query().find(postID)
+			},
+
+			categories () {
+				return CategoryModel.all()
 			},
 		},
 	}

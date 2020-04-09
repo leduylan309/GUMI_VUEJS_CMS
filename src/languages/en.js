@@ -52,6 +52,8 @@ export default {
       categories: 'Categories',
       created_at: 'Created At',
       publish: 'Publish',
+      publish_from: 'publish_from',
+      publish_to: 'publish_to',
       description: 'Description',
       content: 'Content',
       no_records_found: 'No records found.'

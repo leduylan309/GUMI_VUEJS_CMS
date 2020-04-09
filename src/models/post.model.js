@@ -2,6 +2,7 @@ import BaseModel from './base.model'
 import { IROOTQUERY } from '../shared/store/state'
 import AdminModel from './admin.model'
 import moment from 'moment'
+import CategoryModel from './category.model'
 
 export default class PostModel extends BaseModel {
   static entity = 'post'
@@ -18,7 +19,8 @@ export default class PostModel extends BaseModel {
       updated_at: this.string(null).nullable(),
       created_by: this.uid().nullable(),
       updated_by: this.uid().nullable(),
-      creator: this.belongsTo(AdminModel, 'created_by')
+      creator: this.belongsTo(AdminModel, 'created_by'),
+      categories: this.morphMany(CategoryModel, 'model_id', 'model_type')
     }
   }
 

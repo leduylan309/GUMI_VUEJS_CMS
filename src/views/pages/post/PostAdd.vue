@@ -6,11 +6,10 @@
 </template>
 
 <script lang="js">
-	// Dummy
-	import categories from '../../../dummy/post_categories'
-
 	import PostForm from '../../components/post/PostForm'
 	import PostModel from '../../../models/post.model'
+	import { CategoryService, PostService } from '../../../api'
+	import CategoryModel from '../../../models/category.model'
 
 	export default {
 		name: 'PostAdd',
@@ -22,12 +21,21 @@
 		data () {
 			return {
 				post: new PostModel(),
-				categories,
 			}
 		},
 
 		beforeRouteEnter (to, from, next) {
-			next()
+			return Promise.all([
+				CategoryService.list(),
+			]).then(() => {
+				next()
+			})
+		},
+
+		computed: {
+			categories () {
+				return CategoryModel.all()
+			},
 		},
 	}
 </script>

@@ -29,7 +29,6 @@
 								</div>
 							</ValidationProvider>
 
-
 							<!-- SLug - Url -->
 							<ValidationProvider
 											:name="$t('common.table.slug')"
@@ -77,6 +76,34 @@
 								</div>
 							</ValidationProvider>
 
+							<!-- AutoComplete Categories -->
+							<ValidationProvider
+											:name="$t('common.table.categories')"
+											rules="required"
+											class="form-group row"
+											v-slot="{ errors }"
+											v-if="fields.categories && categories && fields.categories"
+							>
+								<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
+
+								<div class="col-sm-10">
+									<AutoComplete v-model="post.categories"
+																class="form-control"
+																:multiple="true"
+																:suggestions="listCategories"
+																:placeholder="$t('common.text.select_category')"
+																:class="{'is-invalid': errors.length }"
+																field="name"
+																@complete="onFilterForAutoComplete($event)">
+										<template #option="slotProps">
+											<span>{{slotProps.option.title}}</span>
+										</template>
+									</AutoComplete>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
 							<!-- Single Categories -->
 							<ValidationProvider
 											:name="$t('common.table.categories')"
@@ -97,8 +124,7 @@
 														:placeholder="$t('common.text.select_category')"
 														:filter="true"
 														:showClear="true"
-														:class="{'is-invalid': errors.length }"
-									>
+														:class="{'is-invalid': errors.length }">
 										<template #option="slotProps">
 											<span>{{slotProps.option.title}}</span>
 										</template>
@@ -241,6 +267,8 @@
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
 	import PostModel from '../../../models/post.model'
+	import moment from 'moment'
+	import { CategoryService, PostService } from '../../../api'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -249,8 +277,10 @@
 	import Dropdown from 'primevue/dropdown'
 	import MultiSelect from 'primevue/multiselect'
 	import Calendar from 'primevue/calendar'
-	import moment from 'moment'
-	import { PostService } from '../../../api'
+	import AutoComplete from 'primevue/autocomplete'
+	import { IROOTQUERY } from '../../../shared/store/state'
+	import category from '../../../router/routes/category'
+	import CategoryModel from '../../../models/category.model'
 
 	export default {
 		name: 'PostForm',
@@ -283,6 +313,7 @@
 			Dropdown,
 			MultiSelect,
 			Calendar,
+			AutoComplete,
 		},
 
 		data () {
@@ -315,6 +346,16 @@
 					this.post.publish_to = moment(value).format(this.dateTimeFormat)
 
 					this.post.$save()
+				},
+			},
+
+			listCategories: {
+				get () {
+					return this.categories
+				},
+
+				set (value) {
+					return value
 				},
 			},
 		},
@@ -360,6 +401,25 @@
 			 */
 			onRedirect () {
 				return this.$router.push({ name: this.listName })
+			},
+
+			/**
+			 * Call Api Service for AutoComplete
+			 * @param event
+			 */
+			async onFilterForAutoComplete (event) {
+				const queries = {
+					...IROOTQUERY,
+					filters: {
+						name: event.query,
+					},
+				}
+
+				// call api to get data
+				await CategoryService.list(queries)
+
+				// map to list
+				this.listCategories = await CategoryModel.all()
 			},
 		},
 	}

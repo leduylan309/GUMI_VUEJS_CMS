@@ -39,4 +39,22 @@
       display: block;
     }
   }
+
+  &.p-autocomplete {
+    padding: 0;
+    height: auto;
+    border: 1px solid $gray-400;
+    display: block;
+
+    &.p-autocomplete-multiple {
+      .p-autocomplete-multiple-container {
+        width: 100%;
+        border: none;
+
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
 }
