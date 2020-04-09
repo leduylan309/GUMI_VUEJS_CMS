@@ -21,7 +21,11 @@
 												:autoLayout="true"
 												@sort="onSort"
 								>
-									<Column field="title" :header="$t('common.table.name')" :sortable="true">
+									<Column field="title"
+													:header="$t('common.table.title')"
+													:sortable="true"
+													v-if="this.fields.title"
+									>
 										<template #filter>
 											<input type="text"
 														 v-model="filters.title"
@@ -29,12 +33,21 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
-									<Column field="image" :header="$t('common.table.image')" :sortable="true">
+									<Column field="image"
+													:header="$t('common.table.image')"
+													:sortable="true"
+													v-if="this.fields.image"
+									>
 										<template #body="slotProps">
 											<img :src="slotProps.data.image" class="img-thumbnail img-size-64">
 										</template>
 									</Column>
-									<Column field="status" :header="$t('common.table.status')" :sortable="true" filterMatchMode="equals">
+									<Column field="status"
+													:header="$t('common.table.status')"
+													:sortable="true"
+													filterMatchMode="equals"
+													v-if="this.fields.status"
+									>
 										<template #body="slotProps">
 											<span :class="'badge badge-' + slotProps.data.status">{{slotProps.data.status}}</span>
 										</template>
@@ -54,7 +67,11 @@
 											</Dropdown>
 										</template>
 									</Column>
-									<Column field="created_at" :header="$t('common.table.created_at')" :sortable="true">
+									<Column field="created_at"
+													:header="$t('common.table.created_at')"
+													:sortable="true"
+													v-if="this.fields.created_at"
+									>
 										<template #filter>
 											<Calendar class="p-column-filter"
 																v-model="filters.created_at"
@@ -149,6 +166,7 @@
 				loading: false,
 				filters: {},
 				status: StatusCommon,
+				fields: PostModel.fields(),
 
 				// Page Define
 				pageName: 'post',
