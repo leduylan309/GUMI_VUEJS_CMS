@@ -71,21 +71,19 @@ export const PostService = {
     })
   },
 
-  async update (ID) {
-    const post = PostModel.query().find(ID)
+  async update (ID, data = {}) {
     const admin = AdminModel.query().first()
 
-    post.updated_by = admin.id
+    data.updated_by = admin.id
 
-    return await PostModel.api().put(`${ PostBaseUrl }/${ ID }`, post)
+    return await PostModel.api().put(`${ PostBaseUrl }/${ ID }`, data)
   },
 
-  async create (ID) {
-    const post = PostModel.query().find(ID)
+  async create (data = {}) {
     const admin = AdminModel.query().first()
 
-    post.created_by = post.updated_by = admin.id
+    data.created_by = post.updated_by = admin.id
 
-    return await PostModel.api().post(`${ PostBaseUrl }`, post)
+    return await PostModel.api().post(`${ PostBaseUrl }`, data)
   }
 }

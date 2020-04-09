@@ -22,15 +22,21 @@
 			return {}
 		},
 
-		beforeRouteEnter (to, from, next) {
+		async beforeRouteEnter (to, from, next) {
 			const postID = to.params.id
+			const post = await PostModel.query().find(postID)
 
-			return Promise.all([
-				PostService.item(postID),
-				CategoryService.list(),
-			]).then(() => {
-				next()
-			})
+			// call to get categories
+			await CategoryService.list()
+
+			// call api
+			if (!post) {
+				return PostService.item(postID).then(() => {
+					next()
+				})
+			}
+
+			return next()
 		},
 
 		computed: {

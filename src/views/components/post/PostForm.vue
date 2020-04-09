@@ -82,7 +82,7 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories && fields.categories"
+											v-if="fields.categories && categories"
 							>
 								<label class="col-sm-2 control-label text-right">{{ $t('common.table.categories') }}</label>
 
@@ -118,7 +118,7 @@
 									<Dropdown v-model="post.category_id"
 														class="form-control"
 														multiple="true"
-														optionLabel="title"
+														optionLabel="name"
 														optionValue="id"
 														:options="categories"
 														:placeholder="$t('common.text.select_category')"
@@ -126,7 +126,7 @@
 														:showClear="true"
 														:class="{'is-invalid': errors.length }">
 										<template #option="slotProps">
-											<span>{{slotProps.option.title}}</span>
+											<span>{{slotProps.option.name}}</span>
 										</template>
 									</Dropdown>
 
@@ -147,7 +147,7 @@
 								<div class="col-sm-10">
 									<MultiSelect v-model="post.category_id"
 															 class="form-control"
-															 optionLabel="title"
+															 optionLabel="name"
 															 optionValue="id"
 															 :options="categories"
 															 :placeholder="$t('common.text.select_category')"
@@ -156,7 +156,7 @@
 															 :class="{'is-invalid': errors.length }"
 									>
 										<template #option="slotProps">
-											<span>{{slotProps.option.title}}</span>
+											<span>{{slotProps.option.name}}</span>
 										</template>
 									</MultiSelect>
 
@@ -332,8 +332,6 @@
 
 				set (value) {
 					this.post.publish_from = moment(value).format(this.dateTimeFormat)
-
-					this.post.$save()
 				},
 			},
 
@@ -344,8 +342,6 @@
 
 				set (value) {
 					this.post.publish_to = moment(value).format(this.dateTimeFormat)
-
-					this.post.$save()
 				},
 			},
 
@@ -374,16 +370,13 @@
 			async onSubmit () {
 				const ID = this.$route.params.id
 
-				// save model
-				await this.post.$save()
-
 				if (ID) {
-					await PostService.update(ID).then(() => {
-						this.onRedirect()
+					await PostService.update(ID, this.post).then(() => {
+						this.onSuccess()
 					})
 				} else {
-					await PostService.create(this.post.id).then(() => {
-						this.onRedirect()
+					await PostService.create(this.post).then(() => {
+						this.onSuccess()
 					})
 				}
 			},
@@ -401,6 +394,16 @@
 			 */
 			onRedirect () {
 				return this.$router.push({ name: this.listName })
+			},
+
+			/**
+			 * Success create & update
+			 */
+			onSuccess () {
+				// save model
+				this.post.$save().then(() => {
+					this.onRedirect()
+				})
 			},
 
 			/**
