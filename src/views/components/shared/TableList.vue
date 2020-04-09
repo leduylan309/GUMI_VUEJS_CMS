@@ -21,6 +21,8 @@
 												:autoLayout="true"
 												@sort="onSort"
 								>
+
+									<!-- Username Column -->
 									<Column field="username"
 													:header="$t('common.table.username')"
 													:sortable="true"
@@ -33,6 +35,8 @@
 														 class="form-control"/>
 										</template>
 									</Column>
+
+									<!-- Name Column -->
 									<Column field="name"
 													:header="$t('common.table.name')"
 													:sortable="true"
@@ -45,6 +49,8 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
+
+									<!-- Email Column -->
 									<Column field="email"
 													:header="$t('common.table.email')"
 													:sortable="true"
@@ -57,6 +63,8 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
+
+									<!-- First Name Column -->
 									<Column field="first_name"
 													:header="$t('common.table.first_name')"
 													:sortable="true"
@@ -69,6 +77,8 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
+
+									<!-- Last Name Column -->
 									<Column field="last_name"
 													:header="$t('common.table.last_name')"
 													:sortable="true"
@@ -81,6 +91,36 @@
 														 @keyup.enter="onSearch"/>
 										</template>
 									</Column>
+
+									<!-- Last Name Column -->
+									<Column field="code"
+													:header="$t('common.table.code')"
+													:sortable="true"
+													v-if="this.fields.code"
+									>
+										<template #filter>
+											<input type="text"
+														 v-model="filters.code"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
+										</template>
+									</Column>
+
+									<!-- Last Name Column -->
+									<Column field="prefecture_id"
+													:header="$t('common.table.prefecture')"
+													:sortable="true"
+													v-if="this.fields.prefecture_id"
+									>
+										<template #filter>
+											<input type="text"
+														 v-model="filters.prefecture_id"
+														 class="form-control"
+														 @keyup.enter="onSearch"/>
+										</template>
+									</Column>
+
+									<!-- Status Column -->
 									<Column field="status"
 													:header="$t('common.table.status')"
 													:sortable="true"
@@ -106,6 +146,8 @@
 											</Dropdown>
 										</template>
 									</Column>
+
+									<!-- Created At Column -->
 									<Column field="created_at"
 													:header="$t('common.table.created_at')"
 													:sortable="true"
@@ -121,6 +163,8 @@
 																:manualInput="false"/>
 										</template>
 									</Column>
+
+									<!-- Action Column -->
 									<Column>
 										<template #body="slotProps">
 											<div class="btn-group btn-group-toggle">
@@ -149,7 +193,7 @@
 							</div>
 
 							<div class="card-footer">
-								<Paginator :rows="paginator.perPage"
+								<Paginator :rows="paginator.per_page"
 													 :totalRecords="paginator.total"
 													 :paginator="true"
 													 :first.sync="page"
@@ -163,8 +207,6 @@
 				</div>
 			</div>
 		</div>
-
-		<pre>{{ filters }}</pre>
 	</div>
 </template>
 

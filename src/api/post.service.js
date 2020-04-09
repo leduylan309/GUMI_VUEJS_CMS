@@ -32,6 +32,10 @@ const PostDataTransformer = ({ data, headers, status = null }) => {
   }
 }
 
+/**
+ * Post Service
+ * @type {{item(*, *=): Promise<Response>, update(*=): Promise<*>, create(*=): Promise<*>, list(*=): Promise<Response>}}
+ */
 export const PostService = {
   /**
    * load list

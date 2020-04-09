@@ -7,10 +7,15 @@ export default class CompanyModel extends BaseModel {
   static fields () {
     return {
       id: this.uid(),
-      email: this.string(''),
-      name: this.string(''),
-      status: this.string(''),
-      created_at: this.string('')
+      name: this.string(null),
+      code: this.string(null),
+      prefecture_id: this.string(null),
+      created_by: this.uid(),
+      updated_by: this.uid(),
+      deleted_by: this.uid(),
+      created_at: this.string(null),
+      updated_at: this.string(null),
+      deleted_at: this.string(null)
     }
   }
 

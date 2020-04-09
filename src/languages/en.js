@@ -48,6 +48,8 @@ export default {
       slug: 'Slug',
       email: 'Email',
       image: 'Image',
+      code: 'Code',
+      prefecture: 'Prefecture',
       status: 'Status',
       categories: 'Categories',
       created_at: 'Created At',
