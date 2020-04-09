@@ -11,6 +11,7 @@ import UserRoute from './user'
 import PostRoute from './post'
 import CompanyRoute from './company'
 import CategoryRoute from './category'
+import RoleRoute from './role'
 
 const main = {
   path: '',
@@ -27,7 +28,8 @@ const main = {
     UserRoute,
     PostRoute,
     CompanyRoute,
-    CategoryRoute
+    CategoryRoute,
+    RoleRoute
   ]
 }
 

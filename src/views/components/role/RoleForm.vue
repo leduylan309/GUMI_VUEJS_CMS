@@ -8,7 +8,7 @@
       <div class="card">
         <div class="card-body">
           <form class="form-horizontal">
-            <!-- Code -->
+            <!-- Name -->
             <div class="form-group row">
               <label class="col-sm-2 control-label text-right">{{ $t('common.text.name') }}</label>
 
@@ -17,48 +17,35 @@
               </div>
             </div>
 
-            <!-- Email -->
+            <!-- Display name -->
             <div class="form-group row">
-              <label class="col-sm-2 control-label text-right">{{ $t('common.text.email') }}</label>
+              <label class="col-sm-2 control-label text-right">{{ $t('common.text.display_name') }}</label>
 
               <div class="col-sm-10">
-                <InputText class="form-control" v-model="item.name" :placeholder="$t('common.text.email')"/>
+                <InputText class="form-control" v-model="item.display_name" :placeholder="$t('common.text.display_name')"/>
               </div>
             </div>
 
-            <!-- Password -->
+						<!-- Description -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">{{ $t('common.text.description') }}</label>
+
+							<div class="col-sm-10">
+								<InputText class="form-control" v-model="item.description" :placeholder="$t('common.text.description')"/>
+							</div>
+						</div>
+
+            <!-- Permission -->
             <div class="form-group row">
-              <label class="col-sm-2 control-label text-right">{{ $t('common.text.password') }}</label>
+              <label class="col-sm-2 control-label text-right">{{ $t('common.text.permission') }}</label>
 
               <div class="col-sm-10">
-                <Password class="form-control" :feedback="false" v-model="item.password"/>
-              </div>
-            </div>
-
-            <!-- Confirm password -->
-            <div class="form-group row">
-              <label class="col-sm-2 control-label text-right">{{ $t('common.text.confirm_password') }}</label>
-
-              <div class="col-sm-10">
-                <Password class="form-control" :feedback="false" v-model="item.confirm_password"/>
-              </div>
-            </div>
-
-            <!-- Role -->
-            <div class="form-group row">
-              <label class="col-sm-2 control-label text-right">{{ $t('common.text.role') }}</label>
-
-              <div class="col-sm-10">
-                <Dropdown class="form-control" :options="roles" v-model="item.role"/>
-              </div>
-            </div>
-
-            <!-- Status -->
-            <div class="form-group row">
-              <label class="col-sm-2 control-label text-right">{{ $t('common.text.activate') }}</label>
-
-              <div class="col-sm-10">
-                <InputSwitch class="p-display--block" v-model="item.activate"/>
+								<template v-for="permission in permissions">
+									<div class="col-sm-12">
+										<Checkbox :id="permission" :inputId="permission" name="permission" :value="permission" v-model="item.permission" />
+										<label :for="permission" class="p-checkbox-label">{{ permission }}</label>
+									</div>
+								</template>
               </div>
             </div>
           </form>
@@ -93,12 +80,10 @@
 
   // Prime
   import InputText from 'primevue/inputtext'
-  import InputSwitch from 'primevue/inputswitch'
-  import Password from 'primevue/password'
-  import Dropdown from 'primevue/dropdown'
+  import Checkbox from 'primevue/checkbox'
 
   export default {
-    name: 'AdminForm',
+    name: 'CompanyForm',
 
     props: {
       title: {
@@ -115,18 +100,23 @@
     components: {
       ContentHeader,
       InputText,
-      InputSwitch,
-      Password,
-      Dropdown
+			Checkbox
     },
 
     data () {
       return {
-				roles: ['Admin', 'Super Admin']
-      }
+      	permissions: ['view', 'create', 'edit', 'delete']
+			}
     },
 
     methods: {
+      /**
+       * Action upload Photo
+       */
+      onUploadImage () {
+
+      },
+
       /**
        * Submit Action
        */

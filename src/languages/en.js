@@ -35,7 +35,10 @@ export default {
       fax: 'Fax',
       url: 'Homepage url',
       from: 'from',
-      to: 'to'
+      to: 'to',
+      display_name: 'Display name',
+      description: 'Description',
+      role: 'Role'
     },
 
     table: {
@@ -109,5 +112,12 @@ export default {
     title_list_page: 'List of categories',
     create_a_category: 'Create a category',
     edit_category: 'Edit post'
+  },
+
+  // Role Page
+  role: {
+    title_list_page: 'List of roles',
+    create_a_role: 'Create a role',
+    edit_role: 'Edit role'
   }
 }
