@@ -10,7 +10,7 @@
 	import { CompanyService } from '../../../api'
 
 	export default {
-		name: 'PostEdit',
+		name: 'CompanyEdit',
 
 		components: {
 			CompanyForm,
@@ -22,10 +22,12 @@
 
 		async beforeRouteEnter (to, from, next) {
 			const companyID = to.params.id
-			const company = CompanyModel.query().find(companyID)
+			const company = CompanyModel.query().with('contact').find(companyID)
 
 			if (!company) {
-				await CompanyService.item(companyID)
+				await CompanyService.item(companyID, {
+					include: 'contact'
+				})
 			}
 
 			next()
@@ -35,7 +37,7 @@
 			item () {
 				const companyID = this.$route.params.id
 
-				return CompanyModel.query().find(companyID)
+				return CompanyModel.query().with('contact').find(companyID)
 			},
 		},
 	}

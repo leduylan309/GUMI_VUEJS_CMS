@@ -43,7 +43,8 @@ export default {
       first_name: 'First Name',
       last_name: 'Last Name',
       birthday: 'Birthday',
-      gender: 'Gender'
+      gender: 'Gender',
+      tel: 'Telephone'
     },
 
     table: {
