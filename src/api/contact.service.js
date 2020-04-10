@@ -1,22 +1,21 @@
 import { IROOTQUERY } from '../shared/store/state'
-import CategoryModel from '../models/category.model'
-import { AdminService } from './admin.service'
+import ContactModel from '../models/contact.model'
 
 // define
-const BaseUrl = 'categories'
+const BaseUrl = 'contacts/'
 
 // define DataTransformer
 const dataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
-    // delete all data before add category
-    CategoryModel.deleteAll()
+    // delete all data before add post
+    ContactModel.deleteAll()
 
     // map data if use JSON API
     if (process.env.VUE_APP_JSON_API === 'true') {
       return data.data.attributes
     }
 
-    CategoryModel.commit(state => {
+    ContactModel.commit(state => {
       // map paginator to stage
       if (data.pagination) {
         state.paginator = { ...data.pagination }
@@ -32,7 +31,10 @@ const dataTransformer = ({ data, status = null }) => {
   }
 }
 
-export const CategoryService = {
+/**
+ * Contact Service
+ */
+export const ContactService = {
   /**
    * load list
    * @param queries
@@ -40,11 +42,11 @@ export const CategoryService = {
    */
   async list (queries = {}) {
     const params = {
-      ...CategoryModel.state().queryParams,
+      ...ContactModel.state().queryParams,
       ...queries
     }
 
-    return await CategoryModel.api().get(`${ BaseUrl }`, {
+    return await ContactModel.api().get(`${ BaseUrl }`, {
       params,
       dataTransformer
     })
@@ -61,32 +63,28 @@ export const CategoryService = {
       ...queries
     }
 
-    return await CategoryModel.api().get(`${ BaseUrl }/${ ID }`, {
+    return await ContactModel.api().get(`${ BaseUrl }/${ ID }`, {
       ...params,
       dataTransformer
     })
   },
 
   /**
-   * update category
+   * update post
    * @param ID
    * @param data
    * @return {Promise<Response>}
    */
   async update (ID, data = {}) {
-    data.updated_by = AdminService.current_admin().id
-
-    return await CategoryModel.api().put(`${ BaseUrl }/${ ID }`, data)
+    return await ContactModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
 
   /**
-   * create category
+   * create post
    * @param data
    * @return {Promise<Response>}
    */
   async create (data = {}) {
-    data.created_by = AdminService.current_admin().id
-
-    return await CategoryModel.api().post(`${ BaseUrl }`, data)
+    return await ContactModel.api().post(`${ BaseUrl }`, data)
   }
 }

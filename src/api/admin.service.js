@@ -47,7 +47,7 @@ export const AdminService = {
    */
   async list (queries = {}) {
     const params = {
-      ...IROOTQUERY,
+      ...AdminModel.state().queryParams,
       ...queries
     }
 

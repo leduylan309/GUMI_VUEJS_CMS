@@ -43,7 +43,7 @@ export const RoleService = {
    */
   async list (queries = {}) {
     const params = {
-      ...IROOTQUERY,
+      ...RoleModel.state().queryParams,
       ...queries
     }
 

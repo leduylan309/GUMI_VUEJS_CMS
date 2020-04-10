@@ -14,7 +14,7 @@ const post = {
     title: 'Company',
 
     // for menu
-    icon: 'pi pi-fw pi-file',
+    icon: 'pi pi-fw pi-briefcase',
     label: 'Company'
   },
   children: [
@@ -26,7 +26,7 @@ const post = {
         title: 'Company',
 
         // for menu
-        icon: 'pi pi-fw pi-file',
+        icon: 'pi pi-fw pi-briefcase',
         label: 'Lists'
       },
       beforeEnter: multiguard([AuthGuard])

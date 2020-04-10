@@ -38,7 +38,8 @@ export default {
       to: 'to',
       display_name: 'Display name',
       description: 'Description',
-      role: 'Role'
+      role: 'Role',
+      website: 'Website'
     },
 
     table: {
@@ -61,12 +62,15 @@ export default {
       categories: 'Categories',
       created_at: 'Created At',
       created_by: 'Created By',
+      content: 'Content',
+      city: 'City',
+      tel: 'Tel',
       updated_at: 'Updated At',
       publish: 'Publish',
       publish_from: 'publish_from',
       publish_to: 'publish_to',
       description: 'Description',
-      content: 'Content',
+      postcode: 'Postcode',
       no_records_found: 'No records found.'
     }
   },
@@ -121,5 +125,12 @@ export default {
     title_list_page: 'List of roles',
     create_a_role: 'Create a role',
     edit_role: 'Edit role'
+  },
+
+  // Contact Page
+  contact: {
+    title_list_page: 'List of contacts',
+    create_a_contact: 'Create a contact',
+    edit_contact: 'Edit contact'
   }
 }

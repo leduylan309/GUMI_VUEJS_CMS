@@ -1,4 +1,3 @@
-import { IROOTQUERY } from '../shared/store/state'
 import CompanyModel from '../models/company.model'
 import { AdminService } from './admin.service'
 
@@ -43,7 +42,7 @@ export const CompanyService = {
    */
   async list (queries = {}) {
     const params = {
-      ...IROOTQUERY,
+      ...CompanyModel.state().queryParams,
       ...queries
     }
 

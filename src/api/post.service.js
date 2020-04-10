@@ -43,7 +43,7 @@ export const PostService = {
    */
   async list (queries = {}) {
     const params = {
-      ...IROOTQUERY,
+      ...PostModel.state().queryParams,
       ...queries
     }
 

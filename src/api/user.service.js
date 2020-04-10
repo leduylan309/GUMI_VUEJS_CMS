@@ -1,5 +1,4 @@
 import UserModel from '../models/user.model'
-import { IROOTQUERY } from '../shared/store/state'
 
 // define
 const BaseUrl = 'users'
@@ -38,7 +37,7 @@ export const UserService = {
    */
   async list (queries = {}) {
     const params = {
-      ...IROOTQUERY,
+      ...UserModel.state().queryParams,
       ...queries
     }
 

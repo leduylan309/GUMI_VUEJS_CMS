@@ -6,19 +6,28 @@ export default class ContactModel extends BaseModel {
 
   static fields () {
     return {
-      id: this.uid(),
-      model_id: this.uid(),
-      model_type: this.string(null),
-      postcode: this.string(''),
+      id: this.attr(null),
+      contactable_id: this.uid(),
+      contactable_type: this.string(null),
+      postcode: this.string('0000000').nullable(),
       city: this.string(null).nullable(),
       address: this.string(null),
-      free_dial: this.string('activated').nullable(),
-      tel: this.string(''),
-      fax: this.string(''),
-      email: this.string(''),
-      website: this.string('')
+      free_dial: this.string(null).nullable(),
+      tel: this.string(null).nullable(),
+      fax: this.string(null).nullable(),
+      email: this.string(null).nullable(),
+      website: this.string(null).nullable(),
+      created_at: this.string(null).nullable(),
+      updated_at: this.string(null).nullable(),
+      owner: this.morphTo('contactable_id', 'contactable_type')
     }
   }
+
+  /**
+   * define columns show on list
+   * @type {string[]}
+   */
+  static columns = ['postcode', 'city', 'tel', 'email']
 
   static state () {
     return {

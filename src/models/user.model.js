@@ -45,7 +45,10 @@ export default class UserModel extends BaseModel {
   static state () {
     return {
       paginator: {},
-      queryParams: IROOTQUERY
+      queryParams: {
+        ...IROOTQUERY,
+        include: 'contact'
+      }
     }
   }
 }

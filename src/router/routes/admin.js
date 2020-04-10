@@ -14,7 +14,7 @@ const admin = {
     title: 'Admin',
 
     // for menu
-    icon: 'pi pi-fw pi-user',
+    icon: 'pi pi-fw pi-users',
     label: 'Admin'
   },
   children: [
