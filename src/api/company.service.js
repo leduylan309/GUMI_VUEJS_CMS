@@ -1,5 +1,5 @@
 import CompanyModel from '../models/company.model'
-import { AdminService } from './admin.service'
+import { AuthService } from './auth.service'
 
 // define
 const baseUrl = 'companies'
@@ -47,7 +47,7 @@ export const CompanyService = {
     }
 
     return await CompanyModel.api().get(`${ baseUrl }`, {
-      params,
+      params: params,
       dataTransformer: CompanyDataTransformer
     })
   },
@@ -64,7 +64,7 @@ export const CompanyService = {
     }
 
     return await CompanyModel.api().get(`${ baseUrl }/${ ID }`, {
-      ...params,
+      params: params,
       dataTransformer: CompanyDataTransformer
     })
   },
@@ -76,7 +76,7 @@ export const CompanyService = {
    * @return {Promise<Response>}
    */
   async update (ID, data = {}) {
-    data.updated_by = AdminService.current_admin().id
+    data.updated_by =  AuthService.current_user().id
 
     return await CompanyModel.api().put(`${ baseUrl }/${ ID }`, data)
   },
@@ -87,7 +87,7 @@ export const CompanyService = {
    * @return {Promise<*>}
    */
   async create (data = {}) {
-    data.created_by = data.updated_by = AdminService.current_admin().id
+    data.created_by = data.updated_by = AuthService.current_user().id
 
     return await CompanyModel.api().api(`${ baseUrl }`, data)
   }

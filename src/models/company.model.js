@@ -1,5 +1,7 @@
 import BaseModel from './base.model'
 import { IROOTQUERY } from '../shared/store/state'
+import ContactModel from './contact.model'
+import MasterDataModel from './masterdata.model'
 
 export default class CompanyModel extends BaseModel {
   static entity = 'company'
@@ -15,7 +17,9 @@ export default class CompanyModel extends BaseModel {
       deleted_by: this.uid(),
       created_at: this.string(null),
       updated_at: this.string(null),
-      deleted_at: this.string(null)
+      deleted_at: this.string(null),
+      contact: this.hasOne(ContactModel, 'contactable_id', 'id'),
+      prefecture: this.belongsTo(MasterDataModel, 'prefecture_id')
     }
   }
 
@@ -33,7 +37,10 @@ export default class CompanyModel extends BaseModel {
   static state () {
     return {
       paginator: {},
-      queryParams: IROOTQUERY
+      queryParams: {
+        ...IROOTQUERY,
+        include: 'contact'
+      }
     }
   }
 }

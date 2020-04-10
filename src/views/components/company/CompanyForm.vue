@@ -1,193 +1,102 @@
 <template>
-	<div class="content-wrapper">
-		<!-- Header Table -->
-		<ContentHeader :title="title"/>
+	<div class="content-section">
+		<div class="content-wrapper">
+			<!-- Header Table -->
+			<ContentHeader :title="title"/>
 
-		<!-- Content Table -->
-		<div class="content">
-			<div class="card">
-				<div class="card-body">
-					<form class="form-horizontal">
-						<!-- Code -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.company_code') }}
-							</label>
+			<!-- Content Table -->
+			<div class="content">
+				<ValidationObserver v-slot="{ handleSubmit }">
+					<form class="form-horizontal"  @submit.prevent="handleSubmit(onSubmit)">
+						<div class="card">
+							<div class="card-body">
+								<!-- Code -->
+								<ValidationProvider
+									:name="$t('common.text.company_code')"
+									rules="required"
+									class="form-group row"
+									v-slot="{ errors }"
+									v-if="fields.company_code">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.company_code') }}
+									</label>
 
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.code"
-													 :placeholder="$t('common.text.company_code')"
-								/>
+									<div class="col-sm-10">
+										<InputText class="form-control"
+															 v-model="item.company_code"
+															 :placeholder="$t('common.text.company_code')"
+															 :class="{'is-invalid': errors.length }"
+										/>
+
+										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+									</div>
+								</ValidationProvider>
+
+								<!--Name -->
+								<ValidationProvider
+									:name="$t('common.text.name')"
+									rules="required"
+									class="form-group row"
+									v-slot="{ errors }"
+									v-if="fields.name">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.name') }}
+									</label>
+
+									<div class="col-sm-10">
+										<InputText class="form-control"
+															 v-model="item.name"
+															 :placeholder="$t('common.text.name')"
+															 :class="{'is-invalid': errors.length }"
+										/>
+
+										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+									</div>
+								</ValidationProvider>
+
+								<!-- Image -->
+								<div class="form-group row">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.table.image') }}
+									</label>
+
+									<div class="col-sm-10">
+										<FileUpload mode="basic"
+																:name="item.image"
+																v-model="item.image"
+																:previewWidth="100"
+																@upload="onUploadImage"
+																accept="image/*"
+																:maxFileSize="1000000"
+																:chooseLabel="$t('common.text.select_image')"
+										/>
+									</div>
+								</div>
 							</div>
-						</div>
 
-						<!--Name -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.name') }}
-							</label>
+							<!-- Action Section Submit & Cancel -->
+							<div class="card-footer fixed-bottom">
+								<button type="button"
+												class="btn btn-default float-right"
+												@click="onCancel">
+									<i class="pi pi-times"/>
 
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.name"
-													 :placeholder="$t('common.text.name')"
-								/>
-							</div>
-						</div>
+									<span>{{ $t('common.button.cancel') }}</span>
+								</button>
 
-						<!-- Postal code -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.postal_code') }}
-							</label>
+								<button type="button"
+												class="btn btn-success float-right mr-1"
+												@click="onSubmit">
+									<i class="pi pi-save"/>
 
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.postal_code"
-													 :placeholder="$t('common.text.postal_code')"
-								/>
-							</div>
-						</div>
-
-						<!-- City -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.city') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.city"
-													 :placeholder="$t('common.text.city')"
-								/>
-							</div>
-						</div>
-
-						<!-- Address -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.address') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.address"
-													 :placeholder="$t('common.text.address')"
-								/>
-							</div>
-						</div>
-
-						<!-- Freedial -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.freedial') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.freedial"
-													 :placeholder="$t('common.text.freedial')"
-								/>
-							</div>
-						</div>
-
-						<!-- Phone -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.phone') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.phone"
-													 :placeholder="$t('common.text.phone')"
-								/>
-							</div>
-						</div>
-
-						<!-- Fax -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.fax') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.fax"
-													 :placeholder="$t('common.text.fax')"
-								/>
-							</div>
-						</div>
-
-						<!-- Email -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.email') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.email"
-													 :placeholder="$t('common.text.email')"
-								/>
-							</div>
-						</div>
-
-						<!-- Url -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.url') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.url"
-													 :placeholder="$t('common.text.url')"
-								/>
-							</div>
-						</div>
-
-						<!-- Image -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.table.image') }}
-							</label>
-
-							<div class="col-sm-10">
-								<FileUpload mode="basic"
-														:name="item.image"
-														v-model="item.image"
-														:previewWidth="100"
-														@upload="onUploadImage"
-														accept="image/*"
-														:maxFileSize="1000000"
-														:chooseLabel="$t('common.text.select_image')"
-								/>
+									<span>{{$t('common.button.save')}}</span>
+								</button>
 							</div>
 						</div>
 					</form>
-				</div>
-
-				<!-- Action Section Submit & Cancel -->
-				<div class="card-footer fixed-bottom">
-					<button type="button"
-									class="btn btn-default float-right"
-									@click="onCancel">
-						<i class="pi pi-times"/>
-
-						<span>{{ $t('common.button.cancel') }}</span>
-					</button>
-
-					<button type="button"
-									class="btn btn-success float-right mr-1"
-									@click="onSubmit">
-						<i class="pi pi-save"/>
-
-						<span>{{$t('common.button.save')}}</span>
-					</button>
-				</div>
+				</ValidationObserver>
 			</div>
+			<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact" />
 		</div>
 	</div>
 </template>
@@ -196,6 +105,8 @@
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
 	import FormMixin from '../../../mixins/form.mixin'
+	import CompanyModel from '../../../models/company.model'
+	import ContactForm from '../shared/ContactForm'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -208,6 +119,7 @@
 		mixins: [FormMixin],
 
 		components: {
+			ContactForm,
 			ContentHeader,
 			InputText,
 			FileUpload,
@@ -217,6 +129,7 @@
 			return {
 				// MUST DEFINE //
 				FormService: CompanyService,
+				fields: CompanyModel.fields()
 			}
 		},
 
