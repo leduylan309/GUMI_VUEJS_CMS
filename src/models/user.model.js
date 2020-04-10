@@ -20,7 +20,7 @@ export default class UserModel extends BaseModel {
       created_at: this.string(null).nullable(),
       updated_at: this.string(null).nullable(),
       delete_at: this.string(null).nullable(),
-      contact: this.morphOne(ContactModel, 'model_id', 'model_type'),
+      contact: this.hasOne(ContactModel, 'contactable_id', 'id'),
       prefecture: this.belongsTo(MasterDataModel, 'prefecture_id')
     }
   }

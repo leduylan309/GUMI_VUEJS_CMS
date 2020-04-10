@@ -58,9 +58,9 @@ export const UserService = {
     const params = {
       ...queries,
     }
-
+    console.log(params)
     return await UserModel.api().get(`${ BaseUrl }/${ ID }`, {
-      ...params,
+      params,
       dataTransformer,
     })
   },

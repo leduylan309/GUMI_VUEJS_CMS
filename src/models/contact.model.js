@@ -19,7 +19,6 @@ export default class ContactModel extends BaseModel {
       website: this.string(null).nullable(),
       created_at: this.string(null).nullable(),
       updated_at: this.string(null).nullable(),
-      owner: this.morphTo('contactable_id', 'contactable_type')
     }
   }
 
