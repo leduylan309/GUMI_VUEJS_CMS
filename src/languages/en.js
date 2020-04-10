@@ -38,7 +38,11 @@ export default {
       to: 'to',
       display_name: 'Display name',
       description: 'Description',
-      role: 'Role'
+      role: 'Role',
+      first_name: 'First Name',
+      last_name: 'Last Name',
+      birthday: 'Birthday',
+      gender: 'Gender'
     },
 
     table: {

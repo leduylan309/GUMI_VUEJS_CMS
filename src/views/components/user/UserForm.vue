@@ -9,21 +9,43 @@
 				<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
 					<div class="card">
 						<div class="card-body">
-							<!-- Name -->
+							<!-- First Name -->
 							<ValidationProvider
-								:name="$t('common.text.name')"
+								:name="$t('common.text.first_name')"
 								rules="required"
 								class="form-group row"
 								v-slot="{ errors }"
-								v-if="fields.name">
+								v-if="fields.first_name">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.name') }}
 								</label>
 
 								<div class="col-sm-10">
 									<InputText class="form-control"
-														 v-model="item.name"
-														 :placeholder="$t('common.text.name')"
+														 v-model="item.first_name"
+														 :placeholder="$t('common.text.first_name')"
+														 :class="{'is-invalid': errors.length }"
+									/>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
+							<!-- Last Name -->
+							<ValidationProvider
+								:name="$t('common.text.last_name')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.last_name">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.text.last_name') }}
+								</label>
+
+								<div class="col-sm-10">
+									<InputText class="form-control"
+														 v-model="item.last_name"
+														 :placeholder="$t('common.text.last_name')"
 														 :class="{'is-invalid': errors.length }"
 									/>
 
@@ -47,6 +69,48 @@
 														 v-model="item.email"
 														 :placeholder="$t('common.text.email')"
 														 :class="{'is-invalid': errors.length }"
+									/>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
+							<!-- Birthday -->
+							<ValidationProvider
+								:name="$t('common.text.birthday')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.birthday">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.text.birthday') }}
+								</label>
+
+								<div class="col-sm-10">
+									<Calendar v-model="item.birthday"
+														:class="{'is-invalid': errors.length }"
+									/>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
+							<!-- Role -->
+							<ValidationProvider
+								:name="$t('common.text.gender')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.gender">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.text.gender') }}
+								</label>
+
+								<div class="col-sm-10">
+									<Dropdown class="form-control"
+														:options="genders"
+														v-model="item.gender"
+														:class="{'is-invalid': errors.length }"
 									/>
 
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
@@ -98,28 +162,6 @@
 								</div>
 							</ValidationProvider>
 
-							<!-- Role -->
-							<ValidationProvider
-								:name="$t('common.text.role')"
-								rules="required"
-								class="form-group row"
-								v-slot="{ errors }"
-								v-if="fields.name">
-								<label class="col-sm-2 control-label text-right">
-									{{ $t('common.text.role') }}
-								</label>
-
-								<div class="col-sm-10">
-									<Dropdown class="form-control"
-														:options="roles"
-														v-model="item.role"
-														:class="{'is-invalid': errors.length }"
-									/>
-
-									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
-								</div>
-							</ValidationProvider>
-
 							<!-- Status -->
 							<div class="form-group row">
 								<label class="col-sm-2 control-label text-right">
@@ -162,18 +204,19 @@
 <script>
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
-	import AdminModel from '../../../models/admin.model'
+	import UserModel from '../../../models/user.model'
 	import FormMixin from '../../../mixins/form.mixin'
-	import { AdminService } from '../../../api'
+	import { UserService } from '../../../api'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
 	import InputSwitch from 'primevue/inputswitch'
 	import Password from 'primevue/password'
 	import Dropdown from 'primevue/dropdown'
+	import Calendar from 'primevue/calendar'
 
 	export default {
-		name: 'AdminForm',
+		name: 'UserForm',
 
 		mixins: [FormMixin],
 
@@ -195,15 +238,15 @@
 			InputSwitch,
 			Password,
 			Dropdown,
+			Calendar
 		},
 
 		data () {
 			return {
 				// MUST DEFINE //
-				FormService: AdminService,
-
-				roles: ['Admin', 'Super Admin'],
-				fields: AdminModel.fields(),
+				FormService: UserService,
+				genders: ['male', 'female'],
+				fields: UserModel.fields(),
 			}
 		},
 	}
