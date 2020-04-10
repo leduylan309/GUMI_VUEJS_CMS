@@ -1,5 +1,6 @@
 <template>
 	<UserForm :title="$t('user.edit_user')"
+						:list-name="'UserList'"
 						:item="item"/>
 </template>
 

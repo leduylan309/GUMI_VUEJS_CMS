@@ -1,5 +1,6 @@
 <template>
 	<UserForm :title="$t('user.create_an_user')"
+						:list-name="'UserList'"
 						:item="item"/>
 </template>
 
@@ -13,8 +14,8 @@
 	import InputSwitch from 'primevue/inputswitch'
 	import Password from 'primevue/password'
 
-  export default {
-    name: 'UserAdd',
+	export default {
+		name: 'UserAdd',
 
 		components: {
 			UserForm,
@@ -26,10 +27,10 @@
 
 		data () {
 			return {
-				item: {},
+				item: { contact: {} },
 			}
 		},
-  }
+	}
 </script>
 
 <style scoped>

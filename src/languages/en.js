@@ -33,6 +33,7 @@ export default {
       freedial: 'Free dial',
       phone: 'Phone',
       fax: 'Fax',
+      tel: 'Tel',
       url: 'Homepage url',
       from: 'from',
       to: 'to',

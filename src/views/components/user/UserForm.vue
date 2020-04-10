@@ -18,7 +18,7 @@
 												v-slot="{ errors }"
 												v-if="fields.first_name">
 									<label class="col-sm-2 control-label text-right">
-										{{ $t('common.text.name') }}
+										{{ $t('common.text.first_name') }}
 									</label>
 
 									<div class="col-sm-10">
@@ -88,7 +88,8 @@
 									</label>
 
 									<div class="col-sm-10">
-										<Calendar v-model="item.birthday"
+										<Calendar v-model="birthday"
+															:dateFormat="'yy-mm-dd'"
 															:class="{'is-invalid': errors.length }"
 										/>
 
@@ -147,14 +148,14 @@
 												rules="required|min:6|confirmed:password"
 												class="form-group row"
 												v-slot="{ errors }"
-												v-if="fields.confirm_password">
+												v-if="fields.password_confirmation">
 									<label class="col-sm-2 control-label text-right">
 										{{ $t('common.text.confirm_password') }}
 									</label>
 
 									<div class="col-sm-10">
 										<Password class="form-control"
-															v-model="item.confirm_password"
+															v-model="item.password_confirmation"
 															:feedback="false"
 															:class="{'is-invalid': errors.length }"
 										/>
@@ -201,8 +202,6 @@
 
 			<ContactForm :title="$t('contact.create_a_contact')"
 									 :item="item.contact"/>
-
-			<pre>{{ item }}</pre>
 		</div>
 	</div>
 </template>
@@ -214,6 +213,7 @@
 	import FormMixin from '../../../mixins/form.mixin'
 	import { UserService } from '../../../api'
 	import ContactForm from '../shared/ContactForm'
+	import moment from 'moment'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -234,7 +234,7 @@
 			Password,
 			Dropdown,
 			Calendar,
-			ContactForm
+			ContactForm,
 		},
 
 		data () {
@@ -244,6 +244,20 @@
 				genders: ['male', 'female'],
 				fields: UserModel.fields(),
 			}
+		},
+
+		computed: {
+			birthday: {
+				get () {
+					return this.item.birthday ? new Date(this.item.birthday) : new Date()
+				},
+
+				set (value) {
+					this.item.birthday = moment(value).format('YYYY-MM-DD')
+
+					return value
+				},
+			},
 		},
 	}
 </script>
