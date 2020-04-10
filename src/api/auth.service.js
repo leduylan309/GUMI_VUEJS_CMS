@@ -1,13 +1,23 @@
-import AuthModel from '../models/auth.model'
 // define
-const AuthBaseUrl = ''
+import AuthModel from '../models/auth.model'
+
+const BaseUrl = 'auth/'
 export const AuthService = {
   /**
-   * call api Login
-   * @param data
+   * call Api to get profile
    * @return {Promise<Response>}
    */
-  async login (data) {
-    return await AuthModel.api().post(`${ AuthBaseUrl }` + 'login', data)
+  async profile () {
+    return await AuthModel.api().get(`${ BaseUrl }` + 'profile', {
+      dataTransformer: (response => {
+        const { data } = response.data
+
+        if (process.env.VUE_APP_JSON_API === 'true') {
+          return data.data.attributes
+        }
+
+        return data
+      })
+    })
   }
 }

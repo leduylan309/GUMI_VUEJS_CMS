@@ -12,8 +12,10 @@ export default class PostModel extends BaseModel {
       id: this.uid(),
       title: this.string(null),
       content: this.string(null),
+      post_type: this.string('post').nullable(),
       publish_from: this.string(moment().format('YYYY-MM-DD H:mm:ss')).nullable(),
       publish_to: this.string(moment().format('YYYY-MM-DD H:mm:ss')).nullable(),
+      status: this.string('publish').nullable(),
       display_order: this.number(0),
       created_at: this.string(null).nullable(),
       updated_at: this.string(null).nullable(),
@@ -29,7 +31,7 @@ export default class PostModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'title',
+    'title'
   ]
 
   static state () {

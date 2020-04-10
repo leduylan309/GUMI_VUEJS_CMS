@@ -2,10 +2,10 @@ import UserModel from '../models/user.model'
 import { IROOTQUERY } from '../shared/store/state'
 
 // define
-const UserBaseUrl = 'users'
+const BaseUrl = 'users'
 
 // define transformer
-const UserDataTransformer = ({ data, headers, status = nul }) => {
+const dataTransformer = ({ data, headers, status = nul }) => {
   if (data && status === 200) {
     // delete all data before add post
     UserModel.deleteAll()
@@ -17,8 +17,8 @@ const UserDataTransformer = ({ data, headers, status = nul }) => {
 
     UserModel.commit(state => {
       // map paginator to stage
-      if (data.meta) {
-        state.paginator = { ...data.meta.pagination }
+      if (data.pagination) {
+        state.paginator = { ...data.pagination }
       }
 
       // map params
@@ -42,9 +42,9 @@ export const UserService = {
       ...queries
     }
 
-    return await UserModel.api().get(`${ UserBaseUrl }`, {
+    return await UserModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer: UserDataTransformer
+      dataTransformer
     })
   }
 }

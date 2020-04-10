@@ -2,10 +2,10 @@ import { IROOTQUERY } from '../shared/store/state'
 import RoleModel from '../models/company.model'
 
 // define
-const baseUrl = 'roles'
+const BaseUrl = 'roles'
 
 // define DataTransformer
-const RoleDataTransformer = ({ data, headers, status = null }) => {
+const dataTransformer = ({ data, headers, status = null }) => {
   if (data && status === 200) {
     // delete all data before add post
     RoleModel.deleteAll()
@@ -17,8 +17,8 @@ const RoleDataTransformer = ({ data, headers, status = null }) => {
 
     RoleModel.commit(state => {
       // map paginator to stage
-      if (data.meta) {
-        state.paginator = { ...data.meta.pagination }
+      if (data.pagination) {
+        state.paginator = { ...data.pagination }
       }
 
       // map params
@@ -47,9 +47,9 @@ export const RoleService = {
       ...queries
     }
 
-    return await RoleModel.api().get(`${ baseUrl }`, {
+    return await RoleModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer: RoleDataTransformer
+      dataTransformer
     })
   }
 }

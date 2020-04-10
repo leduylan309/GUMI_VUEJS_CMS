@@ -8,10 +8,15 @@
   }
 
   &-activated {
-    background: $green;
+    background: $olive;
   }
 
   &-blocked {
     background: $gray-600;
+  }
+
+  &-publish {
+    background: $green;
+    color: white;
   }
 }

@@ -111,7 +111,7 @@
 							</div>
 
 							<div class="card-footer">
-								<Paginator :rows="paginator.per_page"
+								<Paginator :rows="paginator.perPage"
 													 :totalRecords="paginator.total"
 													 :paginator="true"
 													 :first.sync="page"

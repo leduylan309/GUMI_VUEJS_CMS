@@ -1,5 +1,6 @@
 export const StatusCommon = [
   'activated',
   'pending',
-  'blocked'
+  'blocked',
+  'publish'
 ]

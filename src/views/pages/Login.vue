@@ -77,9 +77,9 @@
 
 <script>
 	import Vue from 'vue'
-	import { AuthService } from '../../api'
+	import { LoginService } from '../../api'
 	import router from '../../router'
-	import AuthModel from '../../models/auth.model'
+	import LoginModel from '../../models/login.model'
 
 	// Component
 	import InputText from 'primevue/inputtext'
@@ -104,12 +104,12 @@
 		methods: {
 			async onSubmit () {
 				const inputData = {
-					email: this.loginEmail,
+					username: this.loginEmail,
 					password: this.loginPassword,
 				}
 
-				return await AuthService.login(inputData).then(response => {
-					const { token, exp } = AuthModel.query().first()
+				return await LoginService.login(inputData).then(response => {
+					const { token, exp } = LoginModel.query().first()
 
 					// set token to cookie
 					Vue.$cookies.set('token', token, exp)

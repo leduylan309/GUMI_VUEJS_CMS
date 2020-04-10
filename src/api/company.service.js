@@ -18,8 +18,8 @@ const CompanyDataTransformer = ({ data, status = null }) => {
 
     CompanyModel.commit(state => {
       // map paginator to stage
-      if (data.meta) {
-        state.paginator = { ...data.meta.pagination }
+      if (data.pagination) {
+        state.paginator = { ...data.pagination }
       }
 
       // map params

@@ -3,10 +3,10 @@ import PostModel from '../models/post.model'
 import { AdminService } from './admin.service'
 
 // define
-const PostBaseUrl = 'news'
+const BaseUrl = 'posts/'
 
 // define DataTransformer
-const PostDataTransformer = ({ data, status = null }) => {
+const dataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
     // delete all data before add post
     PostModel.deleteAll()
@@ -18,8 +18,8 @@ const PostDataTransformer = ({ data, status = null }) => {
 
     PostModel.commit(state => {
       // map paginator to stage
-      if (data.meta) {
-        state.paginator = { ...data.meta.pagination }
+      if (data.pagination) {
+        state.paginator = { ...data.pagination }
       }
 
       // map params
@@ -34,7 +34,6 @@ const PostDataTransformer = ({ data, status = null }) => {
 
 /**
  * Post Service
- * @type {{item(*, *=): Promise<Response>, update(*=): Promise<*>, create(*=): Promise<*>, list(*=): Promise<Response>}}
  */
 export const PostService = {
   /**
@@ -48,9 +47,9 @@ export const PostService = {
       ...queries
     }
 
-    return await PostModel.api().get(`${ PostBaseUrl }`, {
+    return await PostModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer: PostDataTransformer
+      dataTransformer
     })
   },
 
@@ -65,9 +64,9 @@ export const PostService = {
       ...queries
     }
 
-    return await PostModel.api().get(`${ PostBaseUrl }/${ ID }`, {
+    return await PostModel.api().get(`${ BaseUrl }/${ ID }`, {
       ...params,
-      dataTransformer: PostDataTransformer
+      dataTransformer
     })
   },
 
@@ -80,7 +79,7 @@ export const PostService = {
   async update (ID, data = {}) {
     data.updated_by = AdminService.current_admin().id
 
-    return await PostModel.api().put(`${ PostBaseUrl }/${ ID }`, data)
+    return await PostModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
 
   /**
@@ -91,6 +90,6 @@ export const PostService = {
   async create (data = {}) {
     data.created_by = data.updated_by = AdminService.current_admin().id
 
-    return await PostModel.api().post(`${ PostBaseUrl }`, data)
+    return await PostModel.api().post(`${ BaseUrl }`, data)
   }
 }

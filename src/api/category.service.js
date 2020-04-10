@@ -3,10 +3,10 @@ import CategoryModel from '../models/category.model'
 import { AdminService } from './admin.service'
 
 // define
-const CategoryBaseUrl = 'categories'
+const BaseUrl = 'categories'
 
 // define DataTransformer
-const CategoryDataTransformer = ({ data, status = null }) => {
+const dataTransformer = ({ data, status = null }) => {
   if (data && status === 200) {
     // delete all data before add category
     CategoryModel.deleteAll()
@@ -18,8 +18,8 @@ const CategoryDataTransformer = ({ data, status = null }) => {
 
     CategoryModel.commit(state => {
       // map paginator to stage
-      if (data.meta) {
-        state.paginator = { ...data.meta.pagination }
+      if (data.pagination) {
+        state.paginator = { ...data.pagination }
       }
 
       // map params
@@ -44,9 +44,9 @@ export const CategoryService = {
       ...queries
     }
 
-    return await CategoryModel.api().get(`${ CategoryBaseUrl }`, {
+    return await CategoryModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer: CategoryDataTransformer
+      dataTransformer
     })
   },
 
@@ -61,9 +61,9 @@ export const CategoryService = {
       ...queries
     }
 
-    return await CategoryModel.api().get(`${ CategoryBaseUrl }/${ ID }`, {
+    return await CategoryModel.api().get(`${ BaseUrl }/${ ID }`, {
       ...params,
-      dataTransformer: CategoryDataTransformer
+      dataTransformer
     })
   },
 
@@ -76,7 +76,7 @@ export const CategoryService = {
   async update (ID, data = {}) {
     data.updated_by = AdminService.current_admin().id
 
-    return await CategoryModel.api().put(`${ CategoryBaseUrl }/${ ID }`, data)
+    return await CategoryModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
 
   /**
@@ -87,6 +87,6 @@ export const CategoryService = {
   async create (data = {}) {
     data.created_by = AdminService.current_admin().id
 
-    return await CategoryModel.api().post(`${ CategoryBaseUrl }`, data)
+    return await CategoryModel.api().post(`${ BaseUrl }`, data)
   }
 }

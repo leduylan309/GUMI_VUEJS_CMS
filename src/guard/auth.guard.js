@@ -1,15 +1,16 @@
 import Vue from 'vue'
-import { AdminService } from '../api'
-import AdminModel from '../models/admin.model'
+import { AuthService } from '../api'
+import AuthModel from '../models/auth.model'
 
 export const AuthGuard = (to, from, next) => {
   const token = Vue.$cookies.get('token')
   if (token) {
-    const admin = AdminModel.query().first()
-    if (admin && 'id' in admin) {
+    const auth = AuthModel.query().first()
+
+    if (auth && 'id' in auth) {
       next()
     } else {
-      AdminService.profile().then(() => {
+      AuthService.profile().then(() => {
         next()
       }).catch((error) => {
         // return if error == undefined

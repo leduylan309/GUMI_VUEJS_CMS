@@ -9,16 +9,12 @@ export default class AdminModel extends BaseModel {
   static fields () {
     return {
       id: this.uid(),
-      prefecture_id: this.uid(),
       username: this.string(null),
-      first_name: this.string(null),
-      last_name: this.string(null),
-      dob: this.string(null).nullable(),
-      gender: this.string(null),
-      status: this.string('activated').nullable(),
-      created_at: this.string(''),
-      updated_at: this.string(''),
-      delete_at: this.string(''),
+      name: this.string(null),
+      // status: this.string('activated').nullable(),
+      created_at: this.string(null).nullable(),
+      updated_at: this.string(null).nullable(),
+      delete_at: this.string(null).nullable(),
       contact: this.morphOne(ContactModel, 'model_id', 'model_type'),
       prefecture: this.belongsTo(MasterDataModel, 'prefecture_id')
     }
@@ -29,8 +25,7 @@ export default class AdminModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'first_name',
-    'last_name',
+    'name',
     'username'
   ]
 

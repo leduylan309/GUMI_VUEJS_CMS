@@ -51,6 +51,8 @@ export default {
       title: 'Title',
       slug: 'Slug',
       email: 'Email',
+      gender: 'Gender',
+      birthday: 'Birthday',
       image: 'Image',
       code: 'Code',
       prefecture: 'Prefecture',

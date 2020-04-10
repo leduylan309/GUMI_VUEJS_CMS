@@ -26,8 +26,8 @@ export default class CompanyModel extends BaseModel {
   static columns = [
     'name',
     'code',
-    'prefecture_id',
-    'created_by',
+    // 'prefecture_id',
+    // 'created_by',
   ]
 
   static state () {

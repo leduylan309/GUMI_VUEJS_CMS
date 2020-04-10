@@ -5,8 +5,12 @@ export default class AuthModel extends BaseModel {
 
   static fields () {
     return {
-      token: this.string(''),
-      exp: this.string('')
+      id: this.uid(),
+      name: this.string(null),
+      username: this.string(null),
+      created_at: this.string(null).nullable(),
+      updated_at: this.string(null).nullable(),
+      deleted_at: this.string(null).nullable()
     }
   }
 }
