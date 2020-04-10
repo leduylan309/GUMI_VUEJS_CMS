@@ -98,10 +98,10 @@
 																:suggestions="listCategories"
 																:placeholder="$t('common.text.select_category')"
 																:class="{'is-invalid': errors.length }"
-																field="name"
+																field="display_name"
 																@complete="onFilterForAutoComplete($event)">
 										<template #option="slotProps">
-											<span>{{slotProps.option.title}}</span>
+											<span>{{slotProps.option.display_name}}</span>
 										</template>
 									</AutoComplete>
 
@@ -115,7 +115,7 @@
 											rules=""
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories && fields.categories">
+											v-if="fields.categories && categories">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.table.categories') }}
 								</label>
@@ -124,7 +124,7 @@
 									<Dropdown v-model="item.category_id"
 														class="form-control"
 														multiple="true"
-														optionLabel="name"
+														optionLabel="display_name"
 														optionValue="id"
 														:options="categories"
 														:placeholder="$t('common.text.select_category')"
@@ -132,7 +132,7 @@
 														:showClear="true"
 														:class="{'is-invalid': errors.length }">
 										<template #option="slotProps">
-											<span>{{slotProps.option.name}}</span>
+											<span>{{slotProps.option.display_name}}</span>
 										</template>
 									</Dropdown>
 
@@ -146,7 +146,7 @@
 											rules=""
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.categories && categories && fields.categories">
+											v-if="fields.categories && categories">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.table.categories') }}
 								</label>
@@ -154,7 +154,7 @@
 								<div class="col-sm-10">
 									<MultiSelect v-model="item.category_id"
 															 class="form-control"
-															 optionLabel="name"
+															 optionLabel="display_name"
 															 optionValue="id"
 															 :options="categories"
 															 :placeholder="$t('common.text.select_category')"
@@ -162,7 +162,7 @@
 															 :showClear="true"
 															 :class="{'is-invalid': errors.length }">
 										<template #option="slotProps">
-											<span>{{slotProps.option.name}}</span>
+											<span>{{slotProps.option.display_name}}</span>
 										</template>
 									</MultiSelect>
 

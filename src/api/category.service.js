@@ -1,6 +1,5 @@
-import { IROOTQUERY } from '../shared/store/state'
 import CategoryModel from '../models/category.model'
-import { AdminService } from './admin.service'
+import { AuthService } from './auth.service'
 
 // define
 const BaseUrl = 'categories'
@@ -74,7 +73,7 @@ export const CategoryService = {
    * @return {Promise<Response>}
    */
   async update (ID, data = {}) {
-    data.updated_by = AdminService.current_admin().id
+    data.updated_by = AuthService.current_user().id
 
     return await CategoryModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
@@ -85,7 +84,7 @@ export const CategoryService = {
    * @return {Promise<Response>}
    */
   async create (data = {}) {
-    data.created_by = AdminService.current_admin().id
+    data.created_by = AuthService.current_user().id
 
     return await CategoryModel.api().post(`${ BaseUrl }`, data)
   }

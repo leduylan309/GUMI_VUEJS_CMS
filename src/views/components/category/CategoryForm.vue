@@ -8,20 +8,6 @@
 			<div class="card">
 				<div class="card-body">
 					<form class="form-horizontal">
-						<!-- Title -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.table.name') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.name"
-													 :placeholder="$t('common.table.name')"
-								/>
-							</div>
-						</div>
-
 						<!-- Display Name -->
 						<div class="form-group row">
 							<label class="col-sm-2 control-label text-right">
@@ -32,6 +18,21 @@
 								<InputText class="form-control"
 													 v-model="item.display_name"
 													 :placeholder="$t('common.table.display_name')"
+								/>
+							</div>
+						</div>
+
+						<!-- Display Order -->
+						<div class="form-group row">
+							<label class="col-sm-2 control-label text-right">
+								{{ $t('common.table.order') }}
+							</label>
+
+							<div class="col-sm-10">
+								<InputText class="form-control"
+													 type="number"
+													 v-model="item.display_order"
+													 :placeholder="$t('common.table.display_order')"
 								/>
 							</div>
 						</div>

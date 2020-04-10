@@ -7,9 +7,8 @@ export default class CategoryModel extends BaseModel {
   static fields () {
     return {
       id: this.uid(),
-      model_id: this.string(null).nullable(),
-      model_type: this.string(null),
-      name: this.string(null),
+      category_code: this.string(null).nullable(),
+      category_type: this.string(null).nullable(),
       display_name: this.string(null).nullable(),
       display_order: this.number(0)
     }
@@ -20,8 +19,9 @@ export default class CategoryModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'name',
     'display_name',
+    'category_code',
+    'category_type'
   ]
 
   static state () {
