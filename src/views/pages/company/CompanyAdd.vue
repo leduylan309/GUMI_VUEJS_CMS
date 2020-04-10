@@ -1,6 +1,6 @@
 <template>
 	<CompanyForm :title="$t('company.create_a_company')"
-						:item="item"/>
+							 :item="item"/>
 </template>
 
 <script lang="js">
@@ -10,12 +10,14 @@
 		name: 'PostAdd',
 
 		components: {
-          CompanyForm,
+			CompanyForm,
 		},
 
 		data () {
 			return {
-				item: {}
+				item: {
+					contact: {},
+				},
 			}
 		},
 
