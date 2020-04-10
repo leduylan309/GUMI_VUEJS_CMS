@@ -14,6 +14,8 @@ export default class UserModel extends BaseModel {
       email: this.string(null),
       birthday: this.string(null).nullable(),
       gender: this.string(null),
+      password: this.string(null),
+      confirm_password: this.string(null),
       // status: this.string('activated').nullable(),
       created_at: this.string(null).nullable(),
       updated_at: this.string(null).nullable(),

@@ -1,4 +1,5 @@
 import UserModel from '../models/user.model'
+import { AuthService } from './auth.service'
 
 // define
 const BaseUrl = 'users'
@@ -43,7 +44,47 @@ export const UserService = {
 
     return await UserModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer
+      dataTransformer,
     })
-  }
+  },
+
+  /**
+   * get only item
+   * @param ID
+   * @param queries
+   * @return {Promise<Response>}
+   */
+  async item (ID, queries = {}) {
+    const params = {
+      ...queries,
+    }
+
+    return await UserModel.api().get(`${ BaseUrl }/${ ID }`, {
+      ...params,
+      dataTransformer,
+    })
+  },
+
+  /**
+   * update user
+   * @param ID
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async update (ID, data = {}) {
+    data.updated_by = AuthService.current_user().id
+
+    return await UserModel.api().put(`${ BaseUrl }/${ ID }`, data)
+  },
+
+  /**
+   * create post
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async create (data = {}) {
+    data.created_by = data.updated_by = AuthService.current_user().id
+
+    return await UserModel.api().post(`${ BaseUrl }`, data)
+  },
 }

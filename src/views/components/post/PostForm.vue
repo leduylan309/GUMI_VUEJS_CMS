@@ -112,7 +112,7 @@
 							<!-- Single Categories -->
 							<ValidationProvider
 											:name="$t('common.table.categories')"
-											rules="required"
+											rules=""
 											class="form-group row"
 											v-slot="{ errors }"
 											v-if="fields.categories && categories && fields.categories">
@@ -143,7 +143,7 @@
 							<!-- Multiple Categories -->
 							<ValidationProvider
 											:name="$t('common.table.categories')"
-											rules="required"
+											rules=""
 											class="form-group row"
 											v-slot="{ errors }"
 											v-if="fields.categories && categories && fields.categories">

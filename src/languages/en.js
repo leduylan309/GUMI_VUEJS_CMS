@@ -39,7 +39,11 @@ export default {
       display_name: 'Display name',
       description: 'Description',
       role: 'Role',
-      website: 'Website'
+      website: 'Website',
+      first_name: 'First Name',
+      last_name: 'Last Name',
+      birthday: 'Birthday',
+      gender: 'Gender'
     },
 
     table: {

@@ -1,6 +1,6 @@
 import { IROOTQUERY } from '../shared/store/state'
 import PostModel from '../models/post.model'
-import { AdminService } from './admin.service'
+import { AuthService } from './auth.service'
 
 // define
 const BaseUrl = 'posts/'
@@ -77,7 +77,7 @@ export const PostService = {
    * @return {Promise<Response>}
    */
   async update (ID, data = {}) {
-    data.updated_by = AdminService.current_admin().id
+    data.updated_by = AuthService.current_user().id
 
     return await PostModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
@@ -88,7 +88,7 @@ export const PostService = {
    * @return {Promise<Response>}
    */
   async create (data = {}) {
-    data.created_by = data.updated_by = AdminService.current_admin().id
+    data.created_by = data.updated_by = AuthService.current_user().id
 
     return await PostModel.api().post(`${ BaseUrl }`, data)
   }

@@ -4,6 +4,14 @@ import AuthModel from '../models/auth.model'
 const BaseUrl = 'auth/'
 export const AuthService = {
   /**
+   * get current user
+   * @return {Item<InstanceOf<AuthModel>>}
+   */
+  current_user () {
+    return AuthModel.query().first()
+  },
+
+  /**
    * call Api to get profile
    * @return {Promise<Response>}
    */
