@@ -1,6 +1,7 @@
 <template>
 	<CompanyForm :title="$t('company.create_a_company')"
-							 :item="item"/>
+							 :item="item"
+							 :listName="'CompanyList'"/>
 </template>
 
 <script lang="js">
