@@ -1,9 +1,8 @@
-import { IROOTQUERY } from '../shared/store/state'
 import PostModel from '../models/post.model'
 import { AuthService } from './auth.service'
 
 // define
-const BaseUrl = 'posts/'
+const BaseUrl = 'posts'
 
 // define DataTransformer
 const dataTransformer = ({ data, status = null }) => {
@@ -91,5 +90,14 @@ export const PostService = {
     data.created_by = data.updated_by = AuthService.current_user().id
 
     return await PostModel.api().post(`${ BaseUrl }`, data)
+  },
+
+  /**
+   * delete post
+   * @return {Promise<Response>}
+   * @param id
+   */
+  async delete (id) {
+    return await PostModel.api().delete(`${ BaseUrl }/${ id }`)
   }
 }

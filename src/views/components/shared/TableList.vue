@@ -11,15 +11,15 @@
 						<div class="card">
 							<div class="card-body">
 								<DataTable
-												class="table table-responsive"
-												:value="list"
-												:rows="paginator.perPage"
-												:first.sync="page"
-												:loading="loading"
-												:resizableColumns="true"
-												:rowHover="true"
-												:autoLayout="true"
-												@sort="onSort"
+									class="table table-responsive"
+									:value="list"
+									:rows="paginator.perPage"
+									:first.sync="page"
+									:loading="loading"
+									:resizableColumns="true"
+									:rowHover="true"
+									:autoLayout="true"
+									@sort="onSort"
 								>
 
 									<!-- Render Dynamic Columns  -->
@@ -51,12 +51,12 @@
 
 										<template #filter>
 											<Dropdown
-															v-model="filters.status"
-															class="form-control"
-															@change="onSearch"
-															placeholder="All"
-															:options="status"
-															:showClear="true"
+												v-model="filters.status"
+												class="form-control"
+												@change="onSearch"
+												placeholder="All"
+												:options="status"
+												:showClear="true"
 											>
 												<template #option="slotProps">
 													<span :class="'badge badge-' + slotProps.option">{{slotProps.option}}</span>
@@ -94,7 +94,7 @@
 												</button>
 
 												<button class="btn btn-sm btn-danger"
-																@click="onEdit(slotProps.data.id)"
+																@click="onDisplayDialog(slotProps.data.id)"
 																v-tooltip.top="$t('common.button.delete')"
 												>
 													<i class="pi pi-trash"/>
@@ -125,6 +125,14 @@
 				</div>
 			</div>
 		</div>
+		<Dialog header="Delete confirmation" :visible.sync="displayDialog" :style="{width: '50vw'}">
+			Are you sure to delete this item ?
+			<template #footer>
+				<Button label="Yes" icon="pi pi-check" @click="handleDelete"/>
+				<Button label="No" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
+			</template>
+		</Dialog>
+		<Toast></Toast>
 	</div>
 </template>
 
@@ -139,17 +147,23 @@
 	import Paginator from 'primevue/paginator'
 	import Dropdown from 'primevue/dropdown'
 	import Calendar from 'primevue/calendar'
+	import Dialog from 'primevue/dialog'
+	import Button from 'primevue/button'
+	import Toast from 'primevue/toast'
 
 	export default {
 		name: 'TableList',
 
 		components: {
+			Toast,
 			Column,
 			DataTable,
 			Paginator,
 			Dropdown,
 			Calendar,
 			ContentHeader,
+			Dialog,
+			Button,
 		},
 
 		data () {
@@ -160,6 +174,8 @@
 				dateTimeFormat: 'yy/mm/dd',
 				fields: this.pageModel.fields(),
 				columns: this.pageModel.columns,
+				displayDialog: false,
+				selectedId: null,
 			}
 		},
 
@@ -295,6 +311,30 @@
 			onEdit (ID) {
 				return this.$router.push(`/${ this.pageName }/${ ID }`)
 			},
+
+			/**
+			 * display dialog delete
+			 * @param ID
+			 * @return {Promise<Route>}
+			 */
+			onDisplayDialog (ID) {
+				this.displayDialog = true
+				this.selectedId = ID
+			},
+
+			/**
+			 * delete item
+			 * @return {Promise<Route>}
+			 */
+			handleDelete () {
+				return this.pageService.delete(this.selectedId).then(() => {
+					this.selectedId = null
+					this.displayDialog = false
+					this.$toast.add({ severity: 'success', summary: 'Delete successfully', life: 3000 })
+					this.callGetList({ page: 1 })
+				}).catch((err) => console.log(err))
+			},
+
 		},
 	}
 </script>

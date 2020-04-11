@@ -50,3 +50,6 @@
 // Page specific styles
 //@import "page/login";
 //@import "page/banner";
+.p-toast {
+  z-index: 999999 !important;
+}

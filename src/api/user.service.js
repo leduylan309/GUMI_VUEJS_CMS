@@ -87,4 +87,13 @@ export const UserService = {
 
     return await UserModel.api().post(`${ BaseUrl }`, data)
   },
+
+  /**
+   * delete user
+   * @return {Promise<Response>}
+   * @param id
+   */
+  async delete (id) {
+    return await UserModel.api().delete(`${ BaseUrl }/${ id }`)
+  }
 }

@@ -2,7 +2,7 @@ import CompanyModel from '../models/company.model'
 import { AuthService } from './auth.service'
 
 // define
-const baseUrl = 'companies'
+const BaseUrl = 'companies'
 
 // define DataTransformer
 const CompanyDataTransformer = ({ data, status = null }) => {
@@ -46,7 +46,7 @@ export const CompanyService = {
       ...queries
     }
 
-    return await CompanyModel.api().get(`${ baseUrl }`, {
+    return await CompanyModel.api().get(`${ BaseUrl }`, {
       params: params,
       dataTransformer: CompanyDataTransformer
     })
@@ -63,7 +63,7 @@ export const CompanyService = {
       ...queries
     }
 
-    return await CompanyModel.api().get(`${ baseUrl }/${ ID }`, {
+    return await CompanyModel.api().get(`${ BaseUrl }/${ ID }`, {
       params: params,
       dataTransformer: CompanyDataTransformer
     })
@@ -78,7 +78,7 @@ export const CompanyService = {
   async update (ID, data = {}) {
     data.updated_by =  AuthService.current_user().id
 
-    return await CompanyModel.api().put(`${ baseUrl }/${ ID }`, data)
+    return await CompanyModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
 
   /**
@@ -89,6 +89,15 @@ export const CompanyService = {
   async create (data = {}) {
     data.created_by = data.updated_by = AuthService.current_user().id
 
-    return await CompanyModel.api().api(`${ baseUrl }`, data)
+    return await CompanyModel.api().api(`${ BaseUrl }`, data)
+  },
+
+  /**
+   * delete company
+   * @return {Promise<Response>}
+   * @param id
+   */
+  async delete (id) {
+    return await CompanyModel.api().delete(`${ BaseUrl }/${ id }`)
   }
 }

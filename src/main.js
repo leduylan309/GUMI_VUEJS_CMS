@@ -13,6 +13,9 @@ import './plugins/vue-cookies'
 import './plugins/pimevue'
 import './plugins/adminlte'
 import i18n from './plugins/i18n'
+import ToastService from 'primevue/toastservice'
+
+Vue.use(ToastService)
 
 Vue.config.productionTip = false
 
