@@ -1,11 +1,19 @@
 .form-control {
+  &.p-inputtext{
+    border: 1px solid $gray-400;
+
+    &.is-invalid {
+      border-color: $red;
+    }
+  }
+
   &.p-dropdown {
     padding: 0;
     height: auto;
     border: 1px solid $gray-400;
 
     &:hover {
-      border-color: $gray-400;
+      //border-color: $gray-400;
 
       &:not(.p-disabled) {
         border-color: $gray-400;
@@ -14,6 +22,10 @@
 
     .p-dropdown-filter-container {
       display: block;
+    }
+
+    &.is-invalid {
+      border-color: $red;
     }
   }
 
@@ -38,6 +50,10 @@
     .p-dropdown-filter-container {
       display: block;
     }
+
+    &.is-invalid {
+      border-color: $red;
+    }
   }
 
   &.p-autocomplete {
@@ -55,6 +71,18 @@
           width: 100%;
         }
       }
+    }
+
+    &.is-invalid {
+      border-color: $red;
+    }
+  }
+}
+
+.control-label {
+  &.text-right{
+    @media #{$info-phone} {
+      text-align: left !important;
     }
   }
 }

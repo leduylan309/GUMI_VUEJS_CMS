@@ -122,7 +122,7 @@
 								<!-- Password -->
 								<ValidationProvider
 												:name="$t('common.text.password')"
-												rules="required|min:6"
+												:rules="$route.params.id ? 'required_if:item.password|min:6' : 'required|min:6'"
 												class="form-group row"
 												v-slot="{ errors }"
 												vid="password"
@@ -145,7 +145,7 @@
 								<!-- Confirm password -->
 								<ValidationProvider
 												:name="$t('common.text.confirm_password')"
-												rules="required|min:6|confirmed:password"
+												:rules="$route.params.id ? 'required_if:item.password|min:6|confirmed:password' : 'required|min:6|confirmed:password'"
 												class="form-group row"
 												v-slot="{ errors }"
 												v-if="fields.password_confirmation">
