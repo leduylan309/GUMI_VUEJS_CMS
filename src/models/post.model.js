@@ -37,7 +37,10 @@ export default class PostModel extends BaseModel {
   static state () {
     return {
       paginator: {},
-      queryParams: IROOTQUERY
+      queryParams: {
+        ...IROOTQUERY,
+        include: 'delivery_target'
+      }
     }
   }
 }

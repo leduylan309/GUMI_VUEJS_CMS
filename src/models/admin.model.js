@@ -9,10 +9,10 @@ export default class AdminModel extends BaseModel {
   static fields () {
     return {
       id: this.uid(),
-      username: this.string(null),
       name: this.string(null),
-      password: this.string(null),
-      confirm_password: this.string(null),
+      username: this.string(null),
+      password: this.string('').nullable(),
+      password_confirmation: this.string('').nullable(),
       // status: this.string('activated').nullable(),
       created_at: this.string(null).nullable(),
       updated_at: this.string(null).nullable(),

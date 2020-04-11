@@ -31,6 +31,28 @@
 								</div>
 							</ValidationProvider>
 
+							<!-- Username -->
+							<ValidationProvider
+											:name="$t('common.text.username')"
+											rules="required"
+											class="form-group row"
+											v-slot="{ errors }"
+											v-if="fields.username">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.text.username') }}
+								</label>
+
+								<div class="col-sm-10">
+									<InputText class="form-control"
+														 v-model="item.username"
+														 :placeholder="$t('common.text.username')"
+														 :class="{'is-invalid': errors.length }"
+									/>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
 							<!-- Email -->
 							<ValidationProvider
 								:name="$t('common.text.email')"
@@ -82,14 +104,14 @@
 								rules="required|min:6|confirmed:password"
 								class="form-group row"
 								v-slot="{ errors }"
-								v-if="fields.confirm_password">
+								v-if="fields.password_confirmation">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.confirm_password') }}
 								</label>
 
 								<div class="col-sm-10">
 									<Password class="form-control"
-														v-model="item.confirm_password"
+														v-model="item.password_confirmation"
 														:feedback="false"
 														:class="{'is-invalid': errors.length }"
 									/>
@@ -176,18 +198,6 @@
 		name: 'AdminForm',
 
 		mixins: [FormMixin],
-
-		props: {
-			title: {
-				type: String,
-				require: true,
-				default: () => 'Form',
-			},
-			item: {
-				type: Object,
-				default: () => {},
-			},
-		},
 
 		components: {
 			ContentHeader,

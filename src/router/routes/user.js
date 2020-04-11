@@ -26,7 +26,7 @@ const user = {
         title: 'User List',
 
         // for menu
-        icon: 'pi pi-fw pi-users',
+        icon: 'pi pi-fw pi-user',
         label: 'Lists'
       },
       beforeEnter: multiguard([AuthGuard])

@@ -54,7 +54,7 @@ export default {
     onSuccess () {
       // save model
       this.item.$save().then(() => {
-        this.onRedirect()
+        this.onRedirect().then(r => {})
       })
     }
   }

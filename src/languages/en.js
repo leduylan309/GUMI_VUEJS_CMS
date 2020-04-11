@@ -19,6 +19,7 @@ export default {
 
     text: {
       name: 'Name',
+      username: 'Username',
       email: 'Email',
       password: 'Password',
       confirm_password: 'Confirm Password',
@@ -45,7 +46,6 @@ export default {
       last_name: 'Last Name',
       birthday: 'Birthday',
       gender: 'Gender',
-      tel: 'Telephone'
     },
 
     table: {
