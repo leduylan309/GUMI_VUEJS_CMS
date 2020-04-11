@@ -332,7 +332,10 @@
 					this.displayDialog = false
 					this.$toast.add({ severity: 'success', summary: 'Delete successfully', life: 3000 })
 					this.callGetList({ page: 1 })
-				}).catch((err) => console.log(err))
+				}).catch((err) => {
+					console.log(err)
+					this.$toast.add({ severity: 'error', summary: 'ERROR' })
+				})
 			},
 
 		},
