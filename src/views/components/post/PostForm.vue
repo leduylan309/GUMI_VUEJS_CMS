@@ -318,6 +318,7 @@
 			return {
 				// MUST DEFINE //
 				FormService: PostService,
+				FormModel: PostModel,
 
 				fields: PostModel.fields(),
 				dateTimeFormat: 'YYYY-MM-DD H:mm:ss',

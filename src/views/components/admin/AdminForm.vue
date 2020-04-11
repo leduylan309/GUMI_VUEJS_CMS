@@ -211,6 +211,7 @@
 			return {
 				// MUST DEFINE //
 				FormService: AdminService,
+				FormModel: AdminModel,
 
 				roles: ['Admin', 'Super Admin'],
 				fields: AdminModel.fields(),

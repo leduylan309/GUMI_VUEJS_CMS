@@ -7,16 +7,16 @@
 			<!-- Content Table -->
 			<div class="content">
 				<ValidationObserver v-slot="{ handleSubmit }">
-					<form class="form-horizontal"  @submit.prevent="handleSubmit(onSubmit)">
+					<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
 						<div class="card">
 							<div class="card-body">
 								<!-- Code -->
 								<ValidationProvider
-									:name="$t('common.text.company_code')"
-									rules="required"
-									class="form-group row"
-									v-slot="{ errors }"
-									v-if="fields.company_code">
+												:name="$t('common.text.company_code')"
+												rules="required"
+												class="form-group row"
+												v-slot="{ errors }"
+												v-if="fields.company_code">
 									<label class="col-sm-2 control-label text-right">
 										{{ $t('common.text.company_code') }}
 									</label>
@@ -34,11 +34,11 @@
 
 								<!--Name -->
 								<ValidationProvider
-									:name="$t('common.text.name')"
-									rules="required"
-									class="form-group row"
-									v-slot="{ errors }"
-									v-if="fields.name">
+												:name="$t('common.text.name')"
+												rules="required"
+												class="form-group row"
+												v-slot="{ errors }"
+												v-if="fields.name">
 									<label class="col-sm-2 control-label text-right">
 										{{ $t('common.text.name') }}
 									</label>
@@ -96,7 +96,7 @@
 					</form>
 				</ValidationObserver>
 			</div>
-			<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact" />
+			<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact"/>
 		</div>
 	</div>
 </template>
@@ -129,7 +129,8 @@
 			return {
 				// MUST DEFINE //
 				FormService: CompanyService,
-				fields: CompanyModel.fields()
+				FormModel: CompanyModel,
+				fields: CompanyModel.fields(),
 			}
 		},
 

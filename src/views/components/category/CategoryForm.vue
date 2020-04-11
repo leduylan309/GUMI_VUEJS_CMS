@@ -67,6 +67,7 @@
 <script>
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
+	import CategoryModel from '../../../models/category.model'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -87,6 +88,7 @@
 			return {
 				// MUST DEFINE //
 				FormService: CategoryService,
+				FormModel: CategoryModel,
 			}
 		},
 

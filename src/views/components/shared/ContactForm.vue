@@ -122,7 +122,6 @@
 <script>
 	// Prime
 	import InputText from 'primevue/inputtext'
-	import { ContactService } from '../../../api'
 
 	export default {
 		name: 'ContactForm',

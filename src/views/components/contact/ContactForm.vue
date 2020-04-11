@@ -149,6 +149,7 @@
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
 	import FormMixin from '../../../mixins/form.mixin'
+	import ContactModel from '../../../models/contact.model'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
@@ -168,6 +169,7 @@
 			return {
 				// MUST DEFINE //
 				FormService: ContactService,
+				FormModel: ContactModel,
 			}
 		},
 	}

@@ -24,11 +24,11 @@ export default {
 
       if (ID) {
         await this.FormService.update(ID, this.item).then(() => {
-          this.onSuccess()
+          this.onSuccessUpdate()
         })
       } else {
         await this.FormService.create(this.item).then(() => {
-          this.onSuccess()
+          this.onSuccessCreate()
         })
       }
     },
@@ -49,10 +49,20 @@ export default {
     },
 
     /**
-     * Success create & update
+     * Success create
      */
-    onSuccess () {
-      // save model
+    onSuccessCreate () {
+      this.FormModel.insert({
+        data: this.item
+      }).then(() => {
+        this.onRedirect().then(r => {})
+      })
+    },
+
+    /**
+     * Success Update
+     */
+    onSuccessUpdate () {
       this.item.$save().then(() => {
         this.onRedirect().then(r => {})
       })

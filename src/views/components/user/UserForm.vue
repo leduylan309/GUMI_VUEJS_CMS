@@ -241,6 +241,8 @@
 			return {
 				// MUST DEFINE //
 				FormService: UserService,
+				FormModel: UserModel,
+
 				genders: ['male', 'female'],
 				fields: UserModel.fields(),
 			}
