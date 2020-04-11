@@ -73,7 +73,7 @@
 									>
 										<template #filter>
 											<Calendar class="p-column-filter"
-																v-model="filters.created_at"
+																v-model="created_at"
 																:dateFormat="`${dateTimeFormat}`"
 																selectionMode="range"
 																icon="pi pi-calendar"
@@ -131,7 +131,12 @@
 <script>
 	import { StatusCommon } from '../../../enum/common.enum'
 	import ContentHeader from '../../components/shared/ContentHeader'
-	import { convertQueryFilterToString } from '../../../utils/filter'
+	import {
+		convertParamsAndFilterToString,
+		convertQueryFilterToString,
+		convertToDateRangeCalendar,
+	} from '../../../utils/filter'
+	import moment from 'moment'
 
 	// Prime
 	import Column from 'primevue/column'
@@ -139,6 +144,7 @@
 	import Paginator from 'primevue/paginator'
 	import Dropdown from 'primevue/dropdown'
 	import Calendar from 'primevue/calendar'
+	import * as _ from 'lodash'
 
 	export default {
 		name: 'TableList',
@@ -155,11 +161,14 @@
 		data () {
 			return {
 				loading: false,
-				filters: {},
+				filters: { ...this.$route.query },
 				status: StatusCommon,
 				dateTimeFormat: 'yy/mm/dd',
 				fields: this.pageModel.fields(),
 				columns: this.pageModel.columns,
+
+				// define data for calendar
+				created_at: convertToDateRangeCalendar(this.$route.query.created_at),
 			}
 		},
 
@@ -196,6 +205,18 @@
 
 				return this.$store.state.entities[this.pageName].paginator
 			},
+
+			dateFromRoute () {
+				const dateFromRoute = _.split(this.$route.query.created_at, ',') || []
+
+				if (dateFromRoute.length) {
+					return _.map(dateFromRoute, (value, key) => {
+						return new Date(value)
+					})
+				}
+
+				return dateFromRoute
+			},
 		},
 
 		methods: {
@@ -207,6 +228,7 @@
 					..._.cloneDeep(this.$route.query),
 					...inputParams,
 				}
+
 				// replace url every actions
 				this.replaceUrl(params)
 
@@ -218,12 +240,15 @@
 			 * @param params
 			 */
 			replaceUrl (params) {
-				const queries = {
-					...convertQueryFilterToString(params),
-					...this.filters,
-				}
+				// const queries = {...convertQueryFilterToString(params), ...this.filters}
+				//
+				// this.$router.replace({query: queries})
 
-				this.$router.replace({ query: queries }).catch(() => {})
+				const queriesMapped = _.transform(this.filters, (result, value, key) => {
+					return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
+				})
+
+				this.$router.replace(`?${ convertParamsAndFilterToString(queriesMapped) }`).catch(() => {})
 			},
 
 			/**
@@ -267,7 +292,16 @@
 			 * Function will filter by date
 			 */
 			onSelectCalendar (value) {
+				const date = moment(value).format('YYYY-MM-DD')
 
+				if (!this.created_at[1]) {
+					this.filters.created_at = { from: date }
+				} else {
+					this.filters.created_at = { ...this.filters.created_at, to: date }
+
+					// call api
+					return this.callGetList({ page: 1 })
+				}
 			},
 
 			/**
@@ -298,7 +332,3 @@
 		},
 	}
 </script>
-
-<style scoped>
-
-</style>

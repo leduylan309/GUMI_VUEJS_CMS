@@ -33,7 +33,9 @@ export const convertOnlyFilterToString = (keyName, Object) => {
 
   if (_.size(Object)) {
     _.forEach(Object, function (value, key) {
-      if (value) {
+      if (_.isObject(value)) {
+        filterString += `${ convertOnlyFilterToString(`${ keyName }[${ key }]`, value) }`
+      } else {
         filterString += `&${ keyName }[${ key }]=${ value }`
       }
     })
@@ -57,15 +59,51 @@ export const convertQueryFilterToString = (params) => {
 /**
  * @param currentQuery
  * @param defaultQuery
+ * @param columnsDateRange
  */
-export const convertQueryObjectFilter = (currentQuery = {}, defaultQuery = {}) => {
+export const convertQueryObjectFilter = (currentQuery = {}, defaultQuery = {}, columnsDateRange = []) => {
   const filters = _.omit(currentQuery, _.keys(defaultQuery))
   const params = _.pick(currentQuery, _.keys(defaultQuery))
 
   return {
     ...defaultQuery,
     ...params,
-    filters: filters
+    filters: mapFilterDateArray(filters, columnsDateRange)
+  }
+}
+
+/**
+ *
+ * @param filters
+ * @param columns
+ * @return {*}
+ */
+export const mapFilterDateArray = (filters, columns) => {
+  if (columns.length) {
+    const array = _.pick(filters, columns)
+
+    if (_.size(array)) {
+      _.forEach(array, (value, key) => {
+        filters[key] = setFromToFromString(value)
+      })
+
+    }
+  }
+
+  return filters
+}
+
+/**
+ *
+ * @param String
+ * @return {{from: *, to: *}}
+ */
+export const setFromToFromString = (String) => {
+  const dateArray = _.split(String, ',')
+
+  return {
+    from: dateArray[0] || '',
+    to: dateArray[1] || ''
   }
 }
 
@@ -79,5 +117,23 @@ export const convertQueryObjectFilter = (currentQuery = {}, defaultQuery = {}) =
 export const convertDateTimeForFilter = (date, format = 'YYYY/MM/DD', timezone = 'Asia/Tokyo') => {
   return _.map([...date], (val) => {
     return val ? moment(val).format(format) : null
+  })
+}
+
+/**
+ * convert string from router to date range
+ * @param dateString
+ * @param separator
+ * @return {*[]|Array}
+ */
+export const convertToDateRangeCalendar = (dateString, separator = ',') => {
+  const array = dateString ? _.split(dateString, separator) : []
+
+  if (!array.length) {
+    return []
+  }
+
+  return _.map(array, (value) => {
+    return new Date(value)
   })
 }

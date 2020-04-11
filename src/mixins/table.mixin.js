@@ -1,11 +1,16 @@
-import { convertQueryFilterToString, convertQueryObjectFilter } from '../utils/filter'
+import { convertParamsAndFilterToString, convertQueryFilterToString, convertQueryObjectFilter } from '../utils/filter'
 import { IROOTQUERY } from '../shared/store/state'
+import * as _ from 'lodash'
 
 export default {
   beforeRouteEnter (to, from, next) {
     next((vm) => {
       // map with route current url
-      const queries = convertQueryObjectFilter(to.query, IROOTQUERY)
+      const queries = convertQueryObjectFilter(
+        to.query,
+        IROOTQUERY,
+        vm.pageModel?.columnsDateRange
+      )
 
       Promise.all([
         vm.pageService.list(queries)
@@ -15,9 +20,15 @@ export default {
           ...queries.filters
         }
 
-        vm.$router.replace({ query: defaultQuery }).catch(() => {})
+        // // map filters to string
+        const queriesMapped = _.transform(defaultQuery, (result, value, key) => {
+          return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
+        })
+
+        vm.$router.replace(`?${ convertParamsAndFilterToString(defaultQuery) }`).catch(() => {})
+
         vm.filters = queries.filters
       })
     })
-  },
+  }
 }
