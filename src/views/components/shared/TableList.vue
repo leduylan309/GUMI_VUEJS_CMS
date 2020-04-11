@@ -125,6 +125,8 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Delete confirmation dialog -->
 		<Dialog header="Delete confirmation" :visible.sync="displayDialog" :style="{width: '50vw'}">
 			Are you sure to delete this item ?
 			<template #footer>
@@ -132,6 +134,8 @@
 				<Button label="No" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
 			</template>
 		</Dialog>
+
+		<!-- Success / Error message -->
 		<Toast></Toast>
 	</div>
 </template>
