@@ -13,6 +13,8 @@
 	import InputText from 'primevue/inputtext'
 	import InputSwitch from 'primevue/inputswitch'
 	import Password from 'primevue/password'
+	import UserModel from '../../../models/user.model'
+	import ContactModel from '../../../models/contact.model'
 
 	export default {
 		name: 'UserAdd',
@@ -27,7 +29,10 @@
 
 		data () {
 			return {
-				item: { contact: {} },
+				item: {
+					...new UserModel(),
+					contact: new ContactModel(),
+				},
 			}
 		},
 	}

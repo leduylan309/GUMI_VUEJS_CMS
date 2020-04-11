@@ -1,10 +1,16 @@
-.form-control {
-  &.p-inputtext{
-    border: 1px solid $gray-400;
+form {
+  .is-invalid {
+    border-color: $red !important;
 
-    &.is-invalid {
-      border-color: $red;
+    input {
+      border-color: $red !important;
     }
+  }
+}
+
+.form-control {
+  &.p-inputtext {
+    border: 1px solid $gray-400;
   }
 
   &.p-dropdown {
@@ -22,10 +28,6 @@
 
     .p-dropdown-filter-container {
       display: block;
-    }
-
-    &.is-invalid {
-      border-color: $red;
     }
   }
 
@@ -50,10 +52,6 @@
     .p-dropdown-filter-container {
       display: block;
     }
-
-    &.is-invalid {
-      border-color: $red;
-    }
   }
 
   &.p-autocomplete {
@@ -72,15 +70,11 @@
         }
       }
     }
-
-    &.is-invalid {
-      border-color: $red;
-    }
   }
 }
 
 .control-label {
-  &.text-right{
+  &.text-right {
     @media #{$info-phone} {
       text-align: left !important;
     }

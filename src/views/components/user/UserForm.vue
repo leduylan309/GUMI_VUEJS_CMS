@@ -4,10 +4,11 @@
 			<!-- Header Table -->
 			<ContentHeader :title="title"/>
 
-			<!-- Content Table -->
-			<div class="content">
-				<ValidationObserver v-slot="{ handleSubmit }">
-					<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
+			<ValidationObserver v-slot="{ handleSubmit }">
+				<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
+
+					<!-- Content Table -->
+					<div class="content">
 						<div class="card">
 							<div class="card-body">
 								<!-- First Name -->
@@ -196,12 +197,13 @@
 								</button>
 							</div>
 						</div>
-					</form>
-				</ValidationObserver>
-			</div>
+					</div>
 
-			<ContactForm :title="$t('contact.create_a_contact')"
-									 :item="item.contact"/>
+					<ContactForm :title="$t('contact.create_a_contact')"
+											 :item="item.contact"/>
+
+				</form>
+			</ValidationObserver>
 		</div>
 	</div>
 </template>

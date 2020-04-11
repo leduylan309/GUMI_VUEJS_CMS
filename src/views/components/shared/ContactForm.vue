@@ -4,7 +4,12 @@
 		<div class="card">
 			<div class="card-body">
 				<!-- Postal code -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.postal_code')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.postcode">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.postal_code') }}
 					</label>
@@ -13,12 +18,20 @@
 						<InputText class="form-control"
 											 v-model="item.postcode"
 											 :placeholder="$t('common.text.postal_code')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- City -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.city')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.city">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.city') }}
 					</label>
@@ -27,12 +40,20 @@
 						<InputText class="form-control"
 											 v-model="item.city"
 											 :placeholder="$t('common.text.city')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Address -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.address')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.address">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.address') }}
 					</label>
@@ -41,12 +62,20 @@
 						<InputText class="form-control"
 											 v-model="item.address"
 											 :placeholder="$t('common.text.address')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Freedial -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.freedial')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.free_dial">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.freedial') }}
 					</label>
@@ -55,12 +84,20 @@
 						<InputText class="form-control"
 											 v-model="item.free_dial"
 											 :placeholder="$t('common.text.freedial')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Phone -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.tel')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.tel">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.tel') }}
 					</label>
@@ -69,12 +106,20 @@
 						<InputText class="form-control"
 											 v-model="item.tel"
 											 :placeholder="$t('common.text.tel')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Fax -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.fax')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.fax">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.fax') }}
 					</label>
@@ -83,12 +128,20 @@
 						<InputText class="form-control"
 											 v-model="item.fax"
 											 :placeholder="$t('common.text.fax')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Email -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.email')"
+								rules="required|email"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.email">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.email') }}
 					</label>
@@ -97,12 +150,19 @@
 						<InputText class="form-control"
 											 v-model="item.email"
 											 :placeholder="$t('common.text.email')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 
 				<!-- Url -->
-				<div class="form-group row">
+				<ValidationProvider
+								:name="$t('common.text.website')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.website">
 					<label class="col-sm-2 control-label text-right">
 						{{ $t('common.text.website') }}
 					</label>
@@ -111,9 +171,11 @@
 						<InputText class="form-control"
 											 v-model="item.website"
 											 :placeholder="$t('common.text.website')"
+											 :class="{'is-invalid': errors.length }"
 						/>
+						<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 					</div>
-				</div>
+				</ValidationProvider>
 			</div>
 		</div>
 	</div>
@@ -122,6 +184,7 @@
 <script>
 	// Prime
 	import InputText from 'primevue/inputtext'
+	import ContactModel from '../../../models/contact.model'
 
 	export default {
 		name: 'ContactForm',
@@ -135,6 +198,12 @@
 
 		components: {
 			InputText,
+		},
+
+		data () {
+			return {
+				fields: ContactModel.fields(),
+			}
 		},
 	}
 </script>
