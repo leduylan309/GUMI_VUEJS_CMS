@@ -78,7 +78,7 @@
 																selectionMode="range"
 																icon="pi pi-calendar"
 																@date-select="onSelectCalendar"
-																:manualInput="false"/>
+																:manualInput="true"/>
 										</template>
 									</Column>
 
@@ -133,7 +133,7 @@
 	import ContentHeader from '../../components/shared/ContentHeader'
 	import {
 		convertParamsAndFilterToString,
-		convertQueryFilterToString,
+		convertQueryFilterToString, convertQueryObjectFilter,
 		convertToDateRangeCalendar,
 	} from '../../../utils/filter'
 	import moment from 'moment'
@@ -145,6 +145,7 @@
 	import Dropdown from 'primevue/dropdown'
 	import Calendar from 'primevue/calendar'
 	import * as _ from 'lodash'
+	import { IROOTQUERY } from '../../../shared/store/state'
 
 	export default {
 		name: 'TableList',
@@ -205,46 +206,20 @@
 
 				return this.$store.state.entities[this.pageName].paginator
 			},
-
-			dateFromRoute () {
-				const dateFromRoute = _.split(this.$route.query.created_at, ',') || []
-
-				if (dateFromRoute.length) {
-					return _.map(dateFromRoute, (value, key) => {
-						return new Date(value)
-					})
-				}
-
-				return dateFromRoute
-			},
 		},
 
 		methods: {
-			/**
-			 * @param inputParams
-			 */
-			setQueries (inputParams) {
-				const params = {
-					..._.cloneDeep(this.$route.query),
-					...inputParams,
-				}
-
-				// replace url every actions
-				this.replaceUrl(params)
-
-				return params
-			},
-
 			/**
 			 * replace URL every actions in list table
 			 * @param params
 			 */
 			replaceUrl (params) {
-				// const queries = {...convertQueryFilterToString(params), ...this.filters}
-				//
-				// this.$router.replace({query: queries})
+				const queries = {
+					...convertQueryFilterToString(params),
+					...this.filters,
+				}
 
-				const queriesMapped = _.transform(this.filters, (result, value, key) => {
+				const queriesMapped = _.transform(queries, (result, value, key) => {
 					return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
 				})
 
@@ -311,13 +286,16 @@
 			async callGetList (params) {
 				this.loading = true
 
-				const queries = this.setQueries({
+				const queries = {
+					...convertQueryObjectFilter(this.filters, IROOTQUERY),
 					...params,
-					filters: this.filters,
-				})
+				}
 
 				return this.pageService.list(queries).then(() => {
 					this.loading = false
+
+					// replace url every actions
+					this.replaceUrl(queries)
 				})
 			},
 

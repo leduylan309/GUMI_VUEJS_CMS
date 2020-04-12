@@ -12,6 +12,7 @@ export default {
         vm.pageModel?.columnsDateRange
       )
 
+      // call api
       Promise.all([
         vm.pageService.list(queries)
       ]).then(() => {
@@ -20,13 +21,12 @@ export default {
           ...queries.filters
         }
 
-        // // map filters to string
+        // map filters to string
         const queriesMapped = _.transform(defaultQuery, (result, value, key) => {
           return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
         })
 
-        vm.$router.replace(`?${ convertParamsAndFilterToString(defaultQuery) }`).catch(() => {})
-
+        vm.$router.replace(`?${ convertParamsAndFilterToString(queriesMapped) }`).catch(() => {})
         vm.filters = queries.filters
       })
     })
