@@ -147,23 +147,14 @@
 
 <script>
 	// Components
-	import ContentHeader from '../../components/shared/ContentHeader'
 	import FormMixin from '../../../mixins/form.mixin'
 	import ContactModel from '../../../models/contact.model'
-
-	// Prime
-	import InputText from 'primevue/inputtext'
 	import { ContactService } from '../../../api'
 
 	export default {
 		name: 'ContactForm',
 
 		mixins: [FormMixin],
-
-		components: {
-			ContentHeader,
-			InputText,
-		},
 
 		data () {
 			return {

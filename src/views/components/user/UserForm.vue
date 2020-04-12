@@ -189,6 +189,16 @@
 									<span>{{ $t('common.button.cancel') }}</span>
 								</button>
 
+								<template v-if="$route.params.id">
+									<button type="button"
+													class="btn btn-danger float-right"
+													@click="displayDialog = true">
+										<i class="pi pi-trash"/>
+
+										<span>{{ $t('common.button.delete') }}</span>
+									</button>
+								</template>
+
 								<button type="submit"
 												class="btn btn-success float-right mr-1">
 									<i class="pi pi-save"/>
@@ -205,12 +215,28 @@
 				</form>
 			</ValidationObserver>
 		</div>
+
+		<!-- Delete confirmation dialog -->
+		<Dialog v-if="$route.params.id"
+						:header="$t('common.alert.delete_header')"
+						:visible.sync="displayDialog"
+						:style="{width: '50vw'}"
+						:modal="true">
+			{{ $t('common.alert.delete_content') }}
+
+			<template #footer>
+				<Button :label="$t('common.yes')" icon="pi pi-check" @click="onDelete($route.params.id)"/>
+				<Button :label="$t('common.no')" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
+			</template>
+		</Dialog>
+
+		<!-- Success / Error message -->
+		<Toast></Toast>
 	</div>
 </template>
 
 <script>
 	// Components
-	import ContentHeader from '../../components/shared/ContentHeader'
 	import UserModel from '../../../models/user.model'
 	import FormMixin from '../../../mixins/form.mixin'
 	import { UserService } from '../../../api'
@@ -218,7 +244,6 @@
 	import moment from 'moment'
 
 	// Prime
-	import InputText from 'primevue/inputtext'
 	import InputSwitch from 'primevue/inputswitch'
 	import Password from 'primevue/password'
 	import Dropdown from 'primevue/dropdown'
@@ -230,8 +255,6 @@
 		mixins: [FormMixin],
 
 		components: {
-			ContentHeader,
-			InputText,
 			InputSwitch,
 			Password,
 			Dropdown,

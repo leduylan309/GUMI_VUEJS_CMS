@@ -1,4 +1,3 @@
-import { IROOTQUERY } from '../shared/store/state'
 import RoleModel from '../models/company.model'
 
 // define

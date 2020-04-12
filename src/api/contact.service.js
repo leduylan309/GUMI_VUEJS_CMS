@@ -1,8 +1,7 @@
-import { IROOTQUERY } from '../shared/store/state'
 import ContactModel from '../models/contact.model'
 
 // define
-const BaseUrl = 'contacts/'
+const BaseUrl = 'contacts'
 
 // define DataTransformer
 const dataTransformer = ({ data, status = null }) => {

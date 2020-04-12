@@ -256,6 +256,16 @@
 								<span>{{ $t('common.button.cancel') }}</span>
 							</button>
 
+							<template v-if="$route.params.id">
+								<button type="button"
+												class="btn btn-danger float-right"
+												@click="displayDialog = true">
+									<i class="pi pi-trash"/>
+
+									<span>{{ $t('common.button.delete') }}</span>
+								</button>
+							</template>
+
 							<button type="submit"
 											class="btn btn-success float-right mr-1">
 								<i class="pi pi-save"/>
@@ -267,29 +277,42 @@
 				</form>
 			</ValidationObserver>
 		</div>
-		<pre>{{ item }}</pre>
-		<pre>{{ title }}</pre>
+
+		<!-- Delete confirmation dialog -->
+		<Dialog v-if="$route.params.id"
+						:header="$t('common.alert.delete_header')"
+						:visible.sync="displayDialog"
+						:style="{width: '50vw'}"
+						:modal="true">
+			{{ $t('common.alert.delete_content') }}
+
+			<template #footer>
+				<Button :label="$t('common.yes')" icon="pi pi-check" @click="onDelete($route.params.id)"/>
+				<Button :label="$t('common.no')" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
+			</template>
+		</Dialog>
+
+		<!-- Success / Error message -->
+		<Toast></Toast>
 	</div>
 </template>
 
 <script>
 	// Components
-	import ContentHeader from '../../components/shared/ContentHeader'
 	import PostModel from '../../../models/post.model'
+	import CategoryModel from '../../../models/category.model'
 	import moment from 'moment'
-	import { CategoryService, PostService } from '../../../api'
 	import FormMixin from '../../../mixins/form.mixin'
+	import { IROOTQUERY } from '../../../shared/store/state'
+	import { CategoryService, PostService } from '../../../api'
 
 	// Prime
-	import InputText from 'primevue/inputtext'
 	import Editor from 'primevue/editor'
 	import FileUpload from 'primevue/fileupload'
 	import Dropdown from 'primevue/dropdown'
 	import MultiSelect from 'primevue/multiselect'
 	import Calendar from 'primevue/calendar'
 	import AutoComplete from 'primevue/autocomplete'
-	import { IROOTQUERY } from '../../../shared/store/state'
-	import CategoryModel from '../../../models/category.model'
 
 	export default {
 		name: 'PostForm',
@@ -304,8 +327,6 @@
 		},
 
 		components: {
-			ContentHeader,
-			InputText,
 			Editor,
 			FileUpload,
 			Dropdown,
@@ -329,21 +350,25 @@
 		computed: {
 			publish_from: {
 				get () {
-					return new Date(this.item.publish_from)
+					return this.item.publish_from ? new Date(this.item.publish_from) : new Date()
 				},
 
 				set (value) {
 					this.item.publish_from = moment(value).format(this.dateTimeFormat)
+
+					return value
 				},
 			},
 
 			publish_to: {
 				get () {
-					return new Date(this.item.publish_to)
+					return this.item.publish_to ? new Date(this.item.publish_to) : new Date()
 				},
 
 				set (value) {
 					this.item.publish_to = moment(value).format(this.dateTimeFormat)
+
+					return value
 				},
 			},
 

@@ -1,4 +1,22 @@
+import ContentHeader from '../views/components/shared/ContentHeader'
+
+//prime
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import Toast from 'primevue/toast'
+import InputText from 'primevue/inputtext'
+
 export default {
+  components: {
+    ContentHeader,
+
+    // prime
+    InputText,
+    Dialog,
+    Button,
+    Toast
+  },
+
   props: {
     listName: {
       type: String,
@@ -12,6 +30,12 @@ export default {
       type: String,
       require: true,
       default: () => 'Form'
+    }
+  },
+
+  data () {
+    return {
+      displayDialog: false
     }
   },
 
@@ -31,6 +55,25 @@ export default {
           this.onSuccessCreate()
         })
       }
+    },
+
+    /**
+     *
+     * @param ID
+     * @return {Promise<Response>}
+     */
+    async onDelete (ID) {
+      return await this.FormService.delete(ID).then(() => {
+        // delete Item
+        this.FormModel.query().find(ID).$delete()
+
+        this.onRedirect().then(r => {})
+      }).catch((err) => {
+        this.$toast.add({
+          severity: this.$t('common.alert.delete_title_error'),
+          summary: this.$t('common.alert.delete_message_successfully')
+        })
+      })
     },
 
     /**

@@ -84,6 +84,16 @@
 									<span>{{ $t('common.button.cancel') }}</span>
 								</button>
 
+								<template v-if="$route.params.id">
+									<button type="button"
+													class="btn btn-danger float-right"
+													@click="displayDialog = true">
+										<i class="pi pi-trash"/>
+
+										<span>{{ $t('common.button.delete') }}</span>
+									</button>
+								</template>
+
 								<button type="button"
 												class="btn btn-success float-right mr-1"
 												@click="onSubmit">
@@ -98,18 +108,33 @@
 			</div>
 			<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact"/>
 		</div>
+
+		<!-- Delete confirmation dialog -->
+		<Dialog v-if="$route.params.id"
+						:header="$t('common.alert.delete_header')"
+						:visible.sync="displayDialog"
+						:style="{width: '50vw'}"
+						:modal="true">
+			{{ $t('common.alert.delete_content') }}
+
+			<template #footer>
+				<Button :label="$t('common.yes')" icon="pi pi-check" @click="onDelete($route.params.id)"/>
+				<Button :label="$t('common.no')" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
+			</template>
+		</Dialog>
+
+		<!-- Success / Error message -->
+		<Toast></Toast>
 	</div>
 </template>
 
 <script>
 	// Components
-	import ContentHeader from '../../components/shared/ContentHeader'
 	import FormMixin from '../../../mixins/form.mixin'
 	import CompanyModel from '../../../models/company.model'
 	import ContactForm from '../shared/ContactForm'
 
 	// Prime
-	import InputText from 'primevue/inputtext'
 	import FileUpload from 'primevue/fileupload'
 	import { CompanyService } from '../../../api'
 
@@ -120,8 +145,6 @@
 
 		components: {
 			ContactForm,
-			ContentHeader,
-			InputText,
 			FileUpload,
 		},
 
