@@ -1,91 +1,97 @@
 export default {
   // Common
   common: {
-    select_lang: 'Languages',
-    login: 'Sign In',
-    global_search: 'Global Search',
-    settings: 'settings',
-    events: 'events',
     add_new: 'Add New',
-    yes: 'Yes',
+    events: 'events',
+    global_search: 'Global Search',
+    login: 'Sign In',
     no: 'No',
+    select_lang: 'Languages',
+    settings: 'settings',
+    yes: 'Yes',
 
     // FOR BUTTON
     button: {
       add: 'Add',
-      save: 'Save',
       cancel: 'Cancel',
-      reset: 'Reset',
       delete: 'Delete',
-      edit: 'Edit'
+      edit: 'Edit',
+      reset: 'Reset',
+      save: 'Save'
     },
 
     // FOR NORMAL TEXT
     text: {
-      name: 'Name',
-      username: 'Username',
-      email: 'Email',
-      password: 'Password',
-      confirm_password: 'Confirm Password',
-      permission: 'Permission',
       activate: 'Activate',
-      select_image: 'Please select image',
-      select_category: 'Please select category',
-      company_code: 'Company code',
-      postal_code: 'Postal code',
-      city: 'City',
       address: 'Address',
-      freedial: 'Free dial',
-      phone: 'Phone',
-      fax: 'Fax',
-      tel: 'Tel',
-      url: 'Homepage url',
-      from: 'from',
-      to: 'to',
-      display_name: 'Display name',
-      description: 'Description',
-      role: 'Role',
-      website: 'Website',
-      first_name: 'First Name',
-      last_name: 'Last Name',
       birthday: 'Birthday',
-      gender: 'Gender'
+      city: 'City',
+      company_code: 'Company code',
+      confirm_password: 'Confirm Password',
+      description: 'Description',
+      display_name: 'Display name',
+      email: 'Email',
+      fax: 'Fax',
+      first_name: 'First Name',
+      freedial: 'Free dial',
+      from: 'from',
+      gender: 'Gender',
+      last_name: 'Last Name',
+      name: 'Name',
+      password: 'Password',
+      permission: 'Permission',
+      phone: 'Phone',
+      postal_code: 'Postal code',
+      role: 'Role',
+      select_category: 'Please select category',
+      select_image: 'Please select image',
+      tel: 'Tel',
+      to: 'to',
+      url: 'Homepage url',
+      username: 'Username',
+      website: 'Website'
     },
 
     // FOR TABLE
     table: {
-      id: 'ID',
-      name: 'Name',
-      display_name: 'Display Name',
-      first_name: 'First Name',
-      last_name: 'Last Name',
-      username: 'Username',
-      title: 'Title',
-      slug: 'Slug',
-      email: 'Email',
-      gender: 'Gender',
       birthday: 'Birthday',
-      image: 'Image',
+      city: 'City',
       code: 'Code',
-      prefecture: 'Prefecture',
-      prefecture_id: 'Prefecture',
-      status: 'Status',
-      categories: 'Categories',
-      category_code: 'Category Code',
-      category_type: 'Category Type',
+      content: 'Content',
       created_at: 'Created At',
       created_by: 'Created By',
-      content: 'Content',
-      city: 'City',
-      tel: 'Tel',
+      description: 'Description',
+      display_name: 'Display Name',
+      display_order: 'Display Order',
+      email: 'Email',
+      first_name: 'First Name',
+      gender: 'Gender',
+      id: 'ID',
+      image: 'Image',
+      last_name: 'Last Name',
+      name: 'Name',
+      no_records_found: 'No records found.',
       order: 'Order',
-      updated_at: 'Updated At',
+      postcode: 'Postcode',
       publish: 'Publish',
       publish_from: 'publish_from',
       publish_to: 'publish_to',
-      description: 'Description',
-      postcode: 'Postcode',
-      no_records_found: 'No records found.'
+      slug: 'Slug',
+      status: 'Status',
+      tel: 'Tel',
+      title: 'Title',
+      updated_at: 'Updated At',
+      username: 'Username',
+
+      // category
+      categories: 'Categories',
+      category_code: 'Category Code',
+      category_type: 'Category Type',
+
+      // prefecture
+      prefecture: 'Prefecture',
+      prefecture_id: 'Prefecture',
+      prefecture_code: 'Prefecture Code'
     },
 
     //  FOR ALERT
@@ -107,60 +113,67 @@ export default {
 
   // Login Page
   login: {
-    title: '<strong> SIGN IN</strong> TO DASHBOARD',
-    welcome: 'Welcome, please use the form to sign-in.',
-    username_placeholder: 'Username',
     password_placeholder: 'Password',
-    wrong_username_password: 'Error!!! You have entered incorrect username or password.',
-    remember_me: 'Remember Me'
+    remember_me: 'Remember Me',
+    title: '<strong> SIGN IN</strong> TO DASHBOARD',
+    username_placeholder: 'Username',
+    welcome: 'Welcome, please use the form to sign-in.',
+    wrong_username_password: 'Error!!! You have entered incorrect username or password.'
   },
 
   // Admin Page
   admin: {
-    title_list_page: 'List of admins',
     create_an_admin: 'Create an admin',
-    edit_admin: 'Edit admin'
+    edit_admin: 'Edit admin',
+    title_list_page: 'List of admins'
   },
 
   // Admin Page
   user: {
-    title_list_page: 'List of users',
     create_an_user: 'Create an user',
-    edit_user: 'Edit user'
+    edit_user: 'Edit user',
+    title_list_page: 'List of users'
   },
 
   // Post Page
   post: {
-    title_list_page: 'List of posts',
     create_a_post: 'Create a post',
-    edit_post: 'Edit post'
+    edit_post: 'Edit post',
+    title_list_page: 'List of posts'
   },
 
   // Company Page
   company: {
-    title_list_page: 'List of Companies',
     create_a_company: 'Create an Company',
-    edit_company: 'Edit Company'
+    edit_company: 'Edit Company',
+    title_list_page: 'List of Companies'
   },
 
   // Category Page
   category: {
-    title_list_page: 'List of categories',
     create_a_category: 'Create a category',
-    edit_category: 'Edit category'
+    edit_category: 'Edit category',
+    title_list_page: 'List of categories'
   },
 
   // Role Page
   role: {
-    title_list_page: 'List of roles',
     create_a_role: 'Create a role',
-    edit_role: 'Edit role'
+    edit_role: 'Edit role',
+    title_list_page: 'List of roles'
   },
 
   // Contact Page
   contact: {
-    title_list_page: 'List of contacts',
     create_a_contact: 'Create a contact',
-    edit_contact: 'Edit contact'
+    edit_contact: 'Edit contact',
+    title_list_page: 'List of contacts'
+  },
+
+  // Prefecture Page
+  prefecture: {
+    create_a_prefecture: 'Create a prefecture',
+    edit_prefecture: 'Edit prefecture',
+    title_list_page: 'List of prefectures'
   }
 }

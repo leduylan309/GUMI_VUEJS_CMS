@@ -11,6 +11,7 @@ import UserRoute from './user'
 import PostRoute from './post'
 import CompanyRoute from './company'
 import ContactRoute from './contact'
+import PrefectureRoute from './prefecture'
 import CategoryRoute from './category'
 import RoleRoute from './role'
 
@@ -30,6 +31,7 @@ const main = {
     PostRoute,
     CompanyRoute,
     ContactRoute,
+    PrefectureRoute
     // CategoryRoute,
     // RoleRoute
   ]

@@ -1,6 +1,6 @@
 form {
   .is-invalid {
-    border-color: $red !important;
+    border: 1px solod $red !important;
 
     input {
       border-color: $red !important;
