@@ -66,38 +66,10 @@ export const PrefectureService = {
     const params = {
       ...queries
     }
-    console.log(params)
+
     return await PrefectureModel.api().get(`${ BaseUrl }/${ ID }`, {
       params,
       dataTransformer
     })
   },
-
-  /**
-   * update prefecture
-   * @param ID
-   * @param data
-   * @return {Promise<Response>}
-   */
-  async update (ID, data = {}) {
-    return await PrefectureModel.api().put(`${ BaseUrl }/${ ID }`, data)
-  },
-
-  /**
-   * create post
-   * @param data
-   * @return {Promise<Response>}
-   */
-  async create (data = {}) {
-    return await PrefectureModel.api().post(`${ BaseUrl }`, data)
-  },
-
-  /**
-   * delete prefecture
-   * @return {Promise<Response>}
-   * @param id
-   */
-  async delete (id) {
-    return await PrefectureModel.api().delete(`${ BaseUrl }/${ id }`)
-  }
 }
