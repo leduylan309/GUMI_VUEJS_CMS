@@ -54,7 +54,7 @@
 
 								</div>
 
-								</ValidationProvider>
+							</ValidationProvider>
 
 							<div class="row">
 								<div class="col-12">
@@ -62,7 +62,7 @@
 													class="btn btn-primary btn-block"
 													icon="pi pi-check"
 													type="submit"
-													/>
+									/>
 								</div>
 								<!-- /.col -->
 							</div>
@@ -76,10 +76,8 @@
 </template>
 
 <script>
-	import Vue from 'vue'
 	import { LoginService } from '../../api'
 	import router from '../../router'
-	import LoginModel from '../../models/login.model'
 
 	// Component
 	import InputText from 'primevue/inputtext'
@@ -102,21 +100,16 @@
 		},
 
 		methods: {
-			async onSubmit () {
+			onSubmit () {
 				const inputData = {
 					username: this.loginEmail,
 					password: this.loginPassword,
 				}
 
-				return await LoginService.login(inputData).then(response => {
-					const { token, exp } = LoginModel.query().first()
-
-					// set token to cookie
-					Vue.$cookies.set('token', token, exp)
-
+				return LoginService.login(inputData).then(() => {
 					router.push({ name: 'Dashboard' })
 				}).catch(error => {
-					const { config, response } = error
+					const { response } = error
 
 					if (response && response.status === 401) {
 						this.loginFail = true
