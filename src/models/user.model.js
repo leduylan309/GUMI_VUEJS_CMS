@@ -11,7 +11,7 @@ export default class UserModel extends BaseModel {
       id: this.uid(),
       first_name: this.string(null),
       last_name: this.string(null),
-      email: this.string(null),
+      email: this.string(''),
       birthday: this.string(new Date()).nullable(),
       gender: this.string(null),
       password: this.string(''),
