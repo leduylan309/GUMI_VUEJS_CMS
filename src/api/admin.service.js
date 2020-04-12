@@ -1,5 +1,4 @@
 import AdminModel from '../models/admin.model'
-import { IROOTQUERY } from '../shared/store/state'
 import { AuthService } from './auth.service'
 
 // define
@@ -80,7 +79,7 @@ export const AdminService = {
   },
 
   /**
-   * create post
+   * create admin
    * @param data
    * @return {Promise<Response>}
    */
@@ -88,5 +87,14 @@ export const AdminService = {
     data.created_by = data.updated_by = AuthService.current_user().id
 
     return await AdminModel.api().post(`${ BaseUrl }`, data)
+  },
+
+  /**
+   * delete admin
+   * @return {Promise<Response>}
+   * @param id
+   */
+  async delete (id) {
+    return await AdminModel.api().delete(`${ BaseUrl }/${ id }`)
   }
 }

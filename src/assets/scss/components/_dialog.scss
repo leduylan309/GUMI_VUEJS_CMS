@@ -1,0 +1,7 @@
+.wrapper {
+  .p-component-overlay {
+    &.p-dialog-mask {
+      z-index: 1035 !important;
+    }
+  }
+}

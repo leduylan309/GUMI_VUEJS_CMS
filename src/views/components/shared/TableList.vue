@@ -94,7 +94,7 @@
 												</button>
 
 												<button class="btn btn-sm btn-danger"
-																@click="onEdit(slotProps.data.id)"
+																@click="onDisplayDialog(slotProps.data.id)"
 																v-tooltip.top="$t('common.button.delete')"
 												>
 													<i class="pi pi-trash"/>
@@ -125,6 +125,20 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Delete confirmation dialog -->
+		<Dialog :header="$t('common.alert.delete_header')" :visible.sync="displayDialog" :style="{width: '50vw'}"
+						:modal="true">
+			{{ $t('common.alert.delete_content') }}
+
+			<template #footer>
+				<Button :label="$t('common.yes')" icon="pi pi-check" @click="handleDelete"/>
+				<Button :label="$t('common.no')" icon="pi pi-times" @click="displayDialog = false" class="p-button-secondary"/>
+			</template>
+		</Dialog>
+
+		<!-- Success / Error message -->
+		<Toast></Toast>
 	</div>
 </template>
 
@@ -137,6 +151,8 @@
 		convertToDateRangeCalendar,
 	} from '../../../utils/filter'
 	import moment from 'moment'
+	import * as _ from 'lodash'
+	import { IROOTQUERY } from '../../../shared/store/state'
 
 	// Prime
 	import Column from 'primevue/column'
@@ -144,20 +160,12 @@
 	import Paginator from 'primevue/paginator'
 	import Dropdown from 'primevue/dropdown'
 	import Calendar from 'primevue/calendar'
-	import * as _ from 'lodash'
-	import { IROOTQUERY } from '../../../shared/store/state'
+	import Dialog from 'primevue/dialog'
+	import Button from 'primevue/button'
+	import Toast from 'primevue/toast'
 
 	export default {
 		name: 'TableList',
-
-		components: {
-			Column,
-			DataTable,
-			Paginator,
-			Dropdown,
-			Calendar,
-			ContentHeader,
-		},
 
 		data () {
 			return {
@@ -167,10 +175,23 @@
 				dateTimeFormat: 'yy/mm/dd',
 				fields: this.pageModel.fields(),
 				columns: this.pageModel.columns,
-
+				displayDialog: false,
+				selectedId: null,
 				// define data for calendar
 				created_at: convertToDateRangeCalendar(this.$route.query.created_at),
 			}
+		},
+
+		components: {
+			Toast,
+			Column,
+			DataTable,
+			Paginator,
+			Dropdown,
+			Calendar,
+			ContentHeader,
+			Dialog,
+			Button,
 		},
 
 		props: {
@@ -307,6 +328,48 @@
 			onEdit (ID) {
 				return this.$router.push(`/${ this.pageName }/${ ID }`)
 			},
+
+			/**
+			 * display dialog delete
+			 * @param ID
+			 * @return {Promise<Route>}
+			 */
+			onDisplayDialog (ID) {
+				this.displayDialog = true
+				this.selectedId = ID
+			},
+
+			/**
+			 * delete item
+			 * @return {Promise<Route>}
+			 */
+			handleDelete () {
+				return this.pageService.delete(this.selectedId).then(() => {
+					// delete Item
+					this.pageModel.query().find(this.selectedId).$delete()
+
+					// reset State
+					this.selectedId = null
+					this.displayDialog = false
+
+					// set toast
+					this.$toast.add({
+						severity: this.$t('common.alert.delete_title_successfully'),
+						summary: this.$t('common.alert.delete_message_successfully'),
+						life: 3000,
+					})
+
+					// call back api
+					// this.callGetList({ page: 1 })
+
+				}).catch((err) => {
+					this.$toast.add({
+						severity: this.$t('common.alert.delete_title_error'),
+						summary: this.$t('common.alert.delete_message_successfully'),
+					})
+				})
+			},
+
 		},
 	}
 </script>

@@ -7,7 +7,10 @@ export default {
     settings: 'settings',
     events: 'events',
     add_new: 'Add New',
+    yes: 'Yes',
+    no: 'No',
 
+    // FOR BUTTON
     button: {
       add: 'Add',
       save: 'Save',
@@ -17,6 +20,7 @@ export default {
       edit: 'Edit'
     },
 
+    // FOR NORMAL TEXT
     text: {
       name: 'Name',
       username: 'Username',
@@ -45,9 +49,10 @@ export default {
       first_name: 'First Name',
       last_name: 'Last Name',
       birthday: 'Birthday',
-      gender: 'Gender',
+      gender: 'Gender'
     },
 
+    // FOR TABLE
     table: {
       id: 'ID',
       name: 'Name',
@@ -81,6 +86,22 @@ export default {
       description: 'Description',
       postcode: 'Postcode',
       no_records_found: 'No records found.'
+    },
+
+    //  FOR ALERT
+    alert: {
+
+      /// delete ///
+      delete_header: 'Delete confirmation',
+      delete_content: 'Are you sure to delete this item ?',
+
+      // title
+      delete_title_successfully: 'success',
+      delete_title_error: 'error',
+
+      // Message
+      delete_message_successfully: 'Delete successfully',
+      delete_message_error: 'Delete successfully'
     }
   },
 
