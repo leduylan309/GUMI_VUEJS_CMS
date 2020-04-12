@@ -31,6 +31,28 @@
 								</div>
 							</ValidationProvider>
 
+							<!-- SLug - Url -->
+							<ValidationProvider
+											:name="$t('common.table.slug')"
+											rules="required"
+											class="form-group row"
+											v-slot="{ errors }"
+											v-if="fields.slug">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.slug') }}
+								</label>
+
+								<div class="col-sm-10">
+									<InputText class="form-control"
+														 v-model="item.slug"
+														 :placeholder="$t('common.table.slug')"
+														 :class="{'is-invalid': errors.length }"
+									/>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
 							<!-- Image -->
 							<ValidationProvider
 											:name="$t('common.table.image')"
@@ -58,21 +80,50 @@
 								</div>
 							</ValidationProvider>
 
-							<!-- Single Categories -->
+							<!-- AutoComplete Categories -->
 							<ValidationProvider
-											:name="$t('common.text.categories')"
+											:name="$t('common.table.categories')"
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="categories">
+											v-if="fields.categories && categories">
 								<label class="col-sm-2 control-label text-right">
-									{{ $t('common.text.categories') }}
+									{{ $t('common.table.categories') }}
+								</label>
+
+								<div class="col-sm-10">
+									<AutoComplete v-model="item.categories"
+																class="form-control"
+																:multiple="true"
+																:suggestions="listCategories"
+																:placeholder="$t('common.text.select_category')"
+																:class="{'is-invalid': errors.length }"
+																field="display_name"
+																@complete="onFilterForAutoComplete($event)">
+										<template #option="slotProps">
+											<span>{{slotProps.option.display_name}}</span>
+										</template>
+									</AutoComplete>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
+							<!-- Single Categories -->
+							<ValidationProvider
+											:name="$t('common.table.categories')"
+											rules="required"
+											class="form-group row"
+											v-slot="{ errors }"
+											v-if="fields.categories && categories">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.categories') }}
 								</label>
 
 								<div class="col-sm-10">
 									<Dropdown v-model="item.delivery_target.category_id"
 														class="form-control"
-														:multiple="true"
+														multiple="true"
 														optionLabel="display_name"
 														optionValue="id"
 														:options="categories"
@@ -91,12 +142,12 @@
 
 							<!-- Single Companies -->
 							<ValidationProvider
-											:name="$t('common.text.companies')"
+											:name="$t('common.table.companies')"
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }">
 								<label class="col-sm-2 control-label text-right">
-									{{ $t('common.text.companies') }}
+									{{ $t('common.table.companies') }}
 								</label>
 
 								<div class="col-sm-10">
@@ -121,13 +172,13 @@
 
 							<!-- Single Prefecture -->
 							<ValidationProvider
-											:name="$t('common.text.prefectures')"
+											:name="$t('common.table.prefectures')"
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
 											v-if="fields.prefectures && prefectures">
 								<label class="col-sm-2 control-label text-right">
-									{{ $t('common.text.prefectures') }}
+									{{ $t('common.table.prefectures') }}
 								</label>
 
 								<div class="col-sm-10">
@@ -137,7 +188,7 @@
 														optionLabel="display_name"
 														optionValue="id"
 														:options="prefectures"
-														:placeholder="$t('common.text.select_prefecture')"
+														:placeholder="$t('common.text.select_company')"
 														:filter="true"
 														:showClear="true"
 														:class="{'is-invalid': errors.length }">
@@ -145,6 +196,36 @@
 											<span>{{slotProps.option.display_name}}</span>
 										</template>
 									</Dropdown>
+
+									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								</div>
+							</ValidationProvider>
+
+							<!-- Multiple Categories -->
+							<ValidationProvider
+											:name="$t('common.table.categories')"
+											rules=""
+											class="form-group row"
+											v-slot="{ errors }"
+											v-if="fields.categories && categories">
+								<label class="col-sm-2 control-label text-right">
+									{{ $t('common.table.categories') }}
+								</label>
+
+								<div class="col-sm-10">
+									<MultiSelect v-model="item.category_id"
+															 class="form-control"
+															 optionLabel="display_name"
+															 optionValue="id"
+															 :options="categories"
+															 :placeholder="$t('common.text.select_category')"
+															 :filter="true"
+															 :showClear="true"
+															 :class="{'is-invalid': errors.length }">
+										<template #option="slotProps">
+											<span>{{slotProps.option.display_name}}</span>
+										</template>
+									</MultiSelect>
 
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 								</div>
@@ -274,8 +355,6 @@
 
 		<!-- Success / Error message -->
 		<Toast></Toast>
-
-		<pre>{{ item }}</pre>
 	</div>
 </template>
 
@@ -297,7 +376,7 @@
 	import AutoComplete from 'primevue/autocomplete'
 
 	export default {
-		name: 'PostForm',
+		name: 'CommonSampleForm',
 
 		mixins: [FormMixin],
 

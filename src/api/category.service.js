@@ -33,6 +33,16 @@ const dataTransformer = ({ data, status = null }) => {
 
 export const CategoryService = {
   /**
+   * get all categories
+   * @return {Promise<Response>}
+   */
+  async all () {
+    return await CategoryModel.api().get(`${ BaseUrl }`, {
+      dataTransformer,
+    })
+  },
+
+  /**
    * load list
    * @param queries
    * @return {Promise<Response>}
@@ -40,12 +50,12 @@ export const CategoryService = {
   async list (queries = {}) {
     const params = {
       ...CategoryModel.state().queryParams,
-      ...queries
+      ...queries,
     }
 
     return await CategoryModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer
+      dataTransformer,
     })
   },
 
@@ -57,12 +67,12 @@ export const CategoryService = {
    */
   async item (ID, queries = {}) {
     const params = {
-      ...queries
+      ...queries,
     }
 
     return await CategoryModel.api().get(`${ BaseUrl }/${ ID }`, {
       ...params,
-      dataTransformer
+      dataTransformer,
     })
   },
 
@@ -87,5 +97,5 @@ export const CategoryService = {
     data.created_by = AuthService.current_user().id
 
     return await CategoryModel.api().post(`${ BaseUrl }`, data)
-  }
+  },
 }

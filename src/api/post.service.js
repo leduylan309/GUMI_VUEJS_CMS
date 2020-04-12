@@ -64,7 +64,7 @@ export const PostService = {
     }
 
     return await PostModel.api().get(`${ BaseUrl }/${ ID }`, {
-      ...params,
+      params,
       dataTransformer
     })
   },
