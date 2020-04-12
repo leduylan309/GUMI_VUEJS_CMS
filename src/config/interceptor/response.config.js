@@ -14,12 +14,12 @@ export const axiosInterceptorResponseError = (error) => {
   if (!axios.isCancel(error) && error) {
     const { config, response: { status } } = error
 
-    // remove request pending
-    AxiosRemovePending(config)
-
     if (status === 401) {
       return router.push({ name: 'Login' })
     }
+
+    // remove request pending
+    AxiosRemovePending(config)
 
     return Promise.reject(error)
   } else {

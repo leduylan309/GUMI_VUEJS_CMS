@@ -339,6 +339,11 @@
 			}
 		},
 
+		created () {
+			// define if delivery_target is null
+			this.item.delivery_target = this.item.delivery_target || {}
+		},
+
 		computed: {
 			publish_from: {
 				get () {
