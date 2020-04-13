@@ -3,5 +3,50 @@
 
   .content-wrapper {
     padding-bottom: 80px;
+
+    .content-section {
+      display: block;
+      padding: 30px;
+      background: #fff;
+
+      &.introduction {
+        color: #fff;
+        background-color: #455c71;
+        background-image: -webkit-gradient(linear,left top,right top,from(#455c71),to(#526f89));
+        background-image: linear-gradient(90deg,#455c71,#526f89);
+
+        .feature-intro {
+          h1 {
+            font-size: 28px;
+            margin: 0 0 20px 0;
+            display: block;
+            text-align: left;
+            color: #fff;
+            font-weight: 400;
+          }
+
+          p {
+            margin: 0;
+            line-height: 2em;
+            font-size: 16px;
+            color: #fff;
+          }
+        }
+      }
+
+      &.implementation > h3 {
+        font-weight: 400;
+        margin-top: 30px;
+        font-size: 18px;
+      }
+
+      &.implementation {
+        .p-col-12 > h3 {
+          font-weight: 400;
+          margin-top: 30px;
+          font-size: 18px;
+        }
+      }
+    }
   }
 }

@@ -13,6 +13,7 @@ import CompanyRoute from './company'
 import ContactRoute from './contact'
 import CategoryRoute from './category'
 import RoleRoute from './role'
+import ExampleRoute from './example'
 
 const main = {
   path: '',
@@ -30,6 +31,7 @@ const main = {
     PostRoute,
     CompanyRoute,
     ContactRoute,
+    ExampleRoute
     // CategoryRoute,
     // RoleRoute
   ]
