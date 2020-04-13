@@ -54,7 +54,8 @@ export default {
       to: 'to',
       url: 'Homepage url',
       username: 'Username',
-      website: 'Website'
+      website: 'Website',
+      change_password: 'Change password'
     },
 
     // FOR TABLE

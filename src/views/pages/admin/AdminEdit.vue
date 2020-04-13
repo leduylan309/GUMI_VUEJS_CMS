@@ -7,7 +7,7 @@
 <script lang="js">
 	// Components
 	import AdminForm from '../../components/admin/AdminForm'
-	import { AdminService } from '../../../api'
+	import {AdminService, RoleService} from '../../../api'
 	import AdminModel from '../../../models/admin.model'
 
 	export default {
@@ -23,11 +23,13 @@
 
 		async beforeRouteEnter (to, from, next) {
 			const adminID = to.params.id
-			const admin = await AdminModel.query().find(adminID)
-
+			const admin = await AdminModel.query().with('roles').find(adminID)
 			// call api
 			if (!admin) {
-				await AdminService.item(adminID)
+				await Promise.all([
+					AdminService.item(adminID, {include: 'roles'}),
+					RoleService.list()
+				])
 			}
 
 			next()
@@ -37,7 +39,12 @@
 			item () {
 				const adminID = this.$route.params.id
 
-				return AdminModel.query().find(adminID)
+				const data = AdminModel.query().with('roles').find(adminID)
+
+				// transform role data
+				data.roles = data.roles.map((value) => value.name)
+
+				return data
 			},
 		},
 

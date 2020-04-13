@@ -31,6 +31,12 @@ const dataTransformer = ({ data, status = null }) => {
   }
 }
 
+const formTransformer = ({ data, status = null }) => {
+  if (data && status === 201) {
+    return data.data
+  }
+}
+
 export const AdminService = {
   /**
    * load list admins
@@ -61,7 +67,7 @@ export const AdminService = {
     }
 
     return await AdminModel.api().get(`${ BaseUrl }/${ ID }`, {
-      ...params,
+      params,
       dataTransformer,
     })
   },
@@ -86,7 +92,9 @@ export const AdminService = {
   async create (data = {}) {
     data.created_by = data.updated_by = AuthService.current_user().id
 
-    return await AdminModel.api().post(`${ BaseUrl }`, data)
+    return await AdminModel.api().post(`${ BaseUrl }`, data, {
+      dataTransformer: formTransformer
+    })
   },
 
   /**

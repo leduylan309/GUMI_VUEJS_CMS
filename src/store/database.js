@@ -14,6 +14,7 @@ import RoleModel from '../models/role.model'
 import LoginModel from '../models/login.model'
 import PrefectureModel from '../models/prefecture.model'
 import DeliveryTargetModel from '../models/delivery_target.model'
+import ModelHasRole from '../models/model_has_role.model'
 
 const database = new VuexORM.Database()
 
@@ -30,5 +31,6 @@ database.register(RoleModel)
 database.register(LoginModel)
 database.register(PrefectureModel)
 database.register(DeliveryTargetModel)
+database.register(ModelHasRole)
 
 export default database

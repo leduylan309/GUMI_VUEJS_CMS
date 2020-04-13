@@ -72,7 +72,6 @@
 								<div class="col-sm-10">
 									<Dropdown v-model="item.delivery_target.category_id"
 														class="form-control"
-														:multiple="true"
 														optionLabel="display_name"
 														optionValue="id"
 														:options="categories"
