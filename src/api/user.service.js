@@ -5,7 +5,7 @@ import { AuthService } from './auth.service'
 const BaseUrl = 'users'
 
 // define transformer
-const dataTransformer = ({ data, headers, status = nul }) => {
+const dataTransformer = ({ data, headers, status = null }) => {
   if (data && status === 200) {
     // delete all data before add post
     UserModel.deleteAll()
@@ -58,7 +58,7 @@ export const UserService = {
     const params = {
       ...queries,
     }
-    console.log(params)
+
     return await UserModel.api().get(`${ BaseUrl }/${ ID }`, {
       params,
       dataTransformer,

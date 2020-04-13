@@ -4,10 +4,11 @@
 			<!-- Header Table -->
 			<ContentHeader :title="title"/>
 
-			<!-- Content Table -->
-			<div class="content">
-				<ValidationObserver v-slot="{ handleSubmit }">
-					<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
+			<ValidationObserver v-slot="{ handleSubmit }">
+				<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
+
+					<!-- Content Table -->
+					<div class="content">
 						<div class="card">
 							<div class="card-body">
 								<!-- Code -->
@@ -94,19 +95,20 @@
 									</button>
 								</template>
 
-								<button type="button"
-												class="btn btn-success float-right mr-1"
-												@click="onSubmit">
+								<button type="submit"
+												class="btn btn-success float-right mr-1">
 									<i class="pi pi-save"/>
 
 									<span>{{$t('common.button.save')}}</span>
 								</button>
 							</div>
 						</div>
-					</form>
-				</ValidationObserver>
-			</div>
-			<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact"/>
+					</div>
+
+					<ContactForm :title="$t('contact.create_a_contact')" :item="item.contact"/>
+
+				</form>
+			</ValidationObserver>
 		</div>
 
 		<!-- Delete confirmation dialog -->

@@ -36,6 +36,16 @@ const CompanyDataTransformer = ({ data, status = null }) => {
  */
 export const CompanyService = {
   /**
+   * get all companies
+   * @return {Promise<Response>}
+   */
+  async all () {
+    return await CompanyModel.api().get(`${ BaseUrl }`, {
+      dataTransformer: CompanyDataTransformer
+    })
+  },
+
+  /**
    * load list
    * @param queries
    * @return {Promise<Response>}
@@ -76,7 +86,7 @@ export const CompanyService = {
    * @return {Promise<Response>}
    */
   async update (ID, data = {}) {
-    data.updated_by =  AuthService.current_user().id
+    data.updated_by = AuthService.current_user().id
 
     return await CompanyModel.api().put(`${ BaseUrl }/${ ID }`, data)
   },
