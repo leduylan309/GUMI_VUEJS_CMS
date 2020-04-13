@@ -37,10 +37,14 @@
 
 <script>
   import Carousel from 'primevue/carousel';
+  import Button from "primevue/button";
 
   export default {
     name: "ExampleCarousel",
-    components: {Carousel},
+    components: {
+      Carousel,
+      Button
+    },
     data() {
       return {
         cars: [
