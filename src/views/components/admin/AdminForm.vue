@@ -33,11 +33,11 @@
 
 							<!-- Username -->
 							<ValidationProvider
-											:name="$t('common.text.username')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="fields.username">
+								:name="$t('common.text.username')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.username">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.username') }}
 								</label>
@@ -134,6 +134,7 @@
 								<div class="col-sm-10">
 									<Dropdown class="form-control"
 														:options="roles"
+														optionLabel="display_name"
 														v-model="item.role"
 														:class="{'is-invalid': errors.length }"
 									/>
@@ -213,6 +214,7 @@
 	import AdminModel from '../../../models/admin.model'
 	import FormMixin from '../../../mixins/form.mixin'
 	import { AdminService } from '../../../api'
+	import RoleModel from '../../../models/role.model'
 
 	// Prime
 	import InputSwitch from 'primevue/inputswitch'
@@ -236,9 +238,33 @@
 				FormService: AdminService,
 				FormModel: AdminModel,
 
-				roles: ['Admin', 'Super Admin'],
+				roles: RoleModel.query().all(),
 				fields: AdminModel.fields(),
 			}
+		},
+
+		methods: {
+			/**
+			 * Submit Action
+			 */
+			async onSubmit () {
+				const ID = this.$route.params.id
+
+				if (ID) {
+					await this.FormService.update(ID, this.item).then(() => {
+						this.onSuccessUpdate()
+					})
+				} else {
+					await this.FormService.create(this.item).then(() => this.FormModel.insert({
+						data: this.item,
+					})).then(() => {
+						const data = {
+							roles: [this.item.role.name],
+						}
+						return this.FormService.assignRole(this.FormModel.id, data)
+					}).then(() => this.$router.push({ name: this.listName }))
+				}
+			},
 		},
 	}
 </script>

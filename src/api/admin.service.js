@@ -40,12 +40,12 @@ export const AdminService = {
   async list (queries = {}) {
     const params = {
       ...AdminModel.state().queryParams,
-      ...queries
+      ...queries,
     }
 
     return await AdminModel.api().get(`${ BaseUrl }`, {
       params,
-      dataTransformer
+      dataTransformer,
     })
   },
 
@@ -57,12 +57,12 @@ export const AdminService = {
    */
   async item (ID, queries = {}) {
     const params = {
-      ...queries
+      ...queries,
     }
 
     return await AdminModel.api().get(`${ BaseUrl }/${ ID }`, {
       ...params,
-      dataTransformer
+      dataTransformer,
     })
   },
 
@@ -96,5 +96,15 @@ export const AdminService = {
    */
   async delete (id) {
     return await AdminModel.api().delete(`${ BaseUrl }/${ id }`)
-  }
+  },
+
+  /**
+   * assign role
+   * @return {Promise<Response>}
+   * @param id
+   * @param data
+   */
+  async assignRole (id, data = {}) {
+    return await AdminModel.api().post(`${ BaseUrl }/${ id }/roles`, data)
+  },
 }

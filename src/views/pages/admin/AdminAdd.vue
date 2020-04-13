@@ -8,6 +8,7 @@
 	// Components
 	import AdminForm from '../../components/admin/AdminForm'
 	import AdminModel from '../../../models/admin.model'
+	import { RoleService } from '../../../api/role.service'
 
 	export default {
 		name: 'AdminAdd',
@@ -22,6 +23,9 @@
 			}
 		},
 
+		beforeRouteEnter (to, from, next) {
+			return RoleService.list().then(() => next())
+		},
 	}
 </script>
 

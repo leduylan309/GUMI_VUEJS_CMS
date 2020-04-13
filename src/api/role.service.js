@@ -1,4 +1,4 @@
-import RoleModel from '../models/company.model'
+import RoleModel from '../models/role.model'
 
 // define
 const BaseUrl = 'roles'
