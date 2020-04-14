@@ -30,7 +30,7 @@
 				await RoleService.list()
 			}
 
-			const admin = await AdminModel.query().with('roles').find(adminID)
+			const admin = await AdminModel.query().find(adminID)
 			if (!admin) {
 				await AdminService.item(adminID, { include: 'roles' })
 			}
@@ -42,10 +42,9 @@
 			item () {
 				const adminID = this.$route.params.id
 
-				return AdminModel.query().with('roles').find(adminID)
+				return AdminModel.query().find(adminID)
 			},
 		},
-
 	}
 </script>
 

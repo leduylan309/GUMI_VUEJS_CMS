@@ -21,7 +21,8 @@ export default class AdminModel extends BaseModel {
       delete_at: this.string(null).nullable(),
       contact: this.morphOne(ContactModel, 'model_id', 'model_type'),
       prefecture: this.belongsTo(MasterDataModel, 'prefecture_id'),
-      roles: this.morphToMany(RoleModel, ModelHasRole, 'role_id', 'model_uuid', 'model_type')
+      // roles: this.morphToMany(RoleModel, ModelHasRole, 'role_id', 'model_uuid', 'model_type')
+      roles: this.attr(null)
     }
   }
 
@@ -42,10 +43,5 @@ export default class AdminModel extends BaseModel {
         include: 'roles'
       }
     }
-  }
-
-  static afterSelect (admin) {
-    debugger
-    admin.roles = _.uniqBy(admin.roles, 'id')
   }
 }
