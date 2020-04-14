@@ -12,7 +12,6 @@ Vue.use(Vuex)
 // CONFIG GLOBAL FOR AXIOS
 VuexORM.use(VuexORMAxios, {
   axios,
-  url: process.env.VUE_APP_ROOT_API,
   baseURL: process.env.VUE_APP_BASE_URL,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',
