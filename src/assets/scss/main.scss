@@ -50,6 +50,12 @@
 // Page specific styles
 //@import "page/login";
 //@import "page/banner";
+@import "page/breadcrumb";
+@import "page/calendar";
+@import "page/carousel";
+@import "page/multiselect";
+@import "page/paginator";
+
 .p-toast {
   z-index: 999999 !important;
 }

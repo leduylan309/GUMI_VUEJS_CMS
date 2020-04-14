@@ -119,21 +119,6 @@
   }
 </script>
 
-<style scoped lang="scss">
-  .p-grid {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    margin-right: -.5em;
-    margin-left: -.5em;
-    margin-top: -.5em;
-  }
+<style scoped>
 
-  .p-md-4 {
-    @media screen and (min-width: 768px) {
-      width: 33.3333%;
-    }
-  }
 </style>

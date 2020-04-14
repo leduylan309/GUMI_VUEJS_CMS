@@ -1,0 +1,49 @@
+.p-multiselect {
+  min-width: 15em;
+}
+
+.p-multiselect-car-option {
+  display: inline-block;
+  vertical-align: middle;
+
+  img {
+    vertical-align: middle;
+    margin-right: .5em;
+    width: 24px;
+  }
+
+  span {
+    margin-top: .125em;
+  }
+}
+
+.p-multiselect-car-token,
+.p-multiselect-empty-car-token {
+  padding: 2px 4px;
+  margin: 0 0.286em 0 0;
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.857em;
+  border-radius: 3px;
+}
+
+.p-multiselect-car-token img {
+  width: 20px;
+  vertical-align: middle;
+  margin-right: .5em
+}
+
+.p-multiselect-car-token {
+  background: #007ad9;
+  color: #ffffff;
+}
+
+.p-multiselect-empty-car-token {
+  background: #d95f00;
+  color: #ffffff;
+}
+
+/deep/ .p-multiselect-label {
+  font-weight: 400 !important;
+  margin-bottom: 0;
+}
