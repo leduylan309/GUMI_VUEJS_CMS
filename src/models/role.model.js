@@ -6,7 +6,7 @@ export default class RoleModel extends BaseModel {
 
   static fields () {
     return {
-      id: this.uid(),
+      id: this.number(null),
       name: this.string(null),
       display_name: this.string(null),
       description: this.string(null),

@@ -43,4 +43,9 @@ export default class AdminModel extends BaseModel {
       }
     }
   }
+
+  static afterSelect (admin) {
+    debugger
+    admin.roles = _.uniqBy(admin.roles, 'id')
+  }
 }

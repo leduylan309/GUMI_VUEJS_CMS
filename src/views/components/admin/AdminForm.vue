@@ -146,13 +146,14 @@
 
 								<div class="col-sm-10">
 									<MultiSelect class="form-control"
-															 :options="roles"
-															 optionValue="name"
+															 :options="rolesOption"
+															 optionValue="id"
 															 optionLabel="display_name"
-															 v-model="item.roles"
+															 dataKey="id"
+															 v-model="roles"
+															 @input="inputRoles"
 															 :class="{'is-invalid': errors.length }"
 									/>
-
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 								</div>
 							</ValidationProvider>
@@ -201,8 +202,6 @@
 					</div>
 				</form>
 			</ValidationObserver>
-			<pre>{{item.roles}}</pre>
-			<pre>{{ changePassword }}</pre>
 		</div>
 
 		<!-- Delete confirmation dialog -->
@@ -228,7 +227,7 @@
 	// Components
 	import AdminModel from '../../../models/admin.model'
 	import FormMixin from '../../../mixins/form.mixin'
-	import {AdminService} from '../../../api'
+	import { AdminService } from '../../../api'
 	import RoleModel from '../../../models/role.model'
 
 	// Prime
@@ -246,18 +245,20 @@
 			InputSwitch,
 			Password,
 			Dropdown,
-			MultiSelect
+			MultiSelect,
 		},
 
-		data() {
+		data () {
 			return {
 				// MUST DEFINE //
 				FormService: AdminService,
 				FormModel: AdminModel,
 
-				roles: RoleModel.query().all(),
+				rolesOption: RoleModel.query().all(),
 				fields: AdminModel.fields(),
-				changePassword: false
+				changePassword: false,
+
+				roles: this.item.roles ? this.item.roles.map(value => value.id) : [],
 			}
 		},
 
@@ -265,28 +266,36 @@
 			/**
 			 * Assign role
 			 */
-			async assignRole() {
-				const newRecord =  await this.FormModel.query().first()
+			async assignRole () {
+				const newRecord = await this.FormModel.query().first()
 				await this.FormService.assignRole(newRecord.id, {
-					roles: this.item.roles
+					roles: this.item.roles.map(value => value.name),
 				})
 			},
 
 			/**
 			 * Submit Action
 			 */
-			async onSubmit() {
+			async onSubmit () {
 				const ID = this.$route.params.id
 
 				if (ID) {
 					await this.FormService.update(ID, this.item)
 					await this.assignRole()
-					await this.onRedirect()
+					await this.onSuccessUpdate()
 				} else {
 					await this.FormService.create(this.item)
 					await this.assignRole()
-					await this.onRedirect()
+					await this.onSuccessCreate()
 				}
+			},
+
+			/**
+			 *
+			 * @param value
+			 */
+			inputRoles (value) {
+				this.item.roles = RoleModel.query().findIn(value)
 			},
 		},
 	}

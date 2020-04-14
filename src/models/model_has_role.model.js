@@ -5,7 +5,7 @@ export default class ModelHasRole extends BaseModel {
 
   static fields () {
     return {
-      role_id: this.uid(),
+      role_id: this.number(null),
       model_type: this.string(null),
       model_uuid: this.string(null)
     }
