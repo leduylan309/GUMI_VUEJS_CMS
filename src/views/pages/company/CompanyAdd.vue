@@ -8,7 +8,7 @@
 	import CompanyForm from '../../components/company/CompanyForm'
 
 	export default {
-		name: 'PostAdd',
+		name: 'CompanyAdd',
 
 		components: {
 			CompanyForm,

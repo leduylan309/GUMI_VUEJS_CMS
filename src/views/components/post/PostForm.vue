@@ -93,7 +93,8 @@
 											:name="$t('common.text.companies')"
 											rules="required"
 											class="form-group row"
-											v-slot="{ errors }">
+											v-slot="{ errors }"
+											v-if="companies">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.companies') }}
 								</label>
@@ -124,7 +125,7 @@
 											rules="required"
 											class="form-group row"
 											v-slot="{ errors }"
-											v-if="fields.prefectures && prefectures">
+											v-if="prefectures">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.prefectures') }}
 								</label>
@@ -273,8 +274,6 @@
 
 		<!-- Success / Error message -->
 		<Toast></Toast>
-
-		<pre>{{ item }}</pre>
 	</div>
 </template>
 

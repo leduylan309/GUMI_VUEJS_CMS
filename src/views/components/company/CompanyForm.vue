@@ -17,14 +17,14 @@
 												rules="required"
 												class="form-group row"
 												v-slot="{ errors }"
-												v-if="fields.company_code">
+												v-if="fields.code">
 									<label class="col-sm-2 control-label text-right">
 										{{ $t('common.text.company_code') }}
 									</label>
 
 									<div class="col-sm-10">
 										<InputText class="form-control"
-															 v-model="item.company_code"
+															 v-model="item.code"
 															 :placeholder="$t('common.text.company_code')"
 															 :class="{'is-invalid': errors.length }"
 										/>

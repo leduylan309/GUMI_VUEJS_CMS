@@ -98,7 +98,7 @@ export default {
       this.FormModel.insert({
         data: this.item
       }).then(() => {
-        this.onRedirect().then(r => {})
+        return this.onRedirect()
       })
     },
 
@@ -107,7 +107,7 @@ export default {
      */
     onSuccessUpdate () {
       this.item.$save().then(() => {
-        this.onRedirect().then(r => {})
+        return this.onRedirect()
       })
     }
   }

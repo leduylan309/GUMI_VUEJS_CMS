@@ -24,11 +24,12 @@ export default class PostModel extends BaseModel {
       updated_at: this.string(null).nullable(),
       created_by: this.uid().nullable(),
       updated_by: this.uid().nullable(),
-      delivery_target: this.hasOne(DeliveryTargetModel, 'post_id', 'id'),
+      delivery_target: this.attr(null),
+      // delivery_target: this.hasOne(DeliveryTargetModel, 'post_id', 'id'),
       creator: this.belongsTo(AdminModel, 'created_by'),
-      categories: this.belongsToMany(CategoryModel, DeliveryTargetModel, 'post_id', 'category_id'),
-      companies: this.belongsToMany(CompanyModel, DeliveryTargetModel, 'post_id', 'company_id'),
-      prefectures: this.belongsToMany(PrefectureModel, DeliveryTargetModel, 'post_id', 'prefecture_id')
+      // categories: this.belongsToMany(CategoryModel, DeliveryTargetModel, 'post_id', 'category_id'),
+      // companies: this.belongsToMany(CompanyModel, DeliveryTargetModel, 'post_id', 'company_id'),
+      // prefectures: this.belongsToMany(PrefectureModel, DeliveryTargetModel, 'post_id', 'prefecture_id')
     }
   }
 

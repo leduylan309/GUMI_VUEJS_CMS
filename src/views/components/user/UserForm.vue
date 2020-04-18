@@ -120,50 +120,65 @@
 									</div>
 								</ValidationProvider>
 
-								<!-- Password -->
-								<ValidationProvider
-												:name="$t('common.text.password')"
-												:rules="$route.params.id ? 'required_if:item.password|min:6' : 'required|min:6'"
-												class="form-group row"
-												v-slot="{ errors }"
-												vid="password"
-												v-if="fields.password">
-									<label class="col-sm-2 control-label text-right">
-										{{ $t('common.text.password') }}
-									</label>
-
-									<div class="col-sm-10">
-										<Password class="form-control"
-															v-model="item.password"
-															:feedback="false"
-															:class="{'is-invalid': errors.length }"
-										/>
-
-										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+								<template v-if="$route.params.id">
+									<div class="form-group row">
+										<label class="col-sm-2 control-label text-right">
+											{{ $t('common.text.change_password') }}
+										</label>
+										<div class="col-sm-10">
+											<InputSwitch class="p-display--block"
+																	 v-model="changePassword"
+											/>
+										</div>
 									</div>
-								</ValidationProvider>
+								</template>
 
-								<!-- Confirm password -->
-								<ValidationProvider
-												:name="$t('common.text.confirm_password')"
-												:rules="$route.params.id ? 'required_if:item.password|min:6|confirmed:password' : 'required|min:6|confirmed:password'"
-												class="form-group row"
-												v-slot="{ errors }"
-												v-if="fields.password_confirmation">
-									<label class="col-sm-2 control-label text-right">
-										{{ $t('common.text.confirm_password') }}
-									</label>
+								<template v-if="changePassword || !$route.params.id">
+									<!-- Password -->
+									<ValidationProvider
+													:name="$t('common.text.password')"
+													rules="required|min:6"
+													class="form-group row"
+													v-slot="{ errors }"
+													vid="password"
+													v-if="fields.password">
+										<label class="col-sm-2 control-label text-right">
+											{{ $t('common.text.password') }}
+										</label>
 
-									<div class="col-sm-10">
-										<Password class="form-control"
-															v-model="item.password_confirmation"
-															:feedback="false"
-															:class="{'is-invalid': errors.length }"
-										/>
+										<div class="col-sm-10">
+											<Password class="form-control"
+																v-model="item.password"
+																:feedback="false"
+																:class="{'is-invalid': errors.length }"
+											/>
 
-										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
-									</div>
-								</ValidationProvider>
+											<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+										</div>
+									</ValidationProvider>
+
+									<!-- Confirm password -->
+									<ValidationProvider
+													:name="$t('common.text.confirm_password')"
+													rules="required|min:6|confirmed:password"
+													class="form-group row"
+													v-slot="{ errors }"
+													v-if="fields.password_confirmation">
+										<label class="col-sm-2 control-label text-right">
+											{{ $t('common.text.confirm_password') }}
+										</label>
+
+										<div class="col-sm-10">
+											<Password class="form-control"
+																v-model="item.password_confirmation"
+																:feedback="false"
+																:class="{'is-invalid': errors.length }"
+											/>
+
+											<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+										</div>
+									</ValidationProvider>
+								</template>
 
 								<!-- Status -->
 								<div class="form-group row">
@@ -270,6 +285,7 @@
 
 				genders: ['male', 'female'],
 				fields: UserModel.fields(),
+				changePassword: false
 			}
 		},
 

@@ -269,7 +269,7 @@
 			async assignRole () {
 				const newRecord = await this.FormModel.query().first()
 				await this.FormService.assignRole(newRecord.id, {
-					roles: this.item.roles.map(value => value.name),
+					roles: this.item.roles.map(value => value.id),
 				})
 			},
 

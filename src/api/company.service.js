@@ -99,7 +99,7 @@ export const CompanyService = {
   async create (data = {}) {
     data.created_by = data.updated_by = AuthService.current_user().id
 
-    return await CompanyModel.api().api(`${ BaseUrl }`, data)
+    return await CompanyModel.api().post(`${ BaseUrl }`, data)
   },
 
   /**
