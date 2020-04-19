@@ -11,11 +11,11 @@
 						<div class="card-body">
 							<!-- Title -->
 							<ValidationProvider
-											:name="$t('common.table.title')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="fields.title">
+								:name="$t('common.table.title')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.title">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.table.title') }}
 								</label>
@@ -33,26 +33,29 @@
 
 							<!-- Image -->
 							<ValidationProvider
-											:name="$t('common.table.image')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="fields.image">
+								:name="$t('common.table.image')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.assets">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.table.image') }}
 								</label>
 
 								<div class="col-sm-10">
 									<FileUpload mode="basic"
-															v-model="item.image"
-															@upload="onUploadImage"
+															@select="onUploadImage"
+															v-model="item.assets"
 															accept="image/*"
-															:name="item.image"
-															:previewWidth="100"
 															:maxFileSize="1000000"
 															:chooseLabel="$t('common.text.select_image')"
-															:class="{'is-invalid': errors.length }"
-									/>
+															:class="{'is-invalid': errors.length }">
+									</FileUpload>
+
+									<!-- Preview image -->
+									<div v-if="previewImage || (item.assets.length && item.assets[0].path)">
+										<img :src="previewImage || item.assets[0].path" alt="Preview Image" width="200"/>
+									</div>
 
 									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 								</div>
@@ -60,11 +63,11 @@
 
 							<!-- Single Categories -->
 							<ValidationProvider
-											:name="$t('common.text.categories')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="categories">
+								:name="$t('common.text.categories')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="categories">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.categories') }}
 								</label>
@@ -90,11 +93,11 @@
 
 							<!-- Single Companies -->
 							<ValidationProvider
-											:name="$t('common.text.companies')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="companies">
+								:name="$t('common.text.companies')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="companies">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.companies') }}
 								</label>
@@ -121,11 +124,11 @@
 
 							<!-- Single Prefecture -->
 							<ValidationProvider
-											:name="$t('common.text.prefectures')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="prefectures">
+								:name="$t('common.text.prefectures')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="prefectures">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.text.prefectures') }}
 								</label>
@@ -152,11 +155,11 @@
 
 							<!-- Description -->
 							<ValidationProvider
-											:name="$t('common.table.content')"
-											rules="required"
-											class="form-group row"
-											v-slot="{ errors }"
-											v-if="fields.content">
+								:name="$t('common.table.content')"
+								rules="required"
+								class="form-group row"
+								v-slot="{ errors }"
+								v-if="fields.content">
 								<label class="col-sm-2 control-label text-right">
 									{{ $t('common.table.content') }}
 								</label>
@@ -179,11 +182,11 @@
 
 								<div class="col-sm-3">
 									<ValidationProvider
-													:name="$t('common.table.publish_from')"
-													rules="required"
-													class="form-group row"
-													v-slot="{ errors }"
-													v-if="fields.publish_from">
+										:name="$t('common.table.publish_from')"
+										rules="required"
+										class="form-group row"
+										v-slot="{ errors }"
+										v-if="fields.publish_from">
 										<Calendar class="p-column-filter"
 															icon="pi pi-calendar"
 															v-model="publish_from"
@@ -204,11 +207,11 @@
 
 								<div class="col-sm-3">
 									<ValidationProvider
-													:name="$t('common.table.publish_from')"
-													rules="required"
-													class="form-group row"
-													v-slot="{ errors }"
-													v-if="fields.publish_to">
+										:name="$t('common.table.publish_from')"
+										rules="required"
+										class="form-group row"
+										v-slot="{ errors }"
+										v-if="fields.publish_to">
 										<Calendar class="p-column-filter"
 															icon="pi pi-calendar"
 															v-model="publish_to"
@@ -274,6 +277,7 @@
 
 		<!-- Success / Error message -->
 		<Toast></Toast>
+		<pre>{{ item }}</pre>
 	</div>
 </template>
 
@@ -281,10 +285,11 @@
 	// Components
 	import PostModel from '../../../models/post.model'
 	import CategoryModel from '../../../models/category.model'
+	import AssetModel from '../../../models/asset.model'
 	import moment from 'moment'
 	import FormMixin from '../../../mixins/form.mixin'
 	import { IROOTQUERY } from '../../../shared/store/state'
-	import { CategoryService, PostService } from '../../../api'
+	import { CategoryService, PostService, AssetService } from '../../../api'
 
 	// Prime
 	import Editor from 'primevue/editor'
@@ -334,6 +339,7 @@
 				fields: PostModel.fields(),
 				dateTimeFormat: 'YYYY-MM-DD H:mm:ss',
 				calendarDateTimeFormat: 'yy-mm-dd',
+				previewImage: null,
 			}
 		},
 
@@ -382,8 +388,29 @@
 			/**
 			 * Action upload Photo
 			 */
-			onUploadImage () {
-
+			onUploadImage (data) {
+				const formData = new FormData()
+				formData.append('assets[]', data.files[0])
+				return AssetService.upload(formData).then(() => {
+					let newItem = AssetModel.query().first()
+					this.previewImage = newItem.path
+					newItem = {
+						asset_id: newItem.id,
+						group: 'test',
+					}
+					this.item.assets = [...this.item.assets, newItem]
+					this.$toast.add({
+						severity: this.$t('common.alert.delete_title_successfully'),
+						summary: this.$t('common.alert.upload_message_successfully'),
+						life: 3000,
+					})
+				}).catch((err) => {
+					console.log(err)
+					this.$toast.add({
+						severity: this.$t('common.alert.delete_title_error'),
+						summary: this.$t('common.alert.upload_message_error'),
+					})
+				})
 			},
 
 			/**

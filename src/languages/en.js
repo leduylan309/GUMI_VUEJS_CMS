@@ -113,7 +113,10 @@ export default {
 
       // Message
       delete_message_successfully: 'Delete successfully',
-      delete_message_error: 'Delete successfully'
+      delete_message_error: 'Delete successfully',
+
+      upload_message_successfully: 'Upload image successfully',
+      upload_message_error: 'Upload image error'
     }
   },
 

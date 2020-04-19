@@ -29,11 +29,11 @@
 
 		async beforeRouteEnter (to, from, next) {
 			const postID = to.params.id
-			const post = await PostModel.query().with('delivery_target').find(postID)
+			const post = await PostModel.query().with('delivery_target,assets').find(postID)
 
 			// call get post item
 			if (!post) {
-				await PostService.item(postID, { include: 'delivery_target' })
+				await PostService.item(postID, { include: 'delivery_target,assets' })
 			}
 
 			// call to get prefectures
@@ -61,7 +61,7 @@
 			item () {
 				const postID = this.$route.params.id
 
-				return PostModel.query().with('delivery_target').find(postID)
+				return PostModel.query().with('delivery_target,assets').find(postID)
 			},
 
 			categories () {

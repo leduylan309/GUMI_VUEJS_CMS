@@ -29,7 +29,8 @@ export default class PostModel extends BaseModel {
       creator: this.belongsTo(AdminModel, 'created_by'),
       // categories: this.belongsToMany(CategoryModel, DeliveryTargetModel, 'post_id', 'category_id'),
       // companies: this.belongsToMany(CompanyModel, DeliveryTargetModel, 'post_id', 'company_id'),
-      // prefectures: this.belongsToMany(PrefectureModel, DeliveryTargetModel, 'post_id', 'prefecture_id')
+      // prefectures: this.belongsToMany(PrefectureModel, DeliveryTargetModel, 'post_id', 'prefecture_id'),
+      assets: this.attr([])
     }
   }
 
@@ -46,7 +47,7 @@ export default class PostModel extends BaseModel {
       paginator: {},
       queryParams: {
         ...IROOTQUERY,
-        include: 'delivery_target'
+        include: 'delivery_target,assets'
       }
     }
   }
