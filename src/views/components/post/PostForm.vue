@@ -49,7 +49,8 @@
 															accept="image/*"
 															:maxFileSize="1000000"
 															:chooseLabel="$t('common.text.select_image')"
-															:class="{'is-invalid': errors.length }">
+															:class="{'is-invalid': errors.length }"
+															ref="fileUpload">
 									</FileUpload>
 
 									<!-- Preview image -->
@@ -391,14 +392,23 @@
 			onUploadImage (data) {
 				const formData = new FormData()
 				formData.append('assets[]', data.files[0])
+
 				return AssetService.upload(formData).then(() => {
-					let newItem = AssetModel.query().first()
+					// clear input file
+					this.$refs.fileUpload.clear()
+
+					// get latest image
+					let newItem = AssetModel.query().last()
 					this.previewImage = newItem.path
 					newItem = {
 						asset_id: newItem.id,
 						group: 'test',
 					}
-					this.item.assets = [...this.item.assets, newItem]
+
+					// add new image to item asset
+					this.item.assets = [].concat(newItem)
+
+					// show message success
 					this.$toast.add({
 						severity: this.$t('common.alert.delete_title_successfully'),
 						summary: this.$t('common.alert.upload_message_successfully'),
