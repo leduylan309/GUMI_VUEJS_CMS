@@ -31,7 +31,7 @@ const main = {
     CompanyRoute,
     ContactRoute,
     // CategoryRoute,
-    // RoleRoute
+    RoleRoute
   ]
 }
 

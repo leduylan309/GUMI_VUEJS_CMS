@@ -5,94 +5,103 @@
 
 		<!-- Content Table -->
 		<div class="content">
-			<div class="card">
-				<div class="card-body">
-					<form class="form-horizontal">
-						<!-- Name -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.name') }}
-							</label>
+			<ValidationObserver v-slot="{ handleSubmit }">
+				<form class="form-horizontal" @submit.prevent="handleSubmit(onSubmit)">
+					<div class="card">
+						<div class="card-body">
+							<form class="form-horizontal">
+								<!-- Name -->
+								<ValidationProvider
+												:name="$t('common.text.name')"
+												rules="required"
+												class="form-group row"
+												v-slot="{ errors }"
+												v-if="fields.name">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.name') }}
+									</label>
 
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.name"
-													 :placeholder="$t('common.text.name')"
-								/>
-							</div>
-						</div>
-
-						<!-- Display name -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.display_name') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.display_name"
-													 :placeholder="$t('common.text.display_name')"
-								/>
-							</div>
-						</div>
-
-						<!-- Description -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.description') }}
-							</label>
-
-							<div class="col-sm-10">
-								<InputText class="form-control"
-													 v-model="item.description"
-													 :placeholder="$t('common.text.description')"
-								/>
-							</div>
-						</div>
-
-						<!-- Permission -->
-						<div class="form-group row">
-							<label class="col-sm-2 control-label text-right">
-								{{ $t('common.text.permission') }}
-							</label>
-
-							<div class="col-sm-10">
-								<template v-for="permission in permissions">
-									<div class="col-sm-12">
-										<Checkbox :id="permission"
-															:inputId="permission"
-															name="permission"
-															:value="permission"
-															v-model="item.permission"
+									<div class="col-sm-10">
+										<InputText class="form-control"
+															 v-model="item.name"
+															 :placeholder="$t('common.text.name')"
+															 :class="{'is-invalid': errors.length }"
 										/>
 
-										<label :for="permission" class="p-checkbox-label">{{ permission }}</label>
+										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
 									</div>
-								</template>
-							</div>
+								</ValidationProvider>
+
+								<!-- Display name -->
+								<ValidationProvider
+												:name="$t('common.text.display_name')"
+												rules="required"
+												class="form-group row"
+												v-slot="{ errors }"
+												v-if="fields.display_name">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.display_name') }}
+									</label>
+
+									<div class="col-sm-10">
+										<InputText class="form-control"
+															 v-model="item.display_name"
+															 :placeholder="$t('common.text.display_name')"
+															 :class="{'is-invalid': errors.length }"
+										/>
+
+										<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
+									</div>
+								</ValidationProvider>
+
+								<!-- Description -->
+								<div class="form-group row">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.description') }}
+									</label>
+
+									<div class="col-sm-10">
+										<InputText class="form-control"
+															 v-model="item.description"
+															 :placeholder="$t('common.text.description')"
+										/>
+									</div>
+								</div>
+
+								<!-- Permission -->
+								<div class="form-group row">
+									<label class="col-sm-2 control-label text-right">
+										{{ $t('common.text.permission') }}
+									</label>
+
+									<div class="col-sm-10">
+										<!--need to update-->
+									</div>
+								</div>
+							</form>
 						</div>
-					</form>
-				</div>
 
-				<!-- Action Section Submit & Cancel -->
-				<div class="card-footer fixed-bottom">
-					<button type="button"
-									class="btn btn-default float-right"
-									@click="onCancel">
-						<i class="pi pi-times"/>
+						<!-- Action Section Submit & Cancel -->
+						<div class="card-footer fixed-bottom">
+							<button type="button"
+											class="btn btn-default float-right"
+											@click="onCancel">
+								<i class="pi pi-times"/>
 
-						<span>{{ $t('common.button.cancel') }}</span>
-					</button>
+								<span>{{ $t('common.button.cancel') }}</span>
+							</button>
 
-					<button type="button"
-									class="btn btn-success float-right mr-1"
-									@click="onSubmit">
-						<i class="pi pi-save"/>
+							<button type="button"
+											class="btn btn-success float-right mr-1"
+											@click="onSubmit">
+								<i class="pi pi-save"/>
 
-						<span>{{$t('common.button.save')}}</span>
-					</button>
-				</div>
-			</div>
+								<span>{{$t('common.button.save')}}</span>
+							</button>
+						</div>
+					</div>
+				</form>
+			</ValidationObserver>
 		</div>
 	</div>
 </template>
@@ -100,13 +109,15 @@
 <script>
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
+	import { RoleService } from '../../../api'
+	import RoleModel from '../../../models/role.model'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
 	import Checkbox from 'primevue/checkbox'
 
 	export default {
-		name: 'CompanyForm',
+		name: 'RoleForm',
 
 		props: {
 			title: {
@@ -128,6 +139,11 @@
 
 		data () {
 			return {
+				// MUST DEFINE //
+				FormService: RoleService,
+				FormModel: RoleModel,
+
+				fields: RoleModel.fields(),
 				permissions: ['view', 'create', 'edit', 'delete'],
 			}
 		},

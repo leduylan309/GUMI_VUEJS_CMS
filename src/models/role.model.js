@@ -19,7 +19,7 @@ export default class RoleModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'name',
+    'display_name',
   ]
 
   static state () {

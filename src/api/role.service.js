@@ -50,5 +50,22 @@ export const RoleService = {
       params,
       dataTransformer
     })
-  }
+  },
+
+  /**
+   * get only item
+   * @param ID
+   * @param queries
+   * @return {Promise<Response>}
+   */
+  async item (ID, queries = {}) {
+    const params = {
+      ...queries,
+    }
+
+    return await RoleModel.api().get(`${ BaseUrl }/${ ID }`, {
+      params,
+      dataTransformer,
+    })
+  },
 }
