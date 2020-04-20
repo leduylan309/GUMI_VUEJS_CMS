@@ -32,35 +32,7 @@
 							</ValidationProvider>
 
 							<!-- Image -->
-							<ValidationProvider
-								:name="$t('common.table.image')"
-								rules="required"
-								class="form-group row"
-								v-slot="{ errors }"
-								v-if="fields.assets">
-								<label class="col-sm-2 control-label text-right">
-									{{ $t('common.table.image') }}
-								</label>
-
-								<div class="col-sm-10">
-									<FileUpload mode="basic"
-															@select="onUploadImage"
-															v-model="item.assets"
-															accept="image/*"
-															:maxFileSize="1000000"
-															:chooseLabel="$t('common.text.select_image')"
-															:class="{'is-invalid': errors.length }"
-															ref="fileUpload">
-									</FileUpload>
-
-									<!-- Preview image -->
-									<div v-if="previewImage || (item.assets.length && item.assets[0].path)">
-										<img :src="previewImage || item.assets[0].path" alt="Preview Image" width="200"/>
-									</div>
-
-									<span class="error invalid-feedback" v-if="errors.length">{{ errors[0] }}</span>
-								</div>
-							</ValidationProvider>
+							<ImageUpload v-model="item.assets"></ImageUpload>
 
 							<!-- Single Categories -->
 							<ValidationProvider
@@ -286,15 +258,14 @@
 	// Components
 	import PostModel from '../../../models/post.model'
 	import CategoryModel from '../../../models/category.model'
-	import AssetModel from '../../../models/asset.model'
 	import moment from 'moment'
 	import FormMixin from '../../../mixins/form.mixin'
 	import { IROOTQUERY } from '../../../shared/store/state'
 	import { CategoryService, PostService, AssetService } from '../../../api'
+	import ImageUpload from '../shared/ImageUpload'
 
 	// Prime
 	import Editor from 'primevue/editor'
-	import FileUpload from 'primevue/fileupload'
 	import Dropdown from 'primevue/dropdown'
 	import MultiSelect from 'primevue/multiselect'
 	import Calendar from 'primevue/calendar'
@@ -323,8 +294,8 @@
 		},
 
 		components: {
+			ImageUpload,
 			Editor,
-			FileUpload,
 			Dropdown,
 			MultiSelect,
 			Calendar,
@@ -339,8 +310,7 @@
 
 				fields: PostModel.fields(),
 				dateTimeFormat: 'YYYY-MM-DD H:mm:ss',
-				calendarDateTimeFormat: 'yy-mm-dd',
-				previewImage: null,
+				calendarDateTimeFormat: 'yy-mm-dd'
 			}
 		},
 
@@ -387,40 +357,26 @@
 
 		methods: {
 			/**
-			 * Action upload Photo
+			 * Submit Action
 			 */
-			onUploadImage (data) {
-				const formData = new FormData()
-				formData.append('assets[]', data.files[0])
+			async onSubmit () {
+				const ID = this.$route.params.id
 
-				return AssetService.upload(formData).then(() => {
-					// clear input file
-					this.$refs.fileUpload.clear()
-
-					// get latest image
-					let newItem = AssetModel.query().last()
-					this.previewImage = newItem.path
-					newItem = {
-						asset_id: newItem.id,
-						group: 'test',
+				this.item.assets = this.item.assets.map((value) => {
+					return {
+						asset_id: value.id,
+						group: 'test'
 					}
-
-					// add new image to item asset
-					this.item.assets = [].concat(newItem)
-
-					// show message success
-					this.$toast.add({
-						severity: this.$t('common.alert.delete_title_successfully'),
-						summary: this.$t('common.alert.upload_message_successfully'),
-						life: 3000,
-					})
-				}).catch((err) => {
-					console.log(err)
-					this.$toast.add({
-						severity: this.$t('common.alert.delete_title_error'),
-						summary: this.$t('common.alert.upload_message_error'),
-					})
 				})
+				if (ID) {
+					await this.FormService.update(ID, this.item).then(() => {
+						this.onSuccessUpdate()
+					})
+				} else {
+					await this.FormService.create(this.item).then(() => {
+						this.onSuccessCreate()
+					})
+				}
 			},
 
 			/**

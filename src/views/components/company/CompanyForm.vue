@@ -56,23 +56,7 @@
 								</ValidationProvider>
 
 								<!-- Image -->
-								<div class="form-group row">
-									<label class="col-sm-2 control-label text-right">
-										{{ $t('common.table.image') }}
-									</label>
-
-									<div class="col-sm-10">
-										<FileUpload mode="basic"
-																:name="item.image"
-																v-model="item.image"
-																:previewWidth="100"
-																@upload="onUploadImage"
-																accept="image/*"
-																:maxFileSize="1000000"
-																:chooseLabel="$t('common.text.select_image')"
-										/>
-									</div>
-								</div>
+								<ImageUpload v-model="item.assets"></ImageUpload>
 							</div>
 
 							<!-- Action Section Submit & Cancel -->
@@ -135,9 +119,9 @@
 	import FormMixin from '../../../mixins/form.mixin'
 	import CompanyModel from '../../../models/company.model'
 	import ContactForm from '../shared/ContactForm'
+	import ImageUpload from '../shared/ImageUpload'
 
-	// Prime
-	import FileUpload from 'primevue/fileupload'
+	// Service
 	import { CompanyService } from '../../../api'
 
 	export default {
@@ -147,7 +131,7 @@
 
 		components: {
 			ContactForm,
-			FileUpload,
+			ImageUpload
 		},
 
 		data () {
@@ -161,12 +145,28 @@
 
 		methods: {
 			/**
-			 * Action upload Photo
+			 * Submit Action
 			 */
-			onUploadImage () {
+			async onSubmit () {
+				const ID = this.$route.params.id
 
+				this.item.assets = this.item.assets.map((value) => {
+					return {
+						asset_id: value.id,
+						group: 'test'
+					}
+				})
+				if (ID) {
+					await this.FormService.update(ID, this.item).then(() => {
+						this.onSuccessUpdate()
+					})
+				} else {
+					await this.FormService.create(this.item).then(() => {
+						this.onSuccessCreate()
+					})
+				}
 			},
-		},
+		}
 	}
 </script>
 

@@ -22,11 +22,11 @@
 
 		async beforeRouteEnter (to, from, next) {
 			const companyID = to.params.id
-			const company = CompanyModel.query().with('contact').find(companyID)
+			const company = CompanyModel.query().with('contact,assets').find(companyID)
 
 			if (!company) {
 				await CompanyService.item(companyID, {
-					include: 'contact'
+					include: 'contact,assets'
 				})
 			}
 
@@ -37,7 +37,7 @@
 			item () {
 				const companyID = this.$route.params.id
 
-				return CompanyModel.query().with('contact').find(companyID)
+				return CompanyModel.query().with('contact,assets').find(companyID)
 			},
 		},
 	}

@@ -18,8 +18,10 @@ export default class CompanyModel extends BaseModel {
       created_at: this.string(null),
       updated_at: this.string(null),
       deleted_at: this.string(null),
-      contact: this.hasOne(ContactModel, 'contactable_id', 'id'),
-      prefecture: this.belongsTo(MasterDataModel, 'prefecture_id')
+      contact: this.attr(null),
+      // contact: this.hasOne(ContactModel, 'contactable_id', 'id'),
+      prefecture: this.belongsTo(MasterDataModel, 'prefecture_id'),
+      assets: this.attr([])
     }
   }
 
@@ -39,7 +41,7 @@ export default class CompanyModel extends BaseModel {
       paginator: {},
       queryParams: {
         ...IROOTQUERY,
-        include: 'contact'
+        include: 'contact,assets'
       }
     }
   }

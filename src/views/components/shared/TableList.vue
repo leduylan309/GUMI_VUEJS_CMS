@@ -354,7 +354,7 @@
 
 					// set toast
 					this.$toast.add({
-						severity: this.$t('common.alert.delete_title_successfully'),
+						severity: this.$t('common.alert.message_success'),
 						summary: this.$t('common.alert.delete_message_successfully'),
 						life: 3000,
 					})
@@ -364,7 +364,7 @@
 
 				}).catch((err) => {
 					this.$toast.add({
-						severity: this.$t('common.alert.delete_title_error'),
+						severity: this.$t('common.alert.message_error'),
 						summary: this.$t('common.alert.delete_message_successfully'),
 					})
 				})

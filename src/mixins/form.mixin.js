@@ -70,7 +70,7 @@ export default {
         this.onRedirect().then(r => {})
       }).catch((err) => {
         this.$toast.add({
-          severity: this.$t('common.alert.delete_title_error'),
+          severity: this.$t('common.alert.message_error'),
           summary: this.$t('common.alert.delete_message_successfully')
         })
       })

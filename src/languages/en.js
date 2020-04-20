@@ -107,9 +107,9 @@ export default {
       delete_header: 'Delete confirmation',
       delete_content: 'Are you sure to delete this item ?',
 
-      // title
-      delete_title_successfully: 'success',
-      delete_title_error: 'error',
+      // message dialog type
+      message_success: 'success',
+      message_error: 'error',
 
       // Message
       delete_message_successfully: 'Delete successfully',
