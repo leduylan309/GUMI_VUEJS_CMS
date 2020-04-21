@@ -129,6 +129,10 @@
 				type: Object,
 				default: () => {},
 			},
+			permissions: {
+				type: Array,
+				default: () => [],
+			},
 		},
 
 		components: {
@@ -143,8 +147,7 @@
 				FormService: RoleService,
 				FormModel: RoleModel,
 
-				fields: RoleModel.fields(),
-				permissions: ['view', 'create', 'edit', 'delete'],
+				fields: RoleModel.fields()
 			}
 		},
 

@@ -1,13 +1,14 @@
 <template>
 	<RoleForm :title="$t('role.edit_role')"
-						:item="item" />
+						:item="item"
+						:permissions="permissions"/>
 </template>
 
 <script lang="js">
     import RoleForm from '../../components/role/RoleForm'
 		import RoleModel from '../../../models/role.model'
-		import { AdminService, RoleService } from '../../../api'
-		import AdminModel from '../../../models/admin.model'
+		import { RoleService, PermissionService } from '../../../api'
+		import PermissionModel from '../../../models/permission.model'
 
 	export default {
 		name: 'RoleEdit',
@@ -28,6 +29,12 @@
 				await RoleService.item(roleId)
 			}
 
+			// call to get companies
+			const permissions = PermissionModel.all()
+			if (!permissions.length) {
+				await PermissionService.all()
+			}
+
 			await next()
 		},
 
@@ -36,6 +43,10 @@
 				const roleId = this.$route.params.id
 
 				return RoleModel.query().find(roleId)
+			},
+
+			permissions () {
+				return PermissionModel.all()
 			},
 		},
 	}
