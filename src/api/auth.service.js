@@ -8,15 +8,16 @@ export const AuthService = {
    * @return {Item<InstanceOf<AuthModel>>}
    */
   current_user () {
-    return AuthModel.query().first()
+    return AuthModel.query().with('roles,permissions').first()
   },
 
   /**
    * call Api to get profile
    * @return {Promise<Response>}
    */
-  async profile () {
+  async profile (params = {}) {
     return await AuthModel.api().get(`${ BaseUrl }` + 'profile', {
+      params,
       dataTransformer: (response => {
         const { data } = response.data
 

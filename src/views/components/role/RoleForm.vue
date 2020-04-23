@@ -74,8 +74,20 @@
 										{{ $t('common.text.permission') }}
 									</label>
 
-									<div class="col-sm-10">
-										<!--need to update-->
+									<div class="col-sm-12">
+										<PickList v-model="userPermissions" dataKey="id" :metaKeySelection="true">
+											<template #sourceHeader>
+												{{ $t('common.text.available_permission') }}
+											</template>
+											<template #targetHeader>
+												{{ $t('common.text.selected_permission') }}
+											</template>
+											<template #item="slotProps">
+												<div class="p-caritem">
+													<div>{{slotProps.item.display_name}}</div>
+												</div>
+											</template>
+										</PickList>
 									</div>
 								</div>
 							</form>
@@ -109,15 +121,20 @@
 <script>
 	// Components
 	import ContentHeader from '../../components/shared/ContentHeader'
+	import FormMixin from '../../../mixins/form.mixin'
 	import { RoleService } from '../../../api'
 	import RoleModel from '../../../models/role.model'
+	import * as _ from 'lodash'
 
 	// Prime
 	import InputText from 'primevue/inputtext'
 	import Checkbox from 'primevue/checkbox'
+	import PickList from 'primevue/picklist'
 
 	export default {
 		name: 'RoleForm',
+
+		mixins: [FormMixin],
 
 		props: {
 			title: {
@@ -139,6 +156,7 @@
 			ContentHeader,
 			InputText,
 			Checkbox,
+			PickList
 		},
 
 		data () {
@@ -147,23 +165,33 @@
 				FormService: RoleService,
 				FormModel: RoleModel,
 
-				fields: RoleModel.fields()
+				fields: RoleModel.fields(),
+				userPermissions: []
 			}
+		},
+
+		created () {
+			const availableItems = _.differenceBy(this.permissions, this.item.permissions, 'id')
+			this.userPermissions = [availableItems, this.item.permissions]
 		},
 
 		methods: {
 			/**
-			 * Action upload Photo
-			 */
-			onUploadImage () {
-
-			},
-
-			/**
 			 * Submit Action
 			 */
-			onSubmit () {
-				console.log(this.item)
+			async onSubmit () {
+				const ID = this.$route.params.id
+				this.item.permissions = this.userPermissions[1].map(item => item.id)
+
+				if (ID) {
+					await this.FormService.update(ID, this.item).then(() => {
+						this.onSuccessUpdate()
+					})
+				} else {
+					await this.FormService.create(this.item).then(() => {
+						this.onSuccessCreate()
+					})
+				}
 			},
 
 			/**

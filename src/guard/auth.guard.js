@@ -5,12 +5,12 @@ import AuthModel from '../models/auth.model'
 export const AuthGuard = (to, from, next) => {
   const token = Vue.$cookies.get('token')
   if (token) {
-    const auth = AuthModel.query().first()
+    const auth = AuthModel.query().with('roles,permissions').first()
 
     if (auth && 'id' in auth) {
       next()
     } else {
-      AuthService.profile().then(() => {
+      AuthService.profile({ include: 'roles,permissions' }).then(() => {
         next()
       }).catch((error) => {
         // return if error == undefined

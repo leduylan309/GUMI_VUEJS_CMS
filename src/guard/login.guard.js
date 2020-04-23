@@ -7,7 +7,7 @@ export const LoginGuard = (to, from, next) => {
   if (!token) {
     next()
   } else {
-    AuthService.profile().then(() => {
+    AuthService.profile({ include: 'roles,permissions'}).then(() => {
       next({ name: 'Dashboard' })
     }).catch(() => {
       Vue.$cookies.remove('token')

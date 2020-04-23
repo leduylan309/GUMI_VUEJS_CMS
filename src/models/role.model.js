@@ -10,7 +10,8 @@ export default class RoleModel extends BaseModel {
       name: this.string(null),
       display_name: this.string(null),
       description: this.string(null),
-      pivot: this.attr(null)
+      pivot: this.attr(null),
+      permissions: this.attr([])
     }
   }
 
@@ -25,7 +26,10 @@ export default class RoleModel extends BaseModel {
   static state () {
     return {
       paginator: {},
-      queryParams: IROOTQUERY
+      queryParams: {
+        ...IROOTQUERY,
+        include: 'permissions'
+      }
     }
   }
 }

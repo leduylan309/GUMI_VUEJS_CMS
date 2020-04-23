@@ -1,7 +1,8 @@
 <template>
 	<RoleForm :title="$t('role.edit_role')"
 						:item="item"
-						:permissions="permissions"/>
+						:permissions="permissions"
+						:list-name="'RoleList'"/>
 </template>
 
 <script lang="js">
@@ -24,9 +25,9 @@
 		async beforeRouteEnter (to, from, next) {
 			const roleId = to.params.id
 
-			const role = await RoleModel.query().find(roleId)
+			const role = await RoleModel.query().with('permissions').find(roleId)
 			if (!role) {
-				await RoleService.item(roleId)
+				await RoleService.item(roleId, { include: 'permissions' })
 			}
 
 			// call to get companies
@@ -42,12 +43,12 @@
 			item () {
 				const roleId = this.$route.params.id
 
-				return RoleModel.query().find(roleId)
+				return RoleModel.query().with('permissions').find(roleId)
 			},
 
 			permissions () {
 				return PermissionModel.all()
 			},
-		},
+		}
 	}
 </script>

@@ -68,4 +68,32 @@ export const RoleService = {
       dataTransformer,
     })
   },
+
+  /**
+   * update role
+   * @param ID
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async update (ID, data = {}) {
+    return await RoleModel.api().put(`${ BaseUrl }/${ ID }`, data)
+  },
+
+  /**
+   * create admin
+   * @param data
+   * @return {Promise<Response>}
+   */
+  async create (data = {}) {
+    return await RoleModel.api().post(`${ BaseUrl }`, data)
+  },
+
+  /**
+   * delete admin
+   * @return {Promise<Response>}
+   * @param id
+   */
+  async delete (id) {
+    return await RoleModel.api().delete(`${ BaseUrl }/${ id }`)
+  },
 }

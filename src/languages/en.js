@@ -55,7 +55,9 @@ export default {
       url: 'Homepage url',
       username: 'Username',
       website: 'Website',
-      change_password: 'Change password'
+      change_password: 'Change password',
+      available_permission: 'Available permission',
+      selected_permission: 'Selected permission'
     },
 
     // FOR TABLE

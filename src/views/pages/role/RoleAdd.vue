@@ -1,10 +1,15 @@
 <template>
 	<RoleForm :title="$t('role.create_a_role')"
-						:item="item"/>
+						:item="item"
+						:permissions="permissions"
+						:list-name="'RoleList'"/>
 </template>
 
 <script lang="js">
 	import RoleForm from '../../components/role/RoleForm'
+	import RoleModel from '../../../models/role.model'
+	import PermissionModel from '../../../models/permission.model'
+	import { PermissionService } from '../../../api'
 
 	export default {
 		name: 'RoleAdd',
@@ -15,13 +20,24 @@
 
 		data () {
 			return {
-				item: {}
+				item: new RoleModel()
 			}
 		},
 
-		beforeRouteEnter (to, from, next) {
-			next()
+		async beforeRouteEnter (to, from, next) {
+			const permissions = await PermissionModel.all()
+			if (!permissions.length) {
+				await PermissionService.all()
+			}
+
+			await next()
 		},
+
+		computed: {
+			permissions () {
+				return PermissionModel.all()
+			},
+		}
 	}
 </script>
 
