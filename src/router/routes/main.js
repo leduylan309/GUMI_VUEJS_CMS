@@ -13,6 +13,8 @@ import CompanyRoute from './company'
 import ContactRoute from './contact'
 import CategoryRoute from './category'
 import RoleRoute from './role'
+import NotFoundRoute from './not-found'
+import UnauthorizedRoute from './unauthorized'
 
 const main = {
   path: '',
@@ -31,7 +33,9 @@ const main = {
     CompanyRoute,
     ContactRoute,
     // CategoryRoute,
-    RoleRoute
+    RoleRoute,
+    NotFoundRoute,
+    UnauthorizedRoute
   ]
 }
 

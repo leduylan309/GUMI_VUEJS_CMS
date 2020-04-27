@@ -115,7 +115,7 @@ export default {
 
       // Message
       delete_message_successfully: 'Delete successfully',
-      delete_message_error: 'Delete successfully',
+      delete_message_error: 'Delete error',
 
       upload_message_successfully: 'Upload image successfully',
       upload_message_error: 'Upload image error'
@@ -186,5 +186,15 @@ export default {
     create_a_prefecture: 'Create a prefecture',
     edit_prefecture: 'Edit prefecture',
     title_list_page: 'List of prefectures'
+  },
+
+  // Not Found Page
+  not_found: {
+    title_list_page: '404 Error Page'
+  },
+
+  // Unauthorized Page
+  unauthorized: {
+    title_list_page: 'Unauthorized Page'
   }
 }

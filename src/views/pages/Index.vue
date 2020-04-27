@@ -81,7 +81,7 @@
 			<!-- Main Sidebar Container -->
 			<aside class="main-sidebar sidebar-dark-primary elevation-4 ">
 				<!-- Brand Logo -->
-				<router-link class="brand-link text-center" to="/">
+				<router-link class="brand-link text-center" :to="{ name: 'Dashboard' }">
 					<img alt=""
 							 class="img-responsive"
 							 src="../../assets/images/newphoria_logo.svg">
