@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import { convertParamsAndFilterToString } from '../../utils/filter'
 import { AxiosRemovePending, CancelToken } from './cancel.config'
+import router from '../../router'
 
 // Config Axios
 export const axiosConfig = {
@@ -13,6 +14,8 @@ export const axiosConfig = {
 
 // Config Request Interceptor
 export const axiosInterceptorRequestConfig = (config) => {
+  router.app.$Progress.start()
+  // this.$Progress.start()
   config.headers['Authorization'] = `Bearer ${ Vue.$cookies.get('token') }`
 
   // Config Cancel Pending
@@ -24,4 +27,7 @@ export const axiosInterceptorRequestConfig = (config) => {
 }
 
 // Config Request Error Interceptor
-export const axiosInterceptorRequestError = (error) => Promise.reject(error)
+export const axiosInterceptorRequestError = (error) => {
+  router.app.$Progress.fail()
+  Promise.reject(error)
+}

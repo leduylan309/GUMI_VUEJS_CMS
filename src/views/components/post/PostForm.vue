@@ -250,7 +250,6 @@
 
 		<!-- Success / Error message -->
 		<Toast></Toast>
-		<pre>{{ item }}</pre>
 	</div>
 </template>
 

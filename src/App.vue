@@ -1,3 +1,8 @@
 <template>
-	<router-view/>
+	<div>
+		<router-view/>
+
+		<!-- set progressbar -->
+		<vue-progress-bar></vue-progress-bar>
+	</div>
 </template>

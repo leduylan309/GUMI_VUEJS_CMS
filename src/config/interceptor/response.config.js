@@ -4,6 +4,7 @@ import router from '../../router'
 import { AxiosRemovePending } from './cancel.config'
 
 export const axiosInterceptorResponseConfig = (response) => {
+  router.app.$Progress.finish()
   AxiosRemovePending(response.config)
 
   return response
@@ -11,6 +12,7 @@ export const axiosInterceptorResponseConfig = (response) => {
 
 // Config Response Error Interceptor
 export const axiosInterceptorResponseError = (error) => {
+  router.app.$Progress.fail()
   if (!axios.isCancel(error) && error) {
     const { config, response: { status } } = error
 

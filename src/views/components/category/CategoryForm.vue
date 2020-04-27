@@ -59,8 +59,6 @@
 				</div>
 			</div>
 		</div>
-		<pre>{{ item }}</pre>
-		<pre>{{ title }}</pre>
 	</div>
 </template>
 
