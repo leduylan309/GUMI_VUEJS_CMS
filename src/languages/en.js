@@ -188,6 +188,11 @@ export default {
     title_list_page: 'List of prefectures'
   },
 
+  // Dashboard page
+  dashboard: {
+    title_page: 'Dashboard'
+  },
+
   // Not Found Page
   not_found: {
     title_list_page: '404 Error Page'

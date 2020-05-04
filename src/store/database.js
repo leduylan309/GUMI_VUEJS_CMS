@@ -17,6 +17,7 @@ import DeliveryTargetModel from '../models/delivery_target.model'
 import ModelHasRole from '../models/model_has_role.model'
 import AssetModel from '../models/asset.model'
 import PermissionModel from '../models/permission.model'
+import DashboardModel from '../models/dashboard.model'
 
 const database = new VuexORM.Database()
 
@@ -36,5 +37,6 @@ database.register(DeliveryTargetModel)
 database.register(ModelHasRole)
 database.register(AssetModel)
 database.register(PermissionModel)
+database.register(DashboardModel)
 
 export default database
