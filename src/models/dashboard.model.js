@@ -5,7 +5,8 @@ export default class DashboardModel extends BaseModel {
 
   static fields () {
     return {
-      data: this.attr(null)
+      statistics: this.attr(null),
+      total_user: this.number(null)
     }
   }
 }

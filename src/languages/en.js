@@ -57,7 +57,14 @@ export default {
       website: 'Website',
       change_password: 'Change password',
       available_permission: 'Available permission',
-      selected_permission: 'Selected permission'
+      selected_permission: 'Selected permission',
+      total_users: 'Total users',
+      more_info: 'More info',
+      display_time: 'Display time',
+      display_type: 'Display type',
+      search: 'Search',
+      monthly: 'monthly',
+      daily: 'daily'
     },
 
     // FOR TABLE

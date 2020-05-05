@@ -14,7 +14,7 @@ const dataTransformer = ({ data, status = null }) => {
       return data.data.attributes
     }
 
-    return data
+    return data.data
   }
 }
 
