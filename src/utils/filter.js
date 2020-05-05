@@ -9,7 +9,9 @@ import moment from 'moment'
  */
 export const convertParamsAndFilterToString = (Object) => {
   let filterString = ''
+  let sortString = ''
 
+  // convert filter
   if ('filters' in Object) {
     const filters = Object.filters
 
@@ -20,7 +22,18 @@ export const convertParamsAndFilterToString = (Object) => {
     delete Object.filters
   }
 
-  return qs.stringify(Object) + filterString
+  // convert sortBy
+  if ('sortBy' in Object) {
+    const sort = Object.sortBy
+
+    // call filter map to string
+    sortString = convertOnlyFilterToString('sortBy', sort)
+
+    // delete Filters params in request
+    delete Object.sortBy
+  }
+
+  return qs.stringify(Object) + filterString + sortString
 }
 
 /**
@@ -62,13 +75,20 @@ export const convertQueryFilterToString = (params) => {
  * @param columnsDateRange
  */
 export const convertQueryObjectFilter = (currentQuery = {}, defaultQuery = {}, columnsDateRange = []) => {
-  const filters = _.omit(currentQuery, _.keys(defaultQuery))
+  const filters = _.omit(currentQuery, _.keys(defaultQuery).concat(['orderBy', 'direction']))
   const params = _.pick(currentQuery, _.keys(defaultQuery))
+  let sortBy =  _.pick(currentQuery, ['orderBy', 'direction'])
+  if (!_.isEmpty(sortBy)) {
+    // convert sort by from query to object
+    sortBy[currentQuery.orderBy] = currentQuery.direction
+    sortBy = _.omit(sortBy, ['orderBy', 'direction'])
+  }
 
   return {
     ...defaultQuery,
     ...params,
-    filters: mapFilterDateArray(filters, columnsDateRange)
+    filters: mapFilterDateArray(filters, columnsDateRange),
+    sortBy
   }
 }
 

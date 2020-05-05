@@ -20,6 +20,10 @@ export const axiosInterceptorResponseError = (error) => {
       return router.push({ name: 'Login' })
     }
 
+    if (status === 403) {
+      router.push({ name: 'Unauthorized' })
+    }
+
     // remove request pending
     AxiosRemovePending(config)
 

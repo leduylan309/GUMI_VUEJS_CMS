@@ -1,6 +1,5 @@
 export const IROOTQUERY = {
-  sort: 'created_at',
-  direction: 'desc',
+  sortBy: [],
   page: 1,
   perPage: parseInt(process.env.VUE_APP_ITEM_PERPAGE),
   filters: []

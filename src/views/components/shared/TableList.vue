@@ -20,6 +20,8 @@
 												:rowHover="true"
 												:autoLayout="true"
 												@sort="onSort"
+												:sortField="sortField"
+												:sortOrder="sortOrder"
 								>
 
 									<!-- Render Dynamic Columns  -->
@@ -169,8 +171,9 @@
 
 		data () {
 			return {
-				loading: false,
+				loading: true,
 				filters: { ...this.$route.query },
+				sortBy: {},
 				status: StatusCommon,
 				dateTimeFormat: 'yy/mm/dd',
 				fields: this.pageModel.fields(),
@@ -227,6 +230,20 @@
 
 				return this.$store.state.entities[this.pageName].paginator
 			},
+
+			sortField () {
+				if ('orderBy' in this.$route.query) {
+					return this.$route.query.orderBy
+				}
+				return null
+			},
+
+			sortOrder () {
+				if ('direction' in this.$route.query) {
+					return this.$route.query.direction === 'desc' ? -1 : 1
+				}
+				return null
+			},
 		},
 
 		methods: {
@@ -241,6 +258,11 @@
 				}
 
 				const queriesMapped = _.transform(queries, (result, value, key) => {
+					if (key === 'sortBy') {
+						result['orderBy'] = _.toString(_.keys(value))
+						result['direction'] = _.toString(_.values(value))
+						return result
+					}
 					return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
 				})
 
@@ -264,6 +286,7 @@
 			 */
 			onSearch (event) {
 				const params = {
+					...this.$route.query,
 					page: 1,
 				}
 
@@ -277,9 +300,11 @@
 			onSort (event) {
 				const params = {
 					page: 1,
-					sort: event.sortField,
-					direction: event.sortOrder === -1 ? 'desc' : 'asc',
+					sortBy: {},
 				}
+
+				params.sortBy[event.sortField] = event.sortOrder === -1 ? 'desc' : 'asc'
+				this.sortBy = {...params.sortBy}
 
 				return this.callGetList(params)
 			},
@@ -306,6 +331,11 @@
 			 */
 			async callGetList (params) {
 				this.loading = true
+
+				if (!_.isEmpty(this.sortBy)) {
+					params.sortBy = {...this.sortBy}
+					params = _.omit(params, ['orderBy', 'direction'])
+				}
 
 				const queries = {
 					...convertQueryObjectFilter(this.filters, IROOTQUERY),
