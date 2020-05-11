@@ -194,7 +194,7 @@ export default {
     edit_prefecture: 'Edit prefecture',
     title_list_page: 'List of prefectures'
   },
-
+  
   // Dashboard page
   dashboard: {
     title_page: 'Dashboard'

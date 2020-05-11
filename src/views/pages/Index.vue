@@ -20,7 +20,7 @@
 
 						<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 							<div class="dropdown-divider"></div>
-							<a href="#" class="dropdown-item dropdown-footer">Sign out</a>
+							<a @click="logout" class="dropdown-item dropdown-footer">Log out</a>
 						</div>
 					</li>
 
@@ -59,6 +59,7 @@
 <script>
 	// Component
 	import AppMenu from '../layouts/AppMenu.vue'
+	import {AuthService} from '../../api'
 
 	export default {
 		name: 'PostIndex',
@@ -83,6 +84,13 @@
 
 			this.menu = menus[1].children
 		},
+
+		methods: {
+			async logout () {
+				await AuthService.logout()
+				await this.$router.push({ name: 'Login' })
+			}
+		}
 	}
 </script>
 

@@ -72,7 +72,6 @@
 </template>
 
 <script>
-	import ContentHeader from '../components/shared/ContentHeader'
 	import DashboardModel from '../../models/dashboard.model'
 	import { DashboardService } from '../../api/dashboard.service'
 	import moment from 'moment'
@@ -80,6 +79,10 @@
 
 	// Prime
 	import Chart from 'primevue/chart'
+	// Components
+	import ContentHeader from '../components/shared/ContentHeader'
+
+	// prime
 	import Calendar from 'primevue/calendar'
 	import Dropdown from 'primevue/dropdown'
 
