@@ -6,6 +6,7 @@ import CategoryModel from './category.model'
 import DeliveryTargetModel from './delivery_target.model'
 import CompanyModel from './company.model'
 import PrefectureModel from './prefecture.model'
+import { StatusCommon } from '../enum/common.enum'
 
 export default class PostModel extends BaseModel {
   static entity = 'post'
@@ -39,7 +40,23 @@ export default class PostModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'title'
+    {
+      name: 'title',
+      type: 'String'
+    },
+    {
+      name: 'updated_at',
+      type: 'DateRange'
+    },
+    {
+      name: 'created_at',
+      type: 'DateRange'
+    },
+    {
+      name: 'status',
+      type: 'Dropdown',
+      options: StatusCommon
+    }
   ]
 
   static state () {

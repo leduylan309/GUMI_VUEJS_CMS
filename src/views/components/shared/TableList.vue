@@ -26,63 +26,83 @@
 
 									<!-- Render Dynamic Columns  -->
 									<template v-for="(column, index) in this.columns">
-										<Column :key="index"
-														:field="column"
-														:header="$t(`common.table.${column}`)"
+										<!-- Column Type === String -->
+										<Column v-if="column.type === 'String'"
+														:key="index"
+														:field="column.name"
+														:header="$t(`common.table.${column.name}`)"
 														:sortable="true"
 										>
 											<template #filter>
 												<input type="text"
 															 @keyup.enter="onSearch"
-															 v-model="filters[column]"
+															 v-model="filters[column.name]"
 															 class="form-control"/>
 											</template>
 										</Column>
+
+										<!-- Column Type === Dropdown -->
+										<Column v-if="column.type === 'Dropdown' && column.options"
+														field="status"
+														:header="$t(`common.table.${column.name}`)"
+														:sortable="true"
+														filterMatchMode="equals"
+										>
+											<template #body="slotProps">
+												<span :class="'badge badge-' + slotProps.data[column.name]">{{slotProps.data[column.name]}}</span>
+											</template>
+
+											<template #filter>
+												<Dropdown
+																v-model="filters[column.name]"
+																class="form-control"
+																@change="onSearch"
+																placeholder="All"
+																:options="column.options"
+																:showClear="true"
+												>
+													<template #option="slotProps">
+														<span :class="'badge badge-' + slotProps.option">{{slotProps.option}}</span>
+													</template>
+												</Dropdown>
+											</template>
+										</Column>
+
+										<!-- Column Type === Date -->
+										<Column v-if="column.type === 'Date'"
+														:field="column.name"
+														:header="$t(`common.table.${column.name}`)"
+														:sortable="true"
+										>
+											<template #filter>
+												<Calendar class="p-column-filter"
+																	v-model="date[column.name]"
+																	:dateFormat="`${dateTimeFormat}`"
+																	icon="pi pi-calendar"
+																	@keydown.enter.prevent="onEnterCalender($event, column.name)"
+																	@date-select="onSelectDateCalendar($event, column.name)"
+																	:manualInput="true"/>
+											</template>
+										</Column>
+
+										<!-- Column Type === DateRange -->
+										<Column v-if="column.type === 'DateRange'"
+														:field="column.name"
+														:header="$t(`common.table.${column.name}`)"
+														:sortable="true"
+										>
+											<template #filter>
+												<Calendar class="p-column-filter"
+																	v-model="dateRange[column.name]"
+																	:dateFormat="`${dateTimeFormat}`"
+																	selectionMode="range"
+																	icon="pi pi-calendar"
+																	@keydown.enter.prevent="onEnterCalender($event, column.name)"
+																	@date-select="onSelectRangeCalendar($event, column.name)"
+																	:manualInput="true"/>
+											</template>
+										</Column>
 									</template>
-
-									<!-- Status Column -->
-									<Column field="status"
-													:header="$t('common.table.status')"
-													:sortable="true"
-													filterMatchMode="equals"
-													v-if="this.fields.status"
-									>
-										<template #body="slotProps">
-											<span :class="'badge badge-' + slotProps.data.status">{{slotProps.data.status}}</span>
-										</template>
-
-										<template #filter>
-											<Dropdown
-															v-model="filters.status"
-															class="form-control"
-															@change="onSearch"
-															placeholder="All"
-															:options="status"
-															:showClear="true"
-											>
-												<template #option="slotProps">
-													<span :class="'badge badge-' + slotProps.option">{{slotProps.option}}</span>
-												</template>
-											</Dropdown>
-										</template>
-									</Column>
-
-									<!-- Created At Column -->
-									<Column field="created_at"
-													:header="$t('common.table.created_at')"
-													:sortable="true"
-													v-if="this.fields.created_at"
-									>
-										<template #filter>
-											<Calendar class="p-column-filter"
-																v-model="created_at"
-																:dateFormat="`${dateTimeFormat}`"
-																selectionMode="range"
-																icon="pi pi-calendar"
-																@date-select="onSelectCalendar"
-																:manualInput="true"/>
-										</template>
-									</Column>
 
 									<!-- Action Column -->
 									<Column>
@@ -149,8 +169,9 @@
 	import ContentHeader from '../../components/shared/ContentHeader'
 	import {
 		convertParamsAndFilterToString,
-		convertQueryFilterToString, convertQueryObjectFilter,
-		convertToDateRangeCalendar,
+		convertQueryFilterToString,
+		convertQueryObjectFilter,
+		convertToDateRangeCalendar
 	} from '../../../utils/filter'
 	import moment from 'moment'
 	import * as _ from 'lodash'
@@ -180,9 +201,14 @@
 				columns: this.pageModel.columns,
 				displayDialog: false,
 				selectedId: null,
-				// define data for calendar
-				created_at: convertToDateRangeCalendar(this.$route.query.created_at),
+				dateRange: [],
+				date: null
 			}
+		},
+
+		created () {
+			this.initDate()
+			this.initDateRange()
 		},
 
 		components: {
@@ -194,13 +220,13 @@
 			Calendar,
 			ContentHeader,
 			Dialog,
-			Button,
+			Button
 		},
 
 		props: {
 			pageName: String,
 			pageModel: null,
-			pageService: null,
+			pageService: null
 		},
 
 		computed: {
@@ -212,7 +238,7 @@
 
 				set (value) {
 					return value
-				},
+				}
 			},
 
 			list () {
@@ -243,10 +269,38 @@
 					return this.$route.query.direction === 'desc' ? -1 : 1
 				}
 				return null
-			},
+			}
 		},
 
 		methods: {
+			/**
+			 * Setting for Date
+			 */
+			initDate () {
+				const tmpQuery = this.$route.query
+				const tmpDate = _.filter(this.pageModel.columns, (item) => item.type === 'Date')
+				this.date = _.reduce(tmpDate, (result, value) => {
+					const val = tmpQuery[value.name]
+
+					result[value.name] = new Date(val) || ''
+
+					return result
+				}, {})
+			},
+
+			/**
+			 * Init Setting for Date Range
+			 */
+			initDateRange () {
+				const tmpQuery = this.$route.query
+				const tmpDateRange = _.filter(this.pageModel.columns, (item) => item.type === 'DateRange')
+
+				this.dateRange = _.reduce(tmpDateRange, (result, value) => {
+					result[value.name] = tmpQuery[value.name] ? convertToDateRangeCalendar(tmpQuery[value.name]) : []
+					return result
+				}, {})
+			},
+
 			/**
 			 * replace URL every actions in list table
 			 * @param params
@@ -254,7 +308,7 @@
 			replaceUrl (params) {
 				const queries = {
 					...convertQueryFilterToString(params),
-					...this.filters,
+					...this.filters
 				}
 
 				const queriesMapped = _.transform(queries, (result, value, key) => {
@@ -275,7 +329,7 @@
 			onPage (event) {
 				const params = {
 					perPage: event.rows,
-					page: (event.page + 1),
+					page: (event.page + 1)
 				}
 
 				return this.callGetList(params)
@@ -287,7 +341,7 @@
 			onSearch (event) {
 				const params = {
 					...this.$route.query,
-					page: 1,
+					page: 1
 				}
 
 				return this.callGetList(params)
@@ -300,29 +354,51 @@
 			onSort (event) {
 				const params = {
 					page: 1,
-					sortBy: {},
+					sortBy: {}
 				}
 
 				params.sortBy[event.sortField] = event.sortOrder === -1 ? 'desc' : 'asc'
-				this.sortBy = {...params.sortBy}
+				this.sortBy = { ...params.sortBy }
 
 				return this.callGetList(params)
 			},
 
 			/**
+			 * Function filter Calendar
+			 */
+			onSelectDateCalendar (value, columnName) {
+				this.filters[columnName] = moment(value).format('YYYY-MM-DD')
+
+				// call api
+				return this.callGetList({ page: 1 })
+			},
+
+			/**
 			 * Function will filter by date
 			 */
-			onSelectCalendar (value) {
+			onSelectRangeCalendar (value, columnName) {
 				const date = moment(value).format('YYYY-MM-DD')
 
-				if (!this.created_at[1]) {
-					this.filters.created_at = { from: date }
+				if (!this.dateRange[columnName][1]) {
+					this.filters[columnName] = { from: date }
 				} else {
-					this.filters.created_at = { ...this.filters.created_at, to: date }
-
+					this.filters[columnName] = { ...this.filters[columnName], to: date }
 					// call api
 					return this.callGetList({ page: 1 })
 				}
+			},
+
+			/**
+			 * action enter for Calendar
+			 * @param event
+			 * @param columnName
+			 * @return {Promise<*>}
+			 */
+			onEnterCalender (event, columnName) {
+				this.filters[columnName] = { ...this.dateRange[columnName] }
+
+				// call api
+				return this.callGetList({ page: 1 })
 			},
 
 			/**
@@ -333,13 +409,13 @@
 				this.loading = true
 
 				if (!_.isEmpty(this.sortBy)) {
-					params.sortBy = {...this.sortBy}
+					params.sortBy = { ...this.sortBy }
 					params = _.omit(params, ['orderBy', 'direction'])
 				}
 
 				const queries = {
 					...convertQueryObjectFilter(this.filters, IROOTQUERY),
-					...params,
+					...params
 				}
 
 				return this.pageService.list(queries).then(() => {
@@ -386,7 +462,7 @@
 					this.$toast.add({
 						severity: this.$t('common.alert.message_success'),
 						summary: this.$t('common.alert.delete_message_successfully'),
-						life: 3000,
+						life: 3000
 					})
 
 					// call back api
@@ -395,11 +471,10 @@
 				}).catch((err) => {
 					this.$toast.add({
 						severity: this.$t('common.alert.message_error'),
-						summary: this.$t('common.alert.delete_message_successfully'),
+						summary: this.$t('common.alert.delete_message_successfully')
 					})
 				})
-			},
-
-		},
+			}
+		}
 	}
 </script>

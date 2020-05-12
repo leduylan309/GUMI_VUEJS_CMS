@@ -30,11 +30,34 @@ export default class UserModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'first_name',
-    'last_name',
-    'email',
-    'gender',
-    'birthday'
+    {
+      name: 'first_name',
+      type: 'String'
+    },
+    {
+      name: 'last_name',
+      type: 'String'
+    },
+    {
+      name: 'email',
+      type: 'String'
+    },
+    {
+      name: 'gender',
+      type: 'String'
+    },
+    {
+      name: 'birthday',
+      type: 'String'
+    },
+    {
+      name: 'updated_at',
+      type: 'DateRange'
+    },
+    {
+      name: 'created_at',
+      type: 'DateRange'
+    }
   ]
 
   /**
