@@ -280,9 +280,7 @@
 				const tmpQuery = this.$route.query
 				const tmpDate = _.filter(this.pageModel.columns, (item) => item.type === 'Date')
 				this.date = _.reduce(tmpDate, (result, value) => {
-					const val = tmpQuery[value.name]
-
-					result[value.name] = new Date(val) || ''
+					result[value.name] = tmpQuery[value.name] ? new Date(tmpQuery[value.name]) : ''
 
 					return result
 				}, {})
