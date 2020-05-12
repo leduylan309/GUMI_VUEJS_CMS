@@ -23,11 +23,19 @@ export default {
 
         // map filters to string
         const queriesMapped = _.transform(defaultQuery, (result, value, key) => {
+          if (key === 'sortBy' && !_.isEmpty(value)) {
+            result['orderBy'] = _.toString(_.keys(value))
+            result['direction'] = _.toString(_.values(value))
+            return result
+          }
           return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
         })
 
         vm.$router.replace(`?${ convertParamsAndFilterToString(queriesMapped) }`).catch(() => {})
-        vm.filters = queries.filters
+
+        // set variable in table list component
+        vm.$children[0].filters = queries.filters
+        vm.$children[0].loading = false
       })
     })
   }

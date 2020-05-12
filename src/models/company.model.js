@@ -30,10 +30,22 @@ export default class CompanyModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'name',
-    'code',
-    // 'prefecture_id',
-    // 'created_by',
+    {
+      name: 'name',
+      type: 'String'
+    },
+    {
+      name: 'code',
+      type: 'String'
+    },
+    {
+      name: 'updated_at',
+      type: 'DateRange'
+    },
+    {
+      name: 'created_at',
+      type: 'DateRange'
+    },
   ]
 
   static state () {

@@ -31,8 +31,22 @@ export default class AdminModel extends BaseModel {
    * @type {string[]}
    */
   static columns = [
-    'name',
-    'username'
+    {
+      name: 'name',
+      type: 'String'
+    },
+    {
+      name: 'username',
+      type: 'String'
+    },
+    {
+      name: 'updated_at',
+      type: 'DateRange'
+    },
+    {
+      name: 'created_at',
+      type: 'DateRange'
+    }
   ]
 
   static state () {
