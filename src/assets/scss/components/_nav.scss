@@ -1,25 +1,7 @@
-:not(.layout-fixed) {
-  .main-sidebar {
-    min-height: 100vh;
-    height: 100%;
-
-    .nav-sidebar {
-      .nav-sidebar {
-        .nav-link {
-          box-shadow: none;
-
-          &.active {
-            background: $gray-900;
-            color: $white
-          }
-        }
-      }
-
-      .nav-link {
-        .right {
-          right: 1.2rem
-        }
-      }
-    }
+.navbar-brand {
+  &.navbar-brand-autodark {
+    margin: 0 auto;
+    -webkit-transform: translate(-16px);
+    transform: translate(-16px);
   }
 }

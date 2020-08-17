@@ -1,22 +1,29 @@
-// import Core
+// Import Core
 import Vue from 'vue'
-import App from './App.vue'
+import App from './App'
 import router from './router'
 import store from './store'
 
-// import Style
+// import Plugins
+import './plugins/tabler'
+import './plugins/progress-bar'
+import './plugins/lazyload'
+import './plugins/validation'
+import './plugins/ant.design'
+import './plugins/google.map'
+import './plugins/moment'
+import i18n from './plugins/i18n'
+
+// STYLE
 import './assets/scss/main.scss'
 
-// import Plugins
-import './plugins/validation'
-import './plugins/vue-cookies'
-import './plugins/pimevue'
-import './plugins/adminlte'
-import i18n from './plugins/i18n'
-import './plugins/progress-bar'
+// import filter
+import './utils/filters'
+import './mixins/global.mixin'
 
 Vue.config.productionTip = false
 
+/* eslint-disable no-new */
 new Vue({
   router,
   store,

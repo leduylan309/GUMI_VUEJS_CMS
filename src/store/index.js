@@ -1,31 +1,62 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios'
-import VuexORM from '@vuex-orm/core'
-import VuexORMAxios from '@vuex-orm/plugin-axios'
-import { configInterceptorAxios } from '../config/interceptor'
-import database from './database'
+import * as types from './mutation-types'
+import Cookie from 'js-cookie'
 
-// map VUEX to Vue
 Vue.use(Vuex)
 
-// CONFIG GLOBAL FOR AXIOS
-VuexORM.use(VuexORMAxios, {
-  axios,
-  baseURL: process.env.VUE_APP_BASE_URL,
-  headers: {
-    'X-Requested-With': 'XMLHttpRequest',
-    'Accept': 'application/json',
-    'Content-Type': 'application/json'
+export default new Vuex.Store({
+  state () {
+    return {
+      layout: 'default',
+      profile: null,
+      currentPermissions: [],
+      token: Cookie.get('token'),
+      loadingOverlay: false,
+      prefectures: null,
+      dataChart: {}
+    }
   },
-  timeout: 10 * 1000
+  getters: {
+    profile: state => state.profile,
+    hasToken: state => state.token,
+    layout: state => state.layout || 'default',
+    prefectures: state => state.prefectures,
+    dataChart: state => state.dataChart,
+    currentPermissions: state => state.currentPermissions
+  },
+  mutations: {
+    [types.SET_PREFECTURES] (state, payload) {
+      state.prefectures = payload
+    },
+    [types.SET_CHART] (state, payload) {
+      state.dataChart = payload
+    },
+    [types.START_LOADING] (state) {
+      state.loadingOverlay = true
+      document.getElementById('loading').style.opacity = 'block'
+    },
+    [types.END_LOADING] (state) {
+      state.loadingOverlay = false
+      document.getElementById('loading').style.display = 'none'
+    },
+    [types.SET_LAYOUT] (state, { layout }) {
+      state.layout = layout
+    },
+    [types.SET_PROFILE] (state, { profile }) {
+      state.profile = profile
+    },
+    [types.SET_TOKEN] (state, { token }) {
+      state.token = token
+      Cookie.set('token', token)
+    },
+    [types.SET_PERMISSION] (state, permissions) {
+      state.currentPermissions = permissions
+    },
+    [types.LOG_OUT] (state) {
+      state.token = null
+      state.profile = null
+      Cookie.remove('token')
+    }
+  }
 })
-
-// config interceptor for Axios
-configInterceptorAxios(axios)
-
-const store = new Vuex.Store({
-  plugins: [VuexORM.install(database)]
-})
-
-export default store

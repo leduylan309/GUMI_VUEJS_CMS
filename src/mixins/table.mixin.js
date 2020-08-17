@@ -1,42 +1,28 @@
-import { convertParamsAndFilterToString, convertQueryFilterToString, convertQueryObjectFilter } from '../utils/filter'
-import { IROOTQUERY } from '../shared/store/state'
-import * as _ from 'lodash'
+import { uniqueId } from 'lodash-es'
+import { LOCALE } from '../enum/locale.enum'
 
 export default {
-  beforeRouteEnter (to, from, next) {
-    next((vm) => {
-      // map with route current url
-      const queries = convertQueryObjectFilter(
-        to.query,
-        IROOTQUERY,
-        vm.pageModel?.columnsDateRange
-      )
+  methods: {
+    // pagination in table
+    buildOptionText (pageSize) {
+      if (this.$i18n.locale === LOCALE.ja) {
+        return `${pageSize.value} / ページ`
+      }
+      return `${pageSize.value} / page`
+    },
 
-      // call api
-      Promise.all([
-        vm.pageService.list(queries)
-      ]).then(() => {
-        const defaultQuery = {
-          ...convertQueryFilterToString(queries),
-          ...queries.filters
-        }
+    showTotal (total, range) {
+      if (this.$i18n.locale === LOCALE.ja) {
+        return `${range[0]} - ${range[1]} 件 / 総件数 ${total}件`
+      }
+      return `${range[0]}-${range[1]} of ${total} items`
+    },
 
-        // map filters to string
-        const queriesMapped = _.transform(defaultQuery, (result, value, key) => {
-          if (key === 'sortBy' && !_.isEmpty(value)) {
-            result['orderBy'] = _.toString(_.keys(value))
-            result['direction'] = _.toString(_.values(value))
-            return result
-          }
-          return result[key] = _.isObject(value) ? _.toString(_.flatMap(value)) : value
-        })
-
-        vm.$router.replace(`?${ convertParamsAndFilterToString(queriesMapped) }`).catch(() => {})
-
-        // set variable in table list component
-        vm.$children[0].filters = queries.filters
-        vm.$children[0].loading = false
-      })
-    })
+    /**
+     * @return {string}
+     */
+    randomUniqueID () {
+      return uniqueId('row_')
+    }
   }
 }

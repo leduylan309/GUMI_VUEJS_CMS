@@ -1,31 +1,45 @@
 import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Router from 'vue-router'
+import { routes } from '@/router/routes'
+import store from '@/store'
+import head from 'lodash-es/head'
+import * as types from '@/store/mutation-types'
 
-// ROUTE
-import LoginRoute from './routes/login'
-import MainRoute from './routes/main'
+Vue.use(Router)
 
-Vue.use(VueRouter)
-
-const routes = [
-  LoginRoute,
-  MainRoute
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   // route level code-splitting
-  //   // this generates a separate chunk (about.[hash].js) for this route
-  //   // which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
-]
-
-const router = new VueRouter({
+const router = new Router({
   mode: 'history',
-  base: process.env.BASE_URL,
+  base: '/cms2/',
   routes
 })
 
-// router.addRoutes(routes)
+/**
+ * Global Before Guards
+ *
+ * @param to
+ * @param from
+ * @param next
+ * @returns {Promise<void>}
+ */
+const beforeEach = async (to, from, next) => {
+  const currentRoute = head(to.matched)
+  store.commit(types.SET_LAYOUT, { layout: currentRoute.meta.layout })
+  router.app.$Progress.start()
+  next()
+}
+
+/**
+ * Global After Hooks
+ *
+ * @returns {Promise<void>}
+ */
+const afterEach = async () => {
+  router.app.$Progress.finish()
+  await router.app.$nextTick()
+  store.commit(types.END_LOADING)
+}
+
+router.beforeEach(beforeEach)
+router.afterEach(afterEach)
 
 export default router

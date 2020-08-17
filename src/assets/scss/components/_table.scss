@@ -1,68 +1,22 @@
-// Prime
-.wrapper {
-  &.table-responsive {
-    overflow: unset;
-  }
-
-  .p-datatable-thead {
-    tr {
-      th {
-        border: 1px solid $gray-400;
-        text-align: left;
-        overflow: unset;
-
-        .pi {
-          float: right;
-          padding: inherit;
-          font-size: 11px;
-        }
-      }
-    }
-  }
-
-  .p-datatable-tbody {
-    tr {
-      &.p-datatable-emptymessage {
-        td {
-          height: 40vh;
-          text-align: center;
-          vertical-align: middle;
-          font-size: 2rem;
-          color: $gray-300
-        }
-      }
-
-      td {
-        overflow: unset;
-        border: 1px solid $gray-400;
-      }
-    }
-  }
-
-  .p-calendar {
+@media #{$info-ipad} {
+  .ant-table table {
+    overflow-x: auto;
     display: block;
+  }
+}
 
-    input {
-      width: 100%;
-      display: block;
-      border: 1px solid $gray-400;
+.ant-table {
+  .btn-list {
+    &.justify-content-end {
+      min-width: 120px;
+      max-width: 175px;
+      margin-left: auto;
     }
+  }
 
-    .p-datepicker {
-      min-width: 25em;
-
-      tr {
-        th {
-          border: none
-        }
-
-        td {
-          border: none;
-          font-weight: 400;
-        }
-      }
-
-    }
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+    min-width: 120px;
   }
 
 }
+
