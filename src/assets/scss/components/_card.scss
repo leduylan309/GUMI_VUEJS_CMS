@@ -1,0 +1,25 @@
+.card-common {
+  margin-bottom: 20px !important;
+  box-shadow: 0.5rem 0.5rem 1rem rgba(0, 0, 0, 0.07) !important;
+  border: 1px solid rgba(110, 117, 130, 0.2) !important;
+}
+
+.card-common.isHideBody .ant-card-body {
+  display: none !important
+}
+
+.card-footer {
+  z-index: 500;
+}
+
+.card-active:before {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  content: "";
+  border: 5px solid #206bc4;
+  border-radius: inherit;
+  background: hsla(0, 0%, 100%, .3);
+}

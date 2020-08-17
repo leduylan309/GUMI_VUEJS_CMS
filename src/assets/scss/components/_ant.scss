@@ -1,0 +1,113 @@
+.ant-select.is-invalid.has-error,
+.ant-calendar-picker.is-invalid {
+  .ant-calendar-picker-input.ant-input,
+  .ant-select-selection.ant-select-selection--single,
+  .ant-select-ope.ant-select {
+    border-color: #cd201f;
+    color: #cd201f;
+    box-shadow: none;
+
+    .ant-select-arrow {
+      display: none;
+    }
+
+    &:focus, &:active, &:hover {
+      box-shadow: none;
+    }
+  }
+
+  .anticon {
+    display: none;
+  }
+}
+
+.form-control-plaintext {
+  .form-control.ant-calendar-picker,
+  .form-control.ant-select {
+    .ant-input,
+    .ant-select-selection--single {
+      border: none
+    }
+  }
+}
+
+.has__error .ant-input {
+  border: 1px solid #cd201f;
+}
+
+.has__error .ant-select-selection {
+  border: 1px solid #cd201f;
+}
+
+#files-popup .ant-modal-content button.ant-modal-close .ant-modal-close-x {
+  position: absolute;
+  background: #6e7582;
+  border-color: #6e7582;
+  color: #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  top: -20px;
+  right: -20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), inset 0 2px 0 -1px rgba(255, 255, 255, 0.1);
+}
+
+#files-popup .ant-modal-content .ant-modal-body {
+  padding: 0;
+}
+
+.ant-table-wrapper {
+  background: #ffffff;
+  box-shadow: 0 .3rem 1rem rgba(0, 0, 0, .15) !important;
+}
+
+.ant-spin-container {
+  padding: 0 !important;
+}
+
+.ant-pagination {
+  margin: 16px 20px !important;
+}
+
+.ant-table-wrapper .ant-table-tbody .inactive {
+  color: #aaaaaa;
+}
+
+.ant-upload.ant-upload-select-picture-card {
+  margin: 0 !important;
+}
+
+.ant-card-body .btn {
+  padding: 0.4375rem 1rem;
+}
+
+.ant-input, .ant-select-selection {
+  min-height: calc(1.4285714286em + 0.875rem + 2px);
+  padding: 0.1rem 0;
+  font-size: 0.875rem;
+}
+
+.ant-input {
+  padding: 4px 11px;
+  font-size: 14px;
+}
+
+.ant-select-selection--multiple {
+  min-height: 36px !important;
+  height: auto;
+}
+
+.ant-input-affix-wrapper {
+  height: 36px !important;
+}
+
+.ant-select-selection--multiple .ant-select-selection__rendered {
+  margin-left: 11px !important;
+}
+
+.ant-table-body .badge {
+  padding: 5px 10px;
+  font-size: 0.75rem;
+}

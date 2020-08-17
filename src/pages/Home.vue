@@ -232,3 +232,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+  .total-member {
+    border: 1px solid rgba(110, 117, 130, .2);
+    border-radius: 3px;
+  }
+</style>
